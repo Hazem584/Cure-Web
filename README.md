@@ -1,6 +1,6 @@
 # Cure Web
 
-![Cure Web]("Cure Web_Book Your Appointment.png")
+![Cure Web](cureweb.png)
 
 ## 📌 Project Overview  
 Cure Web is a smart healthcare Website that enables patients to book appointments with doctors online, anytime, anywhere.  
