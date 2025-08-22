@@ -1,24 +1,25 @@
-# Cure App
+# Cure Web
 
 ## 📌 Project Overview  
-Cure App is a smart healthcare application that enables patients to book doctors online anytime, anywhere.  
-The app allows users to:  
+Cure Web is a smart healthcare Website that enables patients to book appointments with doctors online, anytime, anywhere.  
+The Website allows users to:  
 - Search and book doctors easily.  
 - Receive appointment reminders.  
-- Manage consultations in a simple and efficient way.  
+- Manage consultations efficiently.  
 
 ---
 
 ## 👥 Team Members  
-- [Your Name 1] – Role (e.g., Frontend Developer)  
-- [Your Name 2] – Role (e.g., Backend Developer)  
-- [Your Name 3] – Role (e.g., Mobile App Developer)  
-- [Your Name 4] – Role (e.g., UI/UX Designer)  
+- [Hazem Mohammed Mohammed] 
+- [Ayad Emad Ayad]  
+- [Sara Muhammed Korany]  
+- [Marawan Walied Abdelaziz]
+- [Hamada Khaled Abdullah]
 
 ---
 
 ## 🎯 Objective of the Project  
-The main objective of Cure App is to make healthcare more accessible and convenient by:  
+The main objective of the Cure Web is to make healthcare more accessible and convenient by:  
 1. Providing an easy-to-use platform for booking doctors online.  
 2. Reducing waiting times and missed appointments.  
 3. Sending reminders to patients about their consultation schedules.  
