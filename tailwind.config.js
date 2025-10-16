@@ -1,4 +1,5 @@
 import withMT from "@material-tailwind/react/utils/withMT";
+
 /** @type {import('tailwindcss').Config} */
 export default withMT({
   content: [
@@ -11,6 +12,11 @@ export default withMT({
     extend: {
       fontFamily: {
         georgia: ["Georgia", "serif"],
+      },
+      colors: {
+        primary: "#145DB8",
+        secondry: "#05162C",
+        neutral: "#6D7379",
       },
     },
   },
