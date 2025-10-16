@@ -12,7 +12,7 @@ import { IoLocationOutline } from "react-icons/io5";
 const Footer = () => {
      return (
           <footer className="bg-[#05162C] text-white flex flex-col gap-7 px-5 sm:px-12 pb-5 pt-20">
-               <div className="flex justify-between flex-col md:flex-row xl:justify-normal xl:gap-44">
+               <div className="flex justify-between gap-3 flex-col lg:flex-row xl:justify-normal xl:gap-44">
                     <div className="logo flex flex-col gap-6">
                          <div className="flex items-center gap-4">
                               <BsHeartPulse className="h-full text-5xl" />
@@ -58,7 +58,7 @@ const Footer = () => {
                               </a>
                          </div>
                     </div>
-                    <div className="quick-links flex flex-wrap flex-col lg:flex-row gap-[3.125rem]">
+                    <div className="quick-links flex flex-wrap lg:flex-row gap-[3.125rem]">
                          <div className="flex flex-col gap-6">
                               <h3 className="title font-[Georgia] text-xl">
                                    Customer
@@ -101,7 +101,7 @@ const Footer = () => {
                               <h3 className="title font-[Georgia] text-xl">
                                    Contact Info
                               </h3>
-                              <div className="list flex flex-col gap-4 font-medium font-montserrat">
+                              <div className="list flex flex-row flex-wrap lg:flex-col gap-4 font-medium font-montserrat">
                                    <div className="li-item">
                                         <div className="flex gap-4">
                                              <IoCallOutline className="text-base" />
@@ -129,7 +129,7 @@ const Footer = () => {
                                              <IoLocationOutline className="text-base" />
                                              <div className="info flex flex-col gap-2">
                                                   <p>Address</p>
-                                                  <span className="small-des w-[9.625rem]">
+                                                  <span className="small-des lg:w-[9.625rem]">
                                                        526 Melrose Street, Water
                                                        Mill, 11976 New York
                                                   </span>
