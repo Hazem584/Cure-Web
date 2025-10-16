@@ -10,6 +10,7 @@ import NavBar from "./components/header/NavBar"
 const App = () => {
   return (
     <>
+         <NavBar/> 
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Home />} />
@@ -18,8 +19,6 @@ const App = () => {
       <Route path="/appointments" element={<Appointments />} />
       <Route path="*" element={<NotFound />} />
     </Routes> 
-    <NavBar/> 
-    <Home/>
 </>
 
   );
