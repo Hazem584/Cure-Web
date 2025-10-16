@@ -10,7 +10,7 @@ const Dropdown = () => {
   return (
                     <div
                          tabIndex="-1"
-                         className="menu absolute z-50 flex flex-col gap-3 right-0  font-montserrat bg-base-100 border border-gray-400 rounded-md z-1 w-72 mt-2 px-4 py-2 shadow"
+                         className="menu absolute bg-white z-50 flex flex-col gap-3 right-0  font-montserrat bg-base-100 border border-gray-400 rounded-md z-1 w-72 mt-2 px-4 py-2 shadow"
                     >
                          <div className="user flex justify-between items-center justify-items-center ">
                               <div className="flex items-center gap-3">
