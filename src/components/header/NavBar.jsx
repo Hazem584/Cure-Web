@@ -1,7 +1,7 @@
 import React from "react";
 import { BsHeartPulse } from "react-icons/bs";
 import SearchBar from "./components/SearchBar";
-import ProfileDropdown from "./components/ProfileDropdown";
+import ProfileAvatar from "./components/ProfileAvatar";
 
 
 
@@ -16,7 +16,7 @@ const NavBar = () => {
 
                <SearchBar />
                {/* profile */}
-               <ProfileDropdown />
+               <ProfileAvatar />
           </div>
      );
 };
