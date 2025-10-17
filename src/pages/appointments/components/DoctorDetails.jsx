@@ -38,7 +38,7 @@ const DoctorDetails = () => {
         <div className="flex flex-col items-center text-center">
           <div className="relative -mt-1 flex h-28 w-28 items-center justify-center rounded-full bg-slate-100 p-1 shadow-sm">
             <img
-              src="assets/doctor.png"
+              src="public/doctor.png"
               alt="Dr. Jessica Turner profile"
               className="h-full w-full rounded-full object-cover"
             />
@@ -90,9 +90,9 @@ const DoctorDetails = () => {
           </div>
           <div className="overflow-hidden rounded-2xl">
             <img
-              src="assets/GoogleMapTA (1) 1.png"
+              src="public/GoogleMapTA (1) 1.png"
               alt="Clinic location map"
-              className="h-48 w-full object-cover"
+              className="h-48   w-full object-cover"
             />
           </div>
         </section>
