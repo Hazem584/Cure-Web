@@ -36,7 +36,7 @@ const Card = ({
         </div>
       </div>
       <div className="flex gap-3">
-        <img src="./icon.svg" alt="location" />
+        <img src="/location-icon.svg" alt="location" />
         <h1 className="mt-2 text-[#6D7379]">{address}</h1>
       </div>
       <div className="mt-4">
