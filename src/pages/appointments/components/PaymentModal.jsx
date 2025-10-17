@@ -48,7 +48,7 @@ const PaymentModal = ({ appointment, onClose }) => {
         <div className="flex items-center gap-4">
           <div className="relative h-20 w-20 overflow-hidden rounded-full">
             <img
-              src="/public/doctor.png"
+              src="/doctor.png"
               alt="Dr. Jessica Turner"
               className="h-full w-full object-cover"
             />
