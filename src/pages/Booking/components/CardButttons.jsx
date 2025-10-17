@@ -19,7 +19,7 @@ const CardButttons = ({ status }) => {
         className={`border border-[#99A2AB] px-12 py-2 rounded-xl hover:bg-blue-50 transition 
         ${
           status === "Upcoming"
-            ? "text-[#99A2AB] bg-[#FFFFFF] hover:bg-blue-400 hover:text-white  transition "
+            ? "text-[#99A2AB] bg-[#FFFFFF] hover:bg-blue-gray-600 hover:text-white  transition "
             : "border border-blue-600 text-blue-600 px-11 py-2 rounded-xl hover:bg-blue-50 transition"
         }
             `}
