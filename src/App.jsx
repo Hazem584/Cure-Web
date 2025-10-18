@@ -1,5 +1,7 @@
-import { Route, Routes } from "react-router-dom";
 import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Booking from "./pages/Booking/Booking";
+import Appointments from "./pages/appointments/Appointments";
 import NotFound from "./components/not_found/NotFound";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";

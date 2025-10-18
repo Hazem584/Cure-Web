@@ -8,7 +8,7 @@ const Card = ({
     <div className="border border-[#BBC1C7]  flex flex-col p-2 rounded-2xl">
       <div className="flex justify-between items-center mt-3">
         <div className="flex gap-2">
-          <img src="/images/calendar-02.svg" alt="calendar" />
+          <img src="./calendar-02.svg" alt="calendar" />
           <h1
             className={`text-xs ${
               status == "Upcoming" ? "text-[#05162C]" : "text-[#6D7379]"
@@ -36,7 +36,7 @@ const Card = ({
         </div>
       </div>
       <div className="flex gap-3">
-        <img src="/images/icon.svg" alt="location" />
+        <img src="/location-icon.svg" alt="location" />
         <h1 className="mt-2 text-[#6D7379]">{address}</h1>
       </div>
       <div className="mt-4">
@@ -45,5 +45,4 @@ const Card = ({
     </div>
   );
 };
-
 export default Card;
