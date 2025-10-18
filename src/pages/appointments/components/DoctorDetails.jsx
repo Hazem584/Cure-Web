@@ -33,8 +33,8 @@ const aboutMeDetails =
 const DoctorDetails = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
-    <aside className={`w-full space-y-6 lg:w-80 xl:w-[540px] `}>
-      <section className="space-y-6 rounded-3xl bg-[#F5F6F7] p-6 shadow-sm">
+    <aside className={`w-full space-y-6 lg:w-80 xl:w-[540px] max-[300px]:space-y-5`}>
+      <section className="space-y-6 rounded-3xl bg-[#F5F6F7] p-6 shadow-sm max-[300px]:p-4">
         <div className="flex flex-col items-center text-center">
           <div className="relative -mt-1 flex h-28 w-28 items-center justify-center rounded-full bg-slate-100 p-1 shadow-sm">
             <img
@@ -51,23 +51,30 @@ const DoctorDetails = () => {
           </div>
         </div>
 
-        <div className="flex justify-between text-center text-sm text-slate-500">
+        <div className="flex justify-between text-center text-sm text-slate-500 max-[300px]:grid max-[300px]:grid-cols-2 max-[300px]:gap-x-3 max-[300px]:gap-y-4 max-[300px]:justify-items-center">
           {stats.map(({ label, value, icon: Icon }) => (
-            <div key={label} className="flex-1 space-y-2 rounded-2xl">
-              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-black">
+            <div
+              key={label}
+              className="flex-1 space-y-2 rounded-2xl max-[300px]:flex-none max-[300px]:w-full max-[300px]:space-y-1"
+            >
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-black max-[300px]:h-10 max-[300px]:w-10">
                 <Icon size={28} />
               </span>
-              <p className="text-lg font-semibold text-slate-900">{value}</p>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-lg font-semibold text-slate-900 max-[300px]:text-base">
+                {value}
+              </p>
+              <p className="text-xs uppercase tracking-wide text-slate-500 max-[300px]:text-[10px]">
                 {label}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="space-y-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-5 text-left">
-          <h4 className="text-sm font-semibold text-slate-600">About me</h4>
-          <p className="text-sm leading-relaxed text-slate-600">
+        <div className="space-y-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-5 text-left max-[300px]:p-4 max-[300px]:space-y-2">
+          <h4 className="text-sm font-semibold text-slate-600 max-[300px]:text-xs">
+            About me
+          </h4>
+          <p className="text-sm leading-relaxed text-slate-600 max-[300px]:text-xs max-[300px]:leading-5">
             {aboutMeIntro}
             {isExpanded ? aboutMeDetails : "..."}
           </p>
@@ -75,16 +82,18 @@ const DoctorDetails = () => {
             <button
               type="button"
               onClick={() => setIsExpanded(true)}
-              className="text-sm font-semibold text-blue-500 transition hover:text-blue-600"
+              className="text-sm font-semibold text-blue-500 transition hover:text-blue-600 max-[300px]:text-xs"
             >
               Read more
             </button>
           )}
         </div>
-        <section className="space-y-4 ">
+        <section className="space-y-4 max-[300px]:space-y-3 max-[300px]:text-sm">
           <div>
-            <h4 className="text-lg font-semibold text-slate-900">Location</h4>
-            <p className="mt-1 text-sm text-slate-500">
+            <h4 className="text-lg font-semibold text-slate-900 max-[300px]:text-base">
+              Location
+            </h4>
+            <p className="mt-1 text-sm text-slate-500 max-[300px]:text-xs">
               129, El-Nasr Street, Cairo, Egypt
             </p>
           </div>
@@ -92,7 +101,7 @@ const DoctorDetails = () => {
             <img
               src="/GoogleMapTA (1) 1.png"
               alt="Clinic location map"
-              className="h-48   w-full object-cover"
+              className="h-48 w-full object-cover max-[300px]:h-40"
             />
           </div>
         </section>

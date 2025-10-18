@@ -56,7 +56,6 @@ const renderStars = (rating) => {
 const ReviewsAndRating = ({ className = "" }) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
 
-
   return (
     <section className={`rounded-3xl bg-white p-8 ${className}`}>
       {/* Header */}
