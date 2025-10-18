@@ -8,7 +8,7 @@ const Howitwork = () => {
 
      ]      
   return (
-               <section className="howitwork flex flex-col mt-10 gap-10 items-center">
+               <section className="howitwork dark:bg-dark-darkBg dark:text-dark-textOnDark flex flex-col pt-10 gap-10 items-center">
                     <h1 className="text-2xl">How It Works</h1>
                     <div className="cards-container flex gap-4 flex-wrap justify-center items-center">
                     {cards.map(({title,description,img},indx)=><Howitworkcard title={title} description={description} img={img} key={indx}/>)}

@@ -17,7 +17,7 @@ const Home = () => {
                <Reviews />
                <FAQs />
                <Mobilapplinks />
-               <Footer />
+               
           </>
      );
 };

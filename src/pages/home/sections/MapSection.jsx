@@ -3,12 +3,12 @@ import Map from "../components/Map";
 import SearchByLoactaionBtn from "../components/SearchByLoactaionBtn";
 const MapSection = () => {
      return (
-          <section className="grid lg:grid-cols-2 justify-items-center justify-center items-center py-10">
+          <section className="grid lg:grid-cols-2 dark:bg-dark-darkBg justify-items-center justify-center items-center py-10">
                <div className="flex flex-col gap-4 items-start">
-                    <div className="sectionheading text-4xl font-[georgia] sm:max-w-[390px] text-secondry">
+                    <div className="sectionheading text-4xl dark:text-dark-textOnDark font-[georgia] sm:max-w-[390px] text-secondry">
                          Find Care Near You in Seconds
                     </div>
-                    <div className="subheading text-neutral font-normal text-[1.3rem] sm:max-w-[451px]">
+                    <div className="subheading text-neutral dark:text-dark-textSecondary font-normal text-[1.3rem] sm:max-w-[451px]">
                          Allow location access or choose your city to instantly
                          discover trusted doctors and clinics around you—quick,
                          easy, and local.

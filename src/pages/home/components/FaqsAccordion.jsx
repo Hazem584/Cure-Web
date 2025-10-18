@@ -61,7 +61,7 @@ const CUSTOM_ANIMATION = {
                               >
                                    <AccordionHeader
                                         onClick={() => handleOpen(id)}
-                                        className="!font-[georgia] font-normal text-secondry border-b-0"
+                                        className="!font-[georgia] font-normal text-secondry dark:text-dark-textOnDark dark:border-dark-borderDark dark:border-b-2 border-b-0"
                                    >
                                         {question}
                                    </AccordionHeader>

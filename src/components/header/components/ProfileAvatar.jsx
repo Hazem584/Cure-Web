@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { GrNotification } from "react-icons/gr";
 import { FaBarsStaggered } from "react-icons/fa6";
-import { Link } from "react-router-dom";
-
 import Dropdown from "./Dropdown";
-import { PiGearSixLight } from "react-icons/pi";
 import {
      Avatar,
      Button,
@@ -17,13 +14,13 @@ import {
 
 
 
-const ProfileDropdown = () => {
+const ProfileAvatar = ({theme ,setTheme}) => {
      const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 
      return (
           <div className="flex gap-8 items-center">
-               <div className="flex gap-3 text-1xl">
+               <div className="flex gap-3 text-1xl dark:text-dark-textSecondary">
                     <FaBarsStaggered />
 
                     <GrNotification />
@@ -52,36 +49,14 @@ const ProfileDropdown = () => {
                     </MenuHandler>
 
                     <MenuList className="p-3 w-1/3 max-w-[300px]">
-                         <div className="user flex !hover:border-0 justify-between items-center justify-items-center ">
-                              <div className="flex items-center gap-3">
-                                   <Link to="Home">
-                                        <div className="pic w-14 rounded-full overflow-hidden">
-                                             <img
-                                                  alt="Tailwind CSS Navbar component"
-                                                  src="https://i.postimg.cc/vH3MDBr2/tom1.png"
-                                             />
-                                        </div>
-                                   </Link>
-                                   <div className="flex flex-col">
-                                        <div className="profile-name !text-1xl !font-bold !text-[georgia]">
-                                             Uncle Tom
-                                        </div>
-                                        <div className="profile-address !text-[0.65rem] !text-gray-400">
-                                             129,El-Nasr Street, Cairo
-                                        </div>
-                                   </div>
-                              </div>
-
-                              <button>
-                                   <PiGearSixLight className="text-primary text-2xl" />
-                              </button>
-                         </div>
                          {/* the drop down menu */}
-                         <Dropdown setIsMenuOpen={setIsMenuOpen}/>
-                         </MenuList>
+                         <Dropdown setIsMenuOpen={setIsMenuOpen} theme={theme} setTheme={setTheme}/>
+                         
+                    </MenuList>
+                    
                </Menu>
           </div>
      );
 };
 
-export default ProfileDropdown;
+export default ProfileAvatar;

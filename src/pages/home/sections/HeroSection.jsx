@@ -6,30 +6,30 @@ import HeroBtns from "../components/HeroBtns";
 
 const HeroSection = () => {
      return (
-          <div className="hero-section relative flex sm:justify-center sm:items-center justify-start pt-10">
+          <div className="hero-section dark:bg-dark-darkBg relative flex sm:justify-center sm:items-center justify-start pt-10">
                <div className="deco absolute hidden md:flex top-[50%] left-[10%] flex-col gap-4 items-center">
                     <IoLocation className="text-3xl text-primary animate-bounce" />
-                    <div className="deco-text shadow-2xl py-1 px-2 bg-[#E8EFF8] rounded-3xl text-secondry text-sm">
+                    <div className="deco-text shadow-2xl py-1 px-2 bg-[#E8EFF8] dark:bg-dark-bgSurface dark:text-dark-textPrimary text-secondry rounded-3xl  text-sm">
                          Doctors Near You
                     </div>
                </div>
                <div className="flex flex-col  gap-6 items-start sm:items-center font-normal">
-                    <button className="flex items-center py-1 px-2 bg-[#E8EFF8] rounded-3xl text-[0.85rem]">
+                    <button className="flex items-center py-1 px-2 bg-[#E8EFF8] dark:bg-dark-bgSurface dark:text-dark-textPrimary rounded-3xl text-[0.85rem]">
                          <WiStars className="text-base" />
                          Upgrade Your Account
                     </button>
                     <div className="flex flex-col gap-6 sm:items-center sm:text-center">
-                         <h1 className="heading text-3xl font-[georgia] text-secondry">
+                         <h1 className="heading text-3xl font-[georgia] dark:text-dark-textOnDark text-secondry">
                               Find and book top doctors near you
                          </h1>
-                         <div className="subheading sm:max-w-[405px] font-montserrat text-neutral">
+                         <div className="subheading sm:max-w-[405px] font-montserrat dark:text-dark-textSecondary text-neutral">
                               Easily find top-rated specialists near you and
                               book appointments in just a few clicks. Whether
                               you need an in-person visit consultation, we're
                               here to connect you with the right care—fast,
                               simple, and secure.
                          </div>
-                         <div className="info flex items-center text-neutral font-normal bg-[#E8EFF8] p-2 rounded-[40px]">
+                         <div className="info flex items-center dark:bg-dark-bgSurface dark:text-dark-textPrimary text-neutral font-normal bg-[#E8EFF8] p-2 rounded-[40px]">
                               <div className="flex items-center -space-x-4">
                                    <Avatar
                                         variant="circular"

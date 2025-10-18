@@ -4,9 +4,12 @@ import { PiGearSixLight } from "react-icons/pi";
 import { CiCreditCard1 } from "react-icons/ci";
 import { IoIosLock } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-import { MenuItem, Typography, MenuList } from "@material-tailwind/react";
+import { MenuItem, Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
-const Dropdown = ({setIsMenuOpen}) => {
+import Themetoggler from "./Themetoggler";
+
+const Dropdown = ({ setIsMenuOpen,theme ,setTheme }) => {
      const profileMenuItems = [
           {
                label: "Payment Method",
@@ -28,6 +31,32 @@ const Dropdown = ({setIsMenuOpen}) => {
      const closeMenu = () => setIsMenuOpen(false);
      return (
           <>
+               <MenuItem>
+                    <div className="user flex !hover:border-0 justify-between items-center justify-items-center ">
+                         <div className="flex items-center gap-3">
+                              <Link to="/">
+                                   <div className="pic w-14 rounded-full overflow-hidden">
+                                        <img
+                                             alt="Tailwind CSS Navbar component"
+                                             src="https://i.postimg.cc/vH3MDBr2/tom1.png"
+                                        />
+                                   </div>
+                              </Link>
+                              <div className="flex flex-col">
+                                   <div className="profile-name !text-1xl !font-bold !text-[georgia]">
+                                        Uncle Tom
+                                   </div>
+                                   <div className="profile-address !text-[0.7rem] !text-gray-400">
+                                        129,El-Nasr Street, Cairo
+                                   </div>
+                              </div>
+                         </div>
+
+                         <button>
+                              <PiGearSixLight className="text-primary text-2xl" />
+                         </button>
+                    </div>
+               </MenuItem>
                {profileMenuItems.map(({ label, icon }, key) => {
                     const isLastItem = key === profileMenuItems.length - 1;
                     return (
@@ -59,6 +88,9 @@ const Dropdown = ({setIsMenuOpen}) => {
                          </MenuItem>
                     );
                })}
+               <MenuItem>
+                    <Themetoggler  theme={theme} setTheme={setTheme} />
+               </MenuItem>
           </>
      );
 };

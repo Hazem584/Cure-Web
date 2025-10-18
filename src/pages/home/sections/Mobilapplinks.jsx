@@ -8,7 +8,7 @@ import {
 } from "@material-tailwind/react";
 const mobilapplinks = () => {
      return (
-          <section className="w-full flex relative justify-center">
+          <section className="w-full flex dark:bg-dark-darkBg relative justify-center">
                <Card className="w-full flex-row-reverse top-12 items-center justify-center max-w-[90%] text-white bg-primarylighter rounded-[20px]">
                     <CardHeader
                          shadow={false}

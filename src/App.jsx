@@ -8,6 +8,7 @@ import Booking from "./pages/Booking/Booking";
 import Appointments from "./pages/appointments/Appointments";
 import React from "react";
 import NavBar from "./components/header/NavBar";
+import Footer from "./components/footer/Footer";
 const App = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/appointments" element={<Appointments />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </>
   );
 };

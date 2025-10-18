@@ -2,8 +2,8 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 const Reviews = () => {
      return (
-          <section className="flex flex-col items-center gap-14 p-10">
-               <div className="heading font-[georgia] text-4xl text-center">
+          <section className="flex flex-col dark:bg-dark-darkBg items-center gap-14 p-10">
+               <div className="heading font-[georgia] text-4xl dark:text-dark-textOnDark text-center">
                     Reviews
                     <span className="block">That Speak for Themselves</span>
                </div>
@@ -15,7 +15,7 @@ const Reviews = () => {
                          <FaStar />
                          <FaStar />
                     </div>
-                    <div className="subheading sm:w-[368px] text-[1.4rem] text-neutral text-center mb-10">
+                    <div className="subheading sm:w-[368px] text-[1.4rem] text-neutral dark:text-dark-textSecondary text-center mb-10">
                          “Quick and easy booking! I found a great dermatologist
                          near me and booked an appointment in just a few
                          minutes.”
