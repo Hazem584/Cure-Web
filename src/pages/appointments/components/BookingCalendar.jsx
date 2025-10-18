@@ -11,26 +11,6 @@ const getFormattedDate = (date) =>
     day: "numeric",
   });
 
-const paymentMethods = [
-  {
-    id: "credit-card",
-    label: "Credit Card",
-    description: "Visa",
-    icon: FaCcVisa,
-  },
-  {
-    id: "paypal",
-    label: "PayPal",
-    description: "",
-    icon: FaPaypal,
-  },
-  {
-    id: "apple-pay",
-    label: "Apple Pay",
-    description: "",
-    icon: SiApplepay,
-  },
-];
 
 const BookingCalendar = ({
   dates,
