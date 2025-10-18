@@ -2,7 +2,7 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 const Reviews = () => {
      return (
-          <section className="flex flex-col dark:bg-dark-darkBg items-center gap-14 p-10">
+          <section className="flex flex-col  items-center gap-14 p-10">
                <div className="heading font-[georgia] text-4xl dark:text-dark-textOnDark text-center">
                     Reviews
                     <span className="block">That Speak for Themselves</span>
