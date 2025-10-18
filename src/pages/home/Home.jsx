@@ -11,6 +11,7 @@ import Mobilapplinks from "./sections/Mobilapplinks";
 const Home = () => {
      return (
           <>
+          <div className="home flex flex-col dark:bg-dark-darkBg">
                <NavBar />
                <HeroSection />
                <Howitwork />
@@ -20,6 +21,8 @@ const Home = () => {
                <FAQs />
                <Mobilapplinks />
                <Footer />
+          </div>
+
           </>
      );
 };

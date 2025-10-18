@@ -6,7 +6,7 @@ import HeroBtns from "../components/HeroBtns";
 
 const HeroSection = () => {
      return (
-          <div className="hero-section dark:bg-dark-darkBg relative flex justify-center items-center  pt-10">
+          <div className="hero-section relative flex justify-center items-center  pt-10">
                <div className="deco absolute hidden md:flex top-[50%] left-[10%] flex-col gap-4 items-center">
                     <IoLocation className="text-3xl text-primary animate-bounce" />
                     <div className="deco-text shadow-2xl py-1 px-2 bg-[#E8EFF8] dark:bg-dark-bgSurface dark:text-dark-textPrimary text-secondry rounded-3xl  text-sm">
