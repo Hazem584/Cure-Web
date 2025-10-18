@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import BookingCalendar from "./components/BookingCalendar";
 import DoctorDetails from "./components/DoctorDetails";
+import ReviewsAndRating from "./components/ReviewsAndRating";
 
 const NORMALIZED_DAY_OPTIONS = { weekday: "short" };
 
@@ -78,21 +79,23 @@ const Appointments = () => {
 
     return () => clearInterval(interval);
   }, []);
-
   return (
-    <div className="min-h-screen bg-slate-50 py-12 ">
-      <div className=" flex max-w-full flex-col gap-8 lg:flex-row px-20">
-        <div className="flex-1 space-y-6">
-          <BookingCalendar
-            dates={dates}
-            timeSlots={timeSlots}
-            selectedDate={selectedDate}
-            selectedTime={selectedTime}
-            onSelectDate={setSelectedDate}
-            onSelectTime={setSelectedTime}
-          />
+    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-12">
+      <div className="mx-auto ">
+        <div className="flex flex-col gap-8 lg:flex-row">
+          <div className="flex-1">
+            <BookingCalendar
+              dates={dates}
+              timeSlots={timeSlots}
+              selectedDate={selectedDate}
+              selectedTime={selectedTime}
+              onSelectDate={setSelectedDate}
+              onSelectTime={setSelectedTime}
+            />
+            <ReviewsAndRating />
+          </div>
+          <DoctorDetails />
         </div>
-        <DoctorDetails />
       </div>
     </div>
   );
