@@ -7,7 +7,6 @@ import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Home from "./pages/home/Home";
 import Booking from "./pages/Booking/Booking";
-import Appointments from "./pages/appointments/Appointments";
 import NavBar from "./components/header/NavBar";
 import Footer from "./components/footer/Footer";
 const App = () => {
