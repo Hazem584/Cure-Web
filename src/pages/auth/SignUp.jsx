@@ -1,11 +1,12 @@
-import React from 'react'
-
+import React from "react";
+import AuthLayout from "../../components/auth/AuthLayout";
+import AuthSignup from "../../components/auth/AuthSignup";
 const SignUp = () => {
   return (
-    <div>
-      SignUp
-    </div>
-  )
-}
+    <AuthLayout>
+      <AuthSignup />
+    </AuthLayout>
+  );
+};
 
-export default SignUp
+export default SignUp;
