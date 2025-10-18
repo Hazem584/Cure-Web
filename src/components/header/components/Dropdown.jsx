@@ -34,11 +34,11 @@ const Dropdown = ({ setIsMenuOpen,theme ,setTheme }) => {
                <MenuItem>
                     <div className="user flex !hover:border-0 justify-between items-center justify-items-center ">
                          <div className="flex items-center gap-3">
-                              <Link to="/">
+                              <Link to="p">
                                    <div className="pic w-14 rounded-full overflow-hidden">
                                         <img
                                              alt="Tailwind CSS Navbar component"
-                                             src="https://i.postimg.cc/vH3MDBr2/tom1.png"
+                                             src="https://i.postimg.cc/hhFXM7tG/ba06b3e7882ffb9e60838270ea0dd9b82b74eda6.jpg"
                                         />
                                    </div>
                               </Link>

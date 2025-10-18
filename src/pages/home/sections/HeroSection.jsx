@@ -6,20 +6,20 @@ import HeroBtns from "../components/HeroBtns";
 
 const HeroSection = () => {
      return (
-          <div className="hero-section dark:bg-dark-darkBg relative flex sm:justify-center sm:items-center justify-start pt-10">
+          <div className="hero-section dark:bg-dark-darkBg relative flex justify-center items-center  pt-10">
                <div className="deco absolute hidden md:flex top-[50%] left-[10%] flex-col gap-4 items-center">
                     <IoLocation className="text-3xl text-primary animate-bounce" />
                     <div className="deco-text shadow-2xl py-1 px-2 bg-[#E8EFF8] dark:bg-dark-bgSurface dark:text-dark-textPrimary text-secondry rounded-3xl  text-sm">
                          Doctors Near You
                     </div>
                </div>
-               <div className="flex flex-col  gap-6 items-start sm:items-center font-normal">
+               <div className="flex flex-col  gap-6 items-center font-normal">
                     <button className="flex items-center py-1 px-2 bg-[#E8EFF8] dark:bg-dark-bgSurface dark:text-dark-textPrimary rounded-3xl text-[0.85rem]">
                          <WiStars className="text-base" />
                          Upgrade Your Account
                     </button>
-                    <div className="flex flex-col gap-6 sm:items-center sm:text-center">
-                         <h1 className="heading text-3xl font-[georgia] dark:text-dark-textOnDark text-secondry">
+                    <div className="flex flex-col gap-6 items-center text-center">
+                         <h1 className="heading sm:text-3xl text-2xl font-[georgia] dark:text-dark-textOnDark text-secondry">
                               Find and book top doctors near you
                          </h1>
                          <div className="subheading sm:max-w-[405px] font-montserrat dark:text-dark-textSecondary text-neutral">

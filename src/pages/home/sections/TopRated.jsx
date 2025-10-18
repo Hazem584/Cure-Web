@@ -8,8 +8,8 @@ const TopRated = () => {
     ]
      return (
           <section className="flex flex-col dark:bg-dark-darkBg gap-6 justify-between items-center px-10">
-               <div className="flex justify-between items-center w-full">
-                    <div className="TopRatedHeader flex flex-col gap-4">
+               <div className="flex flex-col sm:flex-row justify-between items-center w-full">
+                    <div className="TopRatedHeader flex text-center sm:text-start flex-col gap-4">
                          <div>
                               <div className="heading dark:text-dark-textOnDark font-[georgia] text-3xl">
                                    Top-Rated Doctors Chosen by Patients

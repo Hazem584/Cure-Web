@@ -43,7 +43,7 @@ const ProfileAvatar = ({theme ,setTheme}) => {
                                    withBorder={true}
                                    color="blue-gray"
                                    className=" p-0.5"
-                                   src="https://docs.material-tailwind.com/img/face-2.jpg"
+                                   src="https://i.postimg.cc/hhFXM7tG/ba06b3e7882ffb9e60838270ea0dd9b82b74eda6.jpg"
                               />
                          </Button>
                     </MenuHandler>
