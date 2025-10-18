@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaUserFriends, FaStar, FaCommentDots } from "react-icons/fa";
+import { FaUserFriends, FaStar } from "react-icons/fa";
 import { PiMedalFill } from "react-icons/pi";
 import { TiMessages } from "react-icons/ti";
 const stats = [
