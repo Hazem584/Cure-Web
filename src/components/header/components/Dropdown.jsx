@@ -6,10 +6,11 @@ import { IoIosLock } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { MenuItem, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { Avatar } from "@material-tailwind/react";
 
 import Themetoggler from "./Themetoggler";
 
-const Dropdown = ({ setIsMenuOpen,theme ,setTheme }) => {
+const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
      const profileMenuItems = [
           {
                label: "Payment Method",
@@ -34,22 +35,26 @@ const Dropdown = ({ setIsMenuOpen,theme ,setTheme }) => {
                <MenuItem>
                     <div className="user flex !hover:border-0 justify-between items-center justify-items-center ">
                          <div className="flex items-center gap-3">
-                              <Link to="p">
-                                   <div className="pic w-14 rounded-full overflow-hidden">
-                                        <img
-                                             alt="Tailwind CSS Navbar component"
+                              <Link to="/">
+                                   <div className="flex items-center gap-4">
+                                        <Avatar
                                              src="https://i.postimg.cc/hhFXM7tG/ba06b3e7882ffb9e60838270ea0dd9b82b74eda6.jpg"
+                                             alt="avatar"
                                         />
+                                        <div>
+                                             <Typography variant="h6" className="font-georgia">
+                                                  Seif Mohamed
+                                             </Typography>
+                                             <Typography
+                                                  variant="small"
+                                                  color="gray"
+                                                  className="font-normal text-[0.8rem]"
+                                             >
+                                                  129,El-Nasr Street, Cairo
+                                             </Typography>
+                                        </div>
                                    </div>
                               </Link>
-                              <div className="flex flex-col">
-                                   <div className="profile-name !text-1xl !font-bold !text-[georgia]">
-                                        Uncle Tom
-                                   </div>
-                                   <div className="profile-address !text-[0.7rem] !text-gray-400">
-                                        129,El-Nasr Street, Cairo
-                                   </div>
-                              </div>
                          </div>
 
                          <button>
@@ -89,7 +94,7 @@ const Dropdown = ({ setIsMenuOpen,theme ,setTheme }) => {
                     );
                })}
                <MenuItem>
-                    <Themetoggler  theme={theme} setTheme={setTheme} />
+                    <Themetoggler theme={theme} setTheme={setTheme} />
                </MenuItem>
           </>
      );
