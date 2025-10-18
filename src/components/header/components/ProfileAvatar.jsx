@@ -48,7 +48,7 @@ const ProfileAvatar = ({theme ,setTheme}) => {
                          </Button>
                     </MenuHandler>
 
-                    <MenuList className="p-3 w-1/3 max-w-[300px]">
+                    <MenuList className="p-3 sm:w-1/3 sm:max-w-[300px]">
                          {/* the drop down menu */}
                          <Dropdown setIsMenuOpen={setIsMenuOpen} theme={theme} setTheme={setTheme}/>
                          
