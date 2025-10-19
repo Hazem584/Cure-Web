@@ -34,7 +34,7 @@ const PaymentModal = ({ appointment, onClose }) => {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full max-w-lg space-y-6 rounded-3xl bg-white p-8 shadow-2xl">
+      <div className="relative z-10 w-full max-w-md space-y-4 rounded-3xl bg-white p-6 shadow-2xl">
         <button
           type="button"
           onClick={onClose}

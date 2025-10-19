@@ -5,7 +5,7 @@ const Themetoggler = ({theme, setTheme}) => {
     
      return (
           <div>
-               <Switch color="yellow" checked={theme=='light' ? true:false}  label={theme} ripple={false} onClick={()=>setTheme()} />
+               <Switch color="yellow" defaultChecked={theme == 'light' ? true:false}  label={theme} ripple={false} onClick={()=>setTheme()} />
           </div>
      );
 };

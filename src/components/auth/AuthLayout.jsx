@@ -1,6 +1,7 @@
 import React from "react";
-
+import useTheme from "../customhooks/useTheme";
 const AuthLayout = ({ children }) => {
+  const [theme, setTheme] = useTheme() 
   return (
   
     <div className="h-screen max-h-screen overflow-hidden bg-white dark:bg-dark-bgSurface">

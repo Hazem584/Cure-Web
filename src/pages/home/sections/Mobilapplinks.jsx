@@ -8,8 +8,8 @@ import {
 } from "@material-tailwind/react";
 const mobilapplinks = () => {
      return (
-          <section className="w-full flex dark:bg-dark-darkBg relative justify-center">
-               <Card className="w-full flex-row-reverse top-12 items-center justify-center max-w-[90%] text-white bg-primarylighter rounded-[20px]">
+          <section className="w-full flex relative justify-center">
+               <Card className="w-full flex-col sm:flex-row-reverse top-12 items-center justify-center max-w-[90%] text-white bg-primarylighter rounded-[20px]">
                     <CardHeader
                          shadow={false}
                          floated={false}
@@ -22,7 +22,7 @@ const mobilapplinks = () => {
                          />
                     </CardHeader>
                     <CardBody>
-                         <Typography className="mb-2 text-4xl !font-[georgia]">
+                         <Typography className="mb-2 text-3xl sm:text-4xl !font-[georgia]">
                               Your Health, One Tap Away
                          </Typography>
                          <Typography className="mb-8 text-1xl lg:max-w-[540px] font-normal !font-montserrat">
