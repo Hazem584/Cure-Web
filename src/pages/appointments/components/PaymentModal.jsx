@@ -34,7 +34,7 @@ const PaymentModal = ({ appointment, onClose }) => {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full max-w-lg space-y-6 rounded-3xl bg-white p-8 shadow-2xl">
+      <div className="relative z-10 w-full max-w-lg space-y-6 rounded-3xl bg-white  dark:bg-dark-darkBg dark:border-2 dark:text-dark-textOnDark dark:border-dark-borderDark p-8 shadow-2xl">
         <button
           type="button"
           onClick={onClose}
@@ -70,8 +70,8 @@ const PaymentModal = ({ appointment, onClose }) => {
             <h3 className="text-xl font-semibold text-slate-900">
               Dr. Jessica Turner
             </h3>
-            <p className="text-sm text-slate-500">Pulmonologist</p>
-            <div className="mt-1 flex items-center gap-1 text-sm text-slate-500">
+            <p className="text-sm text-slate-500 dark:text-dark-textSecondary">Pulmonologist</p>
+            <div className="mt-1 flex items-center gap-1 text-sm text-slate-500 dark:text-dark-textSecondary">
               <svg
                 className="h-4 w-4 text-blue-500"
                 fill="none"
@@ -99,7 +99,7 @@ const PaymentModal = ({ appointment, onClose }) => {
         {/* Appointment Info */}
         <div className="flex items-center justify-between rounded-2xl bg-slate-50 p-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl dark:text-dark-textSecondary">
               <svg
                 className="h-5 w-5 text-blue-500"
                 fill="none"
@@ -129,7 +129,7 @@ const PaymentModal = ({ appointment, onClose }) => {
 
         {/* Payment Method */}
         <div>
-          <h4 className="mb-4 text-lg font-semibold text-slate-900">
+          <h4 className="mb-4 text-lg font-semibold text-slate-900 dark:text-dark-textOnDark">
             Payment Method
           </h4>
 
@@ -138,8 +138,8 @@ const PaymentModal = ({ appointment, onClose }) => {
             <label
               className={`flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all ${
                 selectedPayment === "credit-card"
-                  ? "border-transparent bg-green-50"
-                  : "border-slate-200 bg-white hover:border-slate-300"
+                  ? "border-transparent bg-green-50 dark:bg-dark-bgSurface dark:border-dark-borderDark"
+                  : "border-slate-200 bg-white hover:border-slate-300 dark:bg-dark-darkBg dark:border-transparent"
               }`}
             >
               <div className="flex items-center gap-3">
@@ -147,7 +147,7 @@ const PaymentModal = ({ appointment, onClose }) => {
                   className={`flex h-6 w-6 items-center justify-center rounded-full border-2 ${
                     selectedPayment === "credit-card"
                       ? "border-green-500 bg-green-500"
-                      : "border-slate-300 bg-white"
+                      : "border-slate-300 bg-white "
                   }`}
                 >
                   {selectedPayment === "credit-card" && (
@@ -183,8 +183,8 @@ const PaymentModal = ({ appointment, onClose }) => {
             <label
               className={`flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all ${
                 selectedPayment === "paypal"
-                  ? "border-transparent bg-green-50"
-                  : "border-slate-200 bg-white hover:border-slate-300"
+                  ? "border-transparent bg-green-50 dark:bg-dark-bgSurface dark:border-dark-borderDark"
+                  : "border-slate-200 bg-white hover:border-slate-300 dark:bg-dark-darkBg dark:border-transparent"
               }`}
             >
               <div className="flex items-center gap-3">
@@ -232,8 +232,8 @@ const PaymentModal = ({ appointment, onClose }) => {
             <label
               className={`flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all ${
                 selectedPayment === "apple-pay"
-                  ? "border-transparent bg-green-50"
-                  : "border-slate-200 bg-white hover:border-slate-300"
+                  ? "border-transparent bg-green-50 dark:bg-dark-bgSurface dark:border-dark-borderDark"
+                  : "border-slate-200 bg-white hover:border-slate-300 dark:bg-dark-darkBg dark:border-transparent"
               }`}
             >
               <div className="flex items-center gap-3">
@@ -280,7 +280,7 @@ const PaymentModal = ({ appointment, onClose }) => {
             {/* Add New Card */}
             <button
               type="button"
-              className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-blue-300 bg-white p-4 text-sm font-medium text-blue-500 transition hover:border-blue-400 hover:bg-blue-50"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-blue-300 bg-white dark:bg-dark-bgSurface p-4 text-sm font-medium text-blue-500 transition hover:border-blue-400 hover:bg-blue-50"
             >
               <span className="text-xl">+</span>
               <span>Add new card</span>
@@ -293,7 +293,7 @@ const PaymentModal = ({ appointment, onClose }) => {
           <div className="flex items-baseline justify-between">
             <span className="text-lg font-semibold text-slate-900">
               Price
-              <span className="text-sm font-normal text-slate-500">/hour</span>
+              <span className="text-sm font-normal text-slate-500 dark:text-dark-textSecondary">/hour</span>
             </span>
             <span className="text-2xl font-bold text-red-500">350$</span>
           </div>
