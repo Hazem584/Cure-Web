@@ -6,33 +6,57 @@ import { FaUser, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Date from "../../components/profile/Date"
-const FloatingInputWithIcon = ({ label, type = "text", icon: Icon }) => {
-  const [focused, setFocused] = useState(false);
+const FloatingInputWithIcon = ({
+  label,
+  type = "text",
+  icon: Icon,
+  placeholder,
+  value,
+  onChange,
+  disabled = false,
+  error,
+}) => {
+  const [focused, setFocused] = useState(false)
+  const hasValue = value && value.length > 0
 
   return (
-    <div className="relative w-full mb-6">
-      <Icon
-        className={`absolute left-2 top-1/2 -translate-y-1/2 text-lg transition-colors duration-300 ${
-          focused ? "text-blue-500" : "text-gray-400"
-        }`}
-      />
+    <div className="w-full">
+      <div className="relative">
+        <Icon
+          className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 pointer-events-none z-10 transition-colors duration-300 ${
+            focused ? "text-blue-500" : "text-gray-400"
+          } ${disabled ? "opacity-50" : ""}`}
+        />
 
-      <Input
-        type={type}
-        label={label}
-        color="blue"
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        className="pl-10 text-gray-900"
-        labelProps={{
-    className: "left-0", 
-  }}
-        crossOrigin={undefined}
-      />
+        <Input
+          type={type}
+          placeholder={placeholder || " "}
+          value={value}
+          onChange={onChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          disabled={disabled}
+          className={`pl-10 pt-6 pb-2 peer transition-colors duration-300 ${
+            error ? "border-red-500 focus-visible:ring-red-500" : ""
+          }`}
+          crossOrigin={undefined}
+        />
+
+        <label
+          className={`absolute transition-all duration-300 pointer-events-none z-20 bg-white px-1 flex items-center gap-1 ${
+            focused || hasValue
+              ? "top-0 -translate-y-1/2 left-3 text-xs font-medium text-blue-500 flex items-center gap-1"
+              : "top-1/2 -translate-y-1/2 left-10 text-base text-gray-500"
+          } ${disabled ? "opacity-50" : ""}`}
+        >
+          {label}
+        </label>
+      </div>
+
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
-  );
-};
-
+  )
+}
 const ProfileForm = () => {
   const [phone, setPhone] = useState("");
   const [focusedPhone, setFocusedPhone] = useState(false);

@@ -14,14 +14,14 @@ const DateSelect = () => {
   const [year, setYear] = useState("");
 
   return (
-    <div className="grid grid-cols-3 gap-3 mb-6 max-sm:grid-cols-1">
+    <div className="grid space-x-3 grid-cols-3 gap-3 mb-6 max-sm:grid-cols-1">
       <Select
         label="Day"
         color="blue"
         value={day}
         onChange={setDay}
-        className="!min-h-[36px] !py-1 !text-sm !h-[36px]"
-        containerProps={{ className: "min-w-0 w-full" }}
+        className="!min-h-[36px] !py-1 !text-sm !h-[36px] "
+        containerProps={{ className: "min-w-20" }}
       >
         {days.map((d) => (
           <Option key={d} value={d}>{d}</Option>
@@ -34,7 +34,7 @@ const DateSelect = () => {
         value={month}
         onChange={setMonth}
         className="!min-h-[36px] !py-1 !text-sm !h-[36px]"
-        containerProps={{ className: "min-w-0 w-full" }}
+        containerProps={{ className: "min-w-20" }}
       >
         {months.map((m) => (
           <Option key={m} value={m}>{m}</Option>
@@ -47,7 +47,7 @@ const DateSelect = () => {
         value={year}
         onChange={setYear}
         className="!min-h-[36px] !py-1 !text-sm !h-[36px]"
-        containerProps={{ className: "min-w-0 w-full" }}
+        containerProps={{ className: "min-w-20" }}
       >
         {years.map((y) => (
           <Option key={y} value={y}>{y}</Option>
