@@ -9,7 +9,7 @@ function Calendar() {
   const formatted = date ? format(date, "PPP") : "Select a date";
 
   return (
-    <div className="relative w-64">
+    <div className="relative w-64 [@media(max-width:639px)]:w-full">
       <button
         type="button"
         onClick={() => setOpen(!open)}
