@@ -38,7 +38,7 @@ const CardButttons = ({ status }) => {
       </button>
       <button
         className="bg-[#145DB8] text-[#FFFFFF] px-14 py-2 rounded-xl hover:bg-blue-700 transition [@media(max-width:639px)]:px-3 [@media(max-width:639px)]:w-1/2 
-        [@media(max-width:639px)]:flex-shrink  [@media(max-width:1020px)]:px-3 [@media(max-width:1020px)]:w-1/2 [@media(max-width:1320px)]:px-4 [@media(max-width:1320px)]:w-1/2  "
+          [@media(max-width:1020px)]:px-3 [@media(max-width:1020px)]:w-1/2 [@media(max-width:1320px)]:px-4 [@media(max-width:1320px)]:w-1/2  "
         onClick={() => {
           if (SecondButton == "Reschedule") {
             navigat("/appointments");
