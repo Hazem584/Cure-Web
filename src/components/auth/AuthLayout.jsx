@@ -1,6 +1,7 @@
 import React from "react";
-
+import useTheme from "../customhooks/useTheme";
 const AuthLayout = ({ children }) => {
+  const [theme, setTheme] = useTheme() 
   return (
     <div className="relative  h-screen ">
       <div className="md:container mx-auto  py-10 relative z-10 px-4">

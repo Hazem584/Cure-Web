@@ -24,7 +24,7 @@ const CardButttons = ({ status }) => {
           [@media(max-width:639px)]:whitespace-nowrap [@media(max-width:639px)]:w-1/2 [@media(max-width:1320px)]:w-3/5 [@media(max-width:1320px)]:px-5   
         ${
           status === "Upcoming"
-            ? "text-[#99A2AB] bg-[#FFFFFF] hover:bg-blue-gray-600 hover:text-white  transition "
+            ? "text-[#99A2AB] bg-[#FFFFFF] hover:bg-blue-gray-600 hover:text-white  transition dark:text-dark-textOnDark dark:bg-dark-bgSurface dark:hover:bg-red-400"
             : "border border-blue-600 text-blue-600 px-11 py-2 rounded-xl hover:bg-blue-50 transition"
         }
             `}

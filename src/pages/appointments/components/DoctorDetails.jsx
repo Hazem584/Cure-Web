@@ -34,20 +34,20 @@ const DoctorDetails = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
     <aside className={`w-full space-y-6 lg:w-80 xl:w-[540px] max-[300px]:space-y-5`}>
-      <section className="space-y-6 rounded-3xl bg-[#F5F6F7] p-6 shadow-sm max-[300px]:p-4">
+      <section className="space-y-6 rounded-3xl bg-[#F5F6F7] dark:bg-dark-darkBg p-6 shadow-sm max-[300px]:p-4">
         <div className="flex flex-col items-center text-center">
           <div className="relative -mt-1 flex h-28 w-28 items-center justify-center rounded-full bg-slate-100 p-1 shadow-sm">
             <img
               src="/doctor.png"
               alt="Dr. Jessica Turner profile"
-              className="h-full w-full rounded-full object-cover"
+              className="h-full w-full rounded-full object-cover dark:border-2 dark:border-dark-borderDark"
             />
           </div>
           <div className="mt-4 space-y-1">
-            <h3 className="text-xl font-semibold text-slate-900">
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-dark-textOnDark">
               Dr. Jessica Turner
             </h3>
-            <p className="text-sm font-medium text-slate-500">Pulmonologist</p>
+            <p className="text-sm font-medium text-slate-500 dark:text-dark-textOnDark">Pulmonologist</p>
           </div>
         </div>
 
@@ -55,26 +55,26 @@ const DoctorDetails = () => {
           {stats.map(({ label, value, icon: Icon }) => (
             <div
               key={label}
-              className="flex-1 space-y-2 rounded-2xl max-[300px]:flex-none max-[300px]:w-full max-[300px]:space-y-1"
+              className="flex-1 space-y-2 rounded-2xl dark:text-dark-textOnDark  max-[300px]:flex-none max-[300px]:w-full max-[300px]:space-y-1"
             >
-              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white text-black max-[300px]:h-10 max-[300px]:w-10">
+              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white  text-black  max-[300px]:h-10 max-[300px]:w-10">
                 <Icon size={28} />
               </span>
-              <p className="text-lg font-semibold text-slate-900 max-[300px]:text-base">
+              <p className="text-lg font-semibold text-slate-900 dark:text-dark-textSecondary max-[300px]:text-base">
                 {value}
               </p>
-              <p className="text-xs uppercase tracking-wide text-slate-500 max-[300px]:text-[10px]">
+              <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-dark-textSecondary max-[300px]:text-[10px]">
                 {label}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="space-y-3 rounded-2xl border border-slate-100 bg-slate-50/80 p-5 text-left max-[300px]:p-4 max-[300px]:space-y-2">
-          <h4 className="text-sm font-semibold text-slate-600 max-[300px]:text-xs">
+        <div className="space-y-3 rounded-2xl border border-slate-100 dark:border-dark-borderDark bg-slate-50/80 p-5 text-left max-[300px]:p-4 max-[300px]:space-y-2">
+          <h4 className="text-sm font-semibold text-slate-600 dark:text-dark-textOnDark max-[300px]:text-xs">
             About me
           </h4>
-          <p className="text-sm leading-relaxed text-slate-600 max-[300px]:text-xs max-[300px]:leading-5">
+          <p className="text-sm leading-relaxed text-slate-600 dark:text-dark-textSecondary max-[300px]:text-xs max-[300px]:leading-5">
             {aboutMeIntro}
             {isExpanded ? aboutMeDetails : "..."}
           </p>
@@ -90,10 +90,10 @@ const DoctorDetails = () => {
         </div>
         <section className="space-y-4 max-[300px]:space-y-3 max-[300px]:text-sm">
           <div>
-            <h4 className="text-lg font-semibold text-slate-900 max-[300px]:text-base">
+            <h4 className="text-lg font-semibold text-slate-900 dark:text-dark-textOnDark max-[300px]:text-base">
               Location
             </h4>
-            <p className="mt-1 text-sm text-slate-500 max-[300px]:text-xs">
+            <p className="mt-1 text-sm text-slate-500 dark:text-dark-textSecondary max-[300px]:text-xs">
               129, El-Nasr Street, Cairo, Egypt
             </p>
           </div>

@@ -57,7 +57,7 @@ const ReviewsAndRating = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
 
   return (
-    <section className={`rounded-3xl bg-white p-8`}>
+    <section className={`rounded-3xl bg-white border-2 dark:border-dark-borderDark dark:bg-dark-darkBg dark:text-dark-textOnDark p-8`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-semibold text-slate-900">
@@ -97,7 +97,7 @@ const ReviewsAndRating = () => {
         {testimonials.map(({ id, name, timeAgo, rating, message, avatar }) => (
           <article
             key={id}
-            className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6"
+            className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white dark:border-dark-borderDark dark:bg-dark-darkBg p-6"
           >
             <div className="flex items-start gap-4">
               <img

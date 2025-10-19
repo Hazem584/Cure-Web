@@ -82,9 +82,9 @@ const Appointments = () => {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div>
+    <div className="dark:bg-dark-darkBg">
       <NavBar />
-      <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-12 max-[300px]:px-2 max-[300px]:py-6">
+      <div className="min-h-screen bg-slate-50 dark:bg-dark-darkBg py-8 px-4 sm:px-6 lg:px-12 max-[300px]:px-2 max-[300px]:py-6">
         <div className="mx-auto">
           <div className="flex flex-col gap-8 lg:flex-row max-[300px]:gap-6">
             <div className="order-1 lg:order-2 lg:flex-shrink-0">
