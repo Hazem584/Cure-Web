@@ -5,7 +5,7 @@ import { FaFacebookF, FaApple } from "react-icons/fa";
 const AuthSignup = () => {
   return (
     <div className="flex  items-center justify-center  lg:block">
-      <form className="w-full max-w-md bg-transparent rounded-lg mt-20">
+      <form className="w-full max-w-md bg-transparent rounded-lg mb-32 lg:mb-40">
         <h2 className="text-3xl font-semibold text-center text-gray-900 mb-2">
           Create new account
         </h2>

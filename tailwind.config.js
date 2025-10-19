@@ -16,6 +16,7 @@ export default withMT({
       fontFamily: {
         georgia: ["Georgia", "serif"],
       },
+     
       colors: {
         primary: "#145DB8",
         primarylighter: "#6292CF",
