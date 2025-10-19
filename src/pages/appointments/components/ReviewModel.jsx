@@ -17,7 +17,7 @@ const ReviewModal = ({ onClose, onSubmit }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="relative w-full max-w-sm rounded-3xl bg-white p-6 shadow-xl">
+      <div className="relative w-full max-w-sm rounded-3xl bg-white dark:border-2 dark:border-dark-borderDark dark:bg-dark-darkBg p-6 shadow-xl">
         <button
           type="button"
           onClick={onClose}
@@ -25,7 +25,7 @@ const ReviewModal = ({ onClose, onSubmit }) => {
         >
           <IoClose size={24} />
         </button>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 dark:text-dark-textOnDark">
           <div>
             <h3 className="text-lg font-semibold text-slate-900">Your Rate</h3>
           </div>
@@ -68,7 +68,7 @@ const ReviewModal = ({ onClose, onSubmit }) => {
               onChange={(e) => setReview(e.target.value)}
               placeholder="Write your review"
               rows={6}
-              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 placeholder-slate-400 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className="w-full rounded-2xl border border-slate-200 bg-white dark:bg-dark-bgSurface dark:text-dark-textOnDark  px-4 py-3 text-sm text-slate-700 placeholder-slate-400 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
           <button
