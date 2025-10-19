@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Buttons from "./components/Buttons";
 import Calender from "./components/Calendar";
 import List from "./components/List";
+import NavBar from "../../components/header/NavBar";
+import Footer from "../../components/footer/Footer";
 const Booking = () => {
   const [Doctors] = useState([
     {
@@ -64,21 +66,36 @@ const Booking = () => {
       photo:
         "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
     },
+    ,
+    {
+      id: 204,
+      name: "Dr. Peter Scott",
+      specialty: "Neurologist",
+      appointment_time: "Friday, November 7 - 02:00 PM",
+      address: "24 Green Park, Leeds, UK",
+      status: "Upcoming",
+      photo:
+        "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
+    },
   ]);
 
   return (
-    <div className="container mx-auto px-4 flex flex-col gap-1 mt-8 ">
-      <h1 className="font-georgia text-2xl">Your appointments</h1>
-      <div className="flex justify-end">
-        <Calender />
+    <>
+      <NavBar />
+      <div className="container mx-auto px-4 flex flex-col gap-1 mt-8 ">
+        <h1 className="font-georgia text-2xl">Your appointments</h1>
+        <div className="flex justify-end">
+          <Calender />
+        </div>
+        <div>
+          <Buttons />
+        </div>
+        <div>
+          <List Doctors={Doctors} />
+        </div>
       </div>
-      <div>
-        <Buttons />
-      </div>
-      <div>
-        <List Doctors={Doctors} />
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
