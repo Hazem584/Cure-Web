@@ -9,7 +9,7 @@ const Profile = () => {
     <div className="flex flex-col min-h-screen bg-gray-100">
       <div><NavBar/></div>
       <div className="flex-grow flex justify-center items-center pt-10 pb-10">
-        <Card className="w-full max-w-xl p-6 shadow-md">
+        <Card className="w-full max-w-xl p-10 shadow-md ">
           <ProfileHeader />
           <ProfileForm />
         </Card>
