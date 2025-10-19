@@ -53,11 +53,11 @@ const renderStars = (rating) => {
   return stars;
 };
 
-const ReviewsAndRating = ({ className = "" }) => {
+const ReviewsAndRating = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
 
   return (
-    <section className={`rounded-3xl bg-white p-8 ${className}`}>
+    <section className={`rounded-3xl bg-white p-8`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-semibold text-slate-900">
