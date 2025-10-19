@@ -84,7 +84,7 @@ const Booking = () => {
       <NavBar />
       <div className="container mx-auto px-4 flex flex-col gap-1 mt-8 ">
         <h1 className="font-georgia text-2xl">Your appointments</h1>
-        <div className="flex justify-end">
+        <div className="flex justify-end [@media(max-width:639px)]:justify-center ">
           <Calender />
         </div>
         <div>
