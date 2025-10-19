@@ -5,8 +5,8 @@ const Card = ({
   Doctor: { name, specialty, appointment_time, address, photo, status },
 }) => {
   return (
-    <div className="border border-[#BBC1C7]  flex flex-col p-2 rounded-2xl">
-      <div className="flex justify-between items-center mt-3">
+    <div className="border border-[#BBC1C7]  flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
+      <div className="flex justify-between items-center mt-3 ">
         <div className="flex gap-2">
           <img src="./calendar-02.svg" alt="calendar" />
           <h1
@@ -27,7 +27,7 @@ const Card = ({
           {status}
         </h1>
       </div>
-      <hr className="border-gray-300 my-2 w-[97%] " />
+      <hr className=" border-gray-300 my-2 w-[97%] " />
       <div className="flex gap-3">
         <Avatar src={photo} alt="avatar" />
         <div className="flex flex-col">
