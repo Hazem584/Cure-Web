@@ -2,7 +2,7 @@ import React from "react";
 
 const AuthLayout = ({ children }) => {
   return (
-    <div className="relative  h-screen ">
+    <div className="h-screen" >
       <div className="md:container mx-auto  py-10 relative z-10 px-4">
         <section className="mb-6 flex justify-center lg:justify-start">
           <img
@@ -39,3 +39,5 @@ const AuthLayout = ({ children }) => {
 };
 
 export default AuthLayout;
+AuthLayout.jsx
+
