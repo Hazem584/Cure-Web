@@ -3,6 +3,8 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 import BookingCalendar from "./components/BookingCalendar";
 import DoctorDetails from "./components/DoctorDetails";
 import ReviewsAndRating from "./components/ReviewsAndRating";
+import Footer from "../../components/footer/Footer";
+import NavBar from "../../components/header/NavBar";
 
 const NORMALIZED_DAY_OPTIONS = { weekday: "short" };
 
@@ -80,25 +82,29 @@ const Appointments = () => {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-12 max-[300px]:px-2 max-[300px]:py-6">
-      <div className="mx-auto">
-        <div className="flex flex-col gap-8 lg:flex-row max-[300px]:gap-6">
-          <div className="order-1 lg:order-2 lg:flex-shrink-0">
-            <DoctorDetails />
-          </div>
-          <div className="order-2 flex flex-col gap-8 lg:order-1 lg:flex-1">
-            <BookingCalendar
-              dates={dates}
-              timeSlots={timeSlots}
-              selectedDate={selectedDate}
-              selectedTime={selectedTime}
-              onSelectDate={setSelectedDate}
-              onSelectTime={setSelectedTime}
-            />
-            <ReviewsAndRating />
+    <div className="dark:bg-dark-darkBg">
+      <NavBar />
+      <div className="min-h-screen bg-slate-50 dark:bg-dark-darkBg py-8 px-4 sm:px-6 lg:px-12 max-[300px]:px-2 max-[300px]:py-6">
+        <div className="mx-auto">
+          <div className="flex flex-col gap-8 lg:flex-row max-[300px]:gap-6">
+            <div className="order-1 lg:order-2 lg:flex-shrink-0">
+              <DoctorDetails />
+            </div>
+            <div className="order-2 flex flex-col lg:order-1 lg:flex-1">
+              <BookingCalendar
+                dates={dates}
+                timeSlots={timeSlots}
+                selectedDate={selectedDate}
+                selectedTime={selectedTime}
+                onSelectDate={setSelectedDate}
+                onSelectTime={setSelectedTime}
+              />
+              <ReviewsAndRating />
+            </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

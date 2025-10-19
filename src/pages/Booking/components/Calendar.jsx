@@ -13,7 +13,7 @@ function Calendar() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full border rounded-lg px-4 py-2 text-gray-700 bg-white text-left flex justify-between items-center shadow-sm"
+        className="w-full border rounded-lg px-4 py-2 text-gray-700 dark:bg-dark-darkBg dark:border-2 dark:border-dark-borderDark bg-white text-left flex justify-between items-center shadow-sm"
       >
         <span>{formatted}</span>
         <span className="text-gray-500">▼</span>
