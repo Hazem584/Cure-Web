@@ -5,13 +5,13 @@ const Card = ({
   Doctor: { name, specialty, appointment_time, address, photo, status },
 }) => {
   return (
-    <div className="border border-[#BBC1C7]  flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
+    <div className="border border-[#BBC1C7] dark:border-dark-borderDark  flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
       <div className="flex justify-between items-center mt-3 ">
-        <div className="flex gap-2">
+        <div className="flex gap-2 dark:text-dark-textSecondary">
           <img src="./calendar-02.svg" alt="calendar" />
           <h1
             className={`text-xs ${
-              status == "Upcoming" ? "text-[#05162C]" : "text-[#6D7379]"
+              status == "Upcoming" ? "text-[#05162C] dark:text-primary" : "text-[#6D7379]"
             }`}
           >
             {appointment_time}
@@ -31,13 +31,13 @@ const Card = ({
       <div className="flex gap-3">
         <Avatar src={photo} alt="avatar" />
         <div className="flex flex-col">
-          <h1 className="text-[#33384B] font-semibold">{name}</h1>
-          <h1 className="text-[#6D7379]">{specialty}</h1>
+          <h1 className="text-[#33384B] font-semibold dark:text-dark-textOnDark">{name}</h1>
+          <h1 className="text-[#6D7379] dark:text-dark-textSecondary">{specialty}</h1>
         </div>
       </div>
       <div className="flex gap-3">
         <img src="/location-icon.svg" alt="location" />
-        <h1 className="mt-2 text-[#6D7379]">{address}</h1>
+        <h1 className="mt-2 text-[#6D7379] dark:text-dark-textSecondary">{address}</h1>
       </div>
       <div className="mt-4">
         <CardButttons status={status} />

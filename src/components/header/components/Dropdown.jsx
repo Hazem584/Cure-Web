@@ -4,7 +4,7 @@ import { PiGearSixLight } from "react-icons/pi";
 import { CiCreditCard1 } from "react-icons/ci";
 import { IoIosLock } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-import { MenuItem, Typography } from "@material-tailwind/react";
+import { Button, MenuItem, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { Avatar } from "@material-tailwind/react";
 
@@ -35,7 +35,7 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
                <MenuItem>
                     <div className="user flex !hover:border-0 justify-between items-center justify-items-center ">
                          <div className="flex items-center gap-3">
-                              <Link to="/">
+                              <Link to="/home">
                                    <div className="flex items-center gap-4">
                                         <Avatar
                                              src="https://i.postimg.cc/hhFXM7tG/ba06b3e7882ffb9e60838270ea0dd9b82b74eda6.jpg"
@@ -57,9 +57,9 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
                               </Link>
                          </div>
 
-                         <button>
+                         <div>
                               <PiGearSixLight className="text-primary text-2xl" />
-                         </button>
+                         </div>
                     </div>
                </MenuItem>
                {profileMenuItems.map(({ label, icon }, key) => {
