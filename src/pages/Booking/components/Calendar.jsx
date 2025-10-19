@@ -20,7 +20,7 @@ function Calendar() {
       </button>
 
       {open && (
-        <div className="absolute z-10 mt-2 bg-white border rounded-lg shadow-lg p-3">
+        <div className="absolute z-10 mt-2 bg-white border rounded-lg shadow-lg p-3 ">
           <DayPicker
             mode="single"
             selected={date}
