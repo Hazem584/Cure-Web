@@ -11,7 +11,7 @@ const testimonials = [
     message:
       "Excellent service! Dr. Jessica Turner was attentive and thorough. The clinic was clean, and the staff were friendly. Highly recommend for in-person care!",
     avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
+      "/doctor.png",
   },
   {
     id: "ferry-ichsan",
@@ -21,7 +21,7 @@ const testimonials = [
     message:
       "Quick and easy appointment! Dr. Jessica Turner was professional, and the staff made me feel comfortable. Highly recommend!",
     avatar:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop",
+      "/doctor.png",
   },
 ];
 
@@ -84,8 +84,6 @@ const ReviewsAndRating = ({ className = "" }) => {
           add review
         </button>
       </div>
-
-      {/* Rating Summary */}
       <div className="flex items-center justify-between mb-8">
         <div className="text-5xl font-semibold text-slate-900">4.5/5</div>
         <div className="text-right">
@@ -95,8 +93,6 @@ const ReviewsAndRating = ({ className = "" }) => {
           <p className="text-sm text-slate-600">1250+ Reviews</p>
         </div>
       </div>
-
-      {/* Reviews Grid */}
       <div className="grid gap-6 md:grid-cols-2">
         {testimonials.map(({ id, name, timeAgo, rating, message, avatar }) => (
           <article
@@ -133,8 +129,6 @@ const ReviewsAndRating = ({ className = "" }) => {
           </article>
         ))}
       </div>
-
-      {/* Review Modal */}
       {showReviewModal && (
         <ReviewModal
           onClose={() => setShowReviewModal(false)}
