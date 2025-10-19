@@ -9,7 +9,7 @@ function Calendar() {
   const formatted = date ? format(date, "PPP") : "Select a date";
 
   return (
-    <div className="relative w-64">
+    <div className="relative w-64 [@media(max-width:639px)]:w-full">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -20,7 +20,7 @@ function Calendar() {
       </button>
 
       {open && (
-        <div className="absolute z-10 mt-2 bg-white border rounded-lg shadow-lg p-3">
+        <div className="absolute z-10 mt-2 bg-white border rounded-lg shadow-lg p-3 ">
           <DayPicker
             mode="single"
             selected={date}
