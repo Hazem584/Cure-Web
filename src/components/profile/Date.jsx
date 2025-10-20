@@ -4,8 +4,18 @@ import { Select, Option } from "@material-tailwind/react";
 const DateSelect = () => {
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
   const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   const years = Array.from({ length: 100 }, (_, i) => 2025 - i);
 
@@ -20,11 +30,14 @@ const DateSelect = () => {
         color="blue"
         value={day}
         onChange={setDay}
-        className="!min-h-[36px] !py-1 !text-sm !h-[36px] "
-        containerProps={{ className: "min-w-20" }}
+        className="min-h-[36px] py-1 text-sm h-[36px] [&_div]:!text-sm"
+
+        containerProps={{ className: "min-w-[80px]" }}
       >
         {days.map((d) => (
-          <Option key={d} value={d}>{d}</Option>
+          <Option key={d} value={d}>
+            {d}
+          </Option>
         ))}
       </Select>
 
@@ -33,11 +46,14 @@ const DateSelect = () => {
         color="blue"
         value={month}
         onChange={setMonth}
-        className="!min-h-[36px] !py-1 !text-sm !h-[36px]"
-        containerProps={{ className: "min-w-20" }}
+        className="min-h-[36px] py-1 text-sm h-[36px] [&_div]:!text-sm"
+
+        containerProps={{ className: "min-w-[80px]" }}
       >
         {months.map((m) => (
-          <Option key={m} value={m}>{m}</Option>
+          <Option key={m} value={m}>
+            {m}
+          </Option>
         ))}
       </Select>
 
@@ -46,11 +62,14 @@ const DateSelect = () => {
         color="blue"
         value={year}
         onChange={setYear}
-        className="!min-h-[36px] !py-1 !text-sm !h-[36px]"
-        containerProps={{ className: "min-w-20" }}
+        className="min-h-[36px] py-1 text-sm h-[36px] [&_div]:!text-sm"
+
+        containerProps={{ className: "min-w-[80px]" }}
       >
         {years.map((y) => (
-          <Option key={y} value={y}>{y}</Option>
+          <Option key={y} value={y}>
+            {y}
+          </Option>
         ))}
       </Select>
     </div>
