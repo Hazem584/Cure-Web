@@ -5,7 +5,7 @@ import { IoCalendar } from 'react-icons/io5'
 const HeroBtns = () => {
   return (
                     <div className="btns flex flex-col sm:flex-row gap-8 font-normal">
-                       <Link to="/booking"><div
+                       <Link to="/doctors"><div
                               role="button"
                               className="px-14 py-3 text-white font-montserrat bg-primary hover:bg-blue-700 active:scale-110 transition-all duration-200 text-center rounded-[10px]"
                          >

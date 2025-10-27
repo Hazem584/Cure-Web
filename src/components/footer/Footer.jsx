@@ -67,7 +67,7 @@ const Footer = () => {
                                    <Link to="/home"><div className="li-item">Home</div></Link>
                                    <Link to="/doctors"><div className="li-item">Doctors</div></Link>
                                  <Link to="/home"><div className="li-item">FAQs</div></Link>
-                                  <Link to="/home"><div className="li-item">Contact Us</div></Link>
+                                  <Link to="/contact-us"><div className="li-item">Contact Us</div></Link>
                               </div>
                          </div>
                          <div className="flex flex-col gap-6">
