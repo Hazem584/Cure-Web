@@ -8,7 +8,8 @@ const Contacts = () => {
   return (
     <div className="dark:bg-dark-darkBg" >
       <NavBar />
-      <div className="flex flex-col pl-24 sm:flex-row mb-32 mt-20 sm:justify-between   ">
+      <div className="flex flex-row justify-around  mt-20 mb-20 [@media(max-width:900px)]:flex-col [@media(max-width:900px)]:items-center ">
+      
         <Left />
         <Form />
       </div>

@@ -4,7 +4,7 @@ import { SlLocationPin } from "react-icons/sl";
 import { BiPhoneCall } from "react-icons/bi";
 const Left = () => {
   return (
-    <div className="subheading text-neutral dark:text-dark-textSecondary font-normal text-[1.3rem] mb-20 sm:max-w-[451px]">
+    <div className="subheading text-neutral dark:text-dark-textSecondary [@media(max-width:900px)]:font-normal text-[1.3rem] mb-20">
           <div className=" w-auto h-auto overflow-hidden   ">
               <div >
               <h1 className='font-serif text-4xl pb-5 '>Contact Us</h1>

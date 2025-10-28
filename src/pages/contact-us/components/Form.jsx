@@ -3,9 +3,9 @@ import React from "react";
 
 const Form = () => {
   return (
-    <div className="  w-[90%] sm:w-full h-[400px] md:h-[530px] lg:max-w-[550px]">
+    <div className="">
     <Card color="transparent" shadow={false}>
-      <form className="w-80 ">
+      <form className="w-96">
         <div className="mb-1 flex flex-col gap-4">
           <Input size="lg" label="Name" />
 
