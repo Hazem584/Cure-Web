@@ -1,8 +1,8 @@
 import React from "react";
-import NavBar from "../../components/header/NavBar";
-import Footer from "../../components/footer/Footer";
-import Form from "./components/Form";
+import NavBar from "../../../components/header/NavBar";
 import Left from "./components/Left";
+import Form from "./components/Form";
+import Footer from "../../../components/footer/Footer";
 
 const Contacts = () => {
   return (

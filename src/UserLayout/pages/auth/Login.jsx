@@ -1,6 +1,7 @@
 import React from "react";
-import AuthLayout from "../../components/auth/AuthLayout";
-import AuthForm from "../../components/auth/AuthForm";
+
+import AuthLayout from "../../../components/auth/AuthLayout";
+import AuthForm from "../../../components/auth/AuthForm";
 const Login = () => {
   return (
     <AuthLayout>

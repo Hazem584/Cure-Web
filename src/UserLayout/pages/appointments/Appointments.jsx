@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
-import BookingCalendar from "./components/BookingCalendar";
+import NavBar from "./../../../components/header/NavBar";
 import DoctorDetails from "./components/DoctorDetails";
+import BookingCalendar from "./components/BookingCalendar";
 import ReviewsAndRating from "./components/ReviewsAndRating";
-import Footer from "../../components/footer/Footer";
-import NavBar from "../../components/header/NavBar";
+import Footer from "../../../components/footer/Footer";
 
 const NORMALIZED_DAY_OPTIONS = { weekday: "short" };
 
