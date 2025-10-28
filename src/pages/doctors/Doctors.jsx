@@ -69,13 +69,17 @@ const Doctors = () => {
     },
   ]);
 
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const toggleFilter = () => setIsFilterOpen((prev) => !prev);
   return (
     <div className=" dark:bg-dark-darkBg ">
       <NavBar />
-      <div className=" mr-10   ">
-        <Top />
+      <div className=" mr-10 ml-10  ">
+        <Top onToggleFilter={toggleFilter} />
         <div className="flex flex-row [@media(max-width:1400px)]:flex-col mt-10  ">
-          <FilterOptions />
+          {isFilterOpen && <FilterOptions />}
+
           <div className="w-full flex-col gap-5 ml-5  sm:flex-row  ">
             <h1 className="text-2xl  dark:text-white mb-5">
               Choose Specialties

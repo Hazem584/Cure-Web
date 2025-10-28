@@ -16,10 +16,10 @@ const Card = ({ Doc: { name, photo } }) => {
         />
 
         <div className="inline-flex flex-col hamo">
-          <h1 className="text-[#33384B] font-semi dark:text-dark-textOnDark mt-2 text-2xl">
+          <h1 className="text-[#33384B] font-semi dark:text-dark-textOnDark mt-2 text-xl">
             {name}
           </h1>
-          <h1 className="subheading text-neutral dark:text-dark-textSecondary font-normal text-[1rem] pt-2 ">
+          <h1 className="subheading text-neutral dark:text-dark-textSecondary font-normal text-[0.8rem] pt-2 ">
             Orthopedic | El-Nasr Hospital
           </h1>
           <div className="inline-flex gap-10 mt-3">
@@ -37,13 +37,13 @@ const Card = ({ Doc: { name, photo } }) => {
       </div>
 
       <div className="flex justify-between mt-5 ml-2 mb-2">
-        <h1 className="text-2xl font-semi text-gray-800 dark:text-white">
+        <h1 className="text-xl font-semi text-gray-800 dark:text-white">
           Price
-          <span className="text-xl text-gray-500 dark:text-gray-300">
+          <span className="text-lg text-gray-500 dark:text-gray-300">
             /hour
           </span>
         </h1>
-        <h1 className="text-red-300 text-2xl mr-5">$350</h1>
+        <h1 className="text-red-300 text-xl mr-5">$350</h1>
       </div>
       <button className="bg-blue-700 rounded-lg text-white w-full h-10 ">
         Book appoienmants
