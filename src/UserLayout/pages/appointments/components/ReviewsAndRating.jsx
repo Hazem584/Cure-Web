@@ -10,8 +10,7 @@ const testimonials = [
     rating: 4.5,
     message:
       "Excellent service! Dr. Jessica Turner was attentive and thorough. The clinic was clean, and the staff were friendly. Highly recommend for in-person care!",
-    avatar:
-      "/doctor.png",
+    avatar: "/doctor.png",
   },
   {
     id: "ferry-ichsan",
@@ -20,8 +19,7 @@ const testimonials = [
     rating: 4.5,
     message:
       "Quick and easy appointment! Dr. Jessica Turner was professional, and the staff made me feel comfortable. Highly recommend!",
-    avatar:
-      "/doctor.png",
+    avatar: "/doctor.png",
   },
 ];
 
@@ -57,7 +55,9 @@ const ReviewsAndRating = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
 
   return (
-    <section className={`rounded-3xl bg-white border-2 dark:border-dark-borderDark dark:bg-dark-darkBg dark:text-dark-textOnDark p-8`}>
+    <section
+      className={`rounded-3xl bg-white border-2 dark:border-dark-borderDark dark:bg-dark-darkBg dark:text-dark-textOnDark p-8`}
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-semibold text-slate-900">
