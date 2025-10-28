@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NavBar from "../components/header/NavBar";
-import DashList from "./components/DashList";
 import AddDoctorView from "./components/AddDoctorView";
+import DashList from "./Components/DashList";
 const AdminLayout = () => {
-  const [doctors, setDoctor] = useState([
+  const [doctors] = useState([
     {
       id: 101,
       name: "Robert Johnson",
