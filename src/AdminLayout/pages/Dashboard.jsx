@@ -1,5 +1,8 @@
+
 import React, { useState } from "react";
 import DashList from "../Components/DashList";
+import React from "react";
+import GoCard from "../components/GoCard";
 
 const Dashboard = () => {
   const [doctors, setDoctor] = useState([
@@ -63,8 +66,11 @@ const Dashboard = () => {
   ]);
 
   return (
-    <div className=" mx-auto  flex flex-col gap-1 mt-8 w-11/12 ">
-      <DashList doctors={doctors} />
+    <div className="flex justify-center items-center min-h-screen">
+      <GoCard />
+
+
+
     </div>
   );
 };
