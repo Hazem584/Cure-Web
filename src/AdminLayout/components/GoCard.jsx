@@ -29,12 +29,12 @@ const GoCard = () => {
           Go To Doctors View
         </Typography>
         <Typography>
-          Explore our extensive list of medical professionals and edit your list of
-          doctor for your needs.
+          Explore our extensive list of medical professionals and edit your list
+          of doctor for your needs.
         </Typography>
       </CardBody>
       <CardFooter className="pt-0">
-        <Link to="/doctors-view" className="inline-block">
+        <Link to="doctors-list" className="inline-block">
           <Button size="sm" variant="text" className="flex items-center gap-2">
             Go to Doctors View
             <svg
