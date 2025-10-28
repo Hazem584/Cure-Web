@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import NavBar from "../../components/header/NavBar";
-import Footer from "../../components//footer/Footer";
+import NavBar from "../../../components/header/NavBar";
+import Top from "./components/Top";
+import DoctorTypes from "./components/DoctorTypes";
+import NextPageButton from "./components/NextPageButton";
+import Footer from "../../../components/footer/Footer";
 import Cards from "./components/Cards";
 import FilterOptions from "./components/FilterOptions";
-import NextPageButton from "./components/NextPageButton";
-import DoctorTypes from "./components/DoctorTypes";
-import Top from "./components/Top";
+
 
 const Doctors = () => {
   const [Doc] = useState([
@@ -45,7 +46,6 @@ const Doctors = () => {
       photo:
         "https://images.unsplash.com/photo-1643297654416-05795d62e39c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTZ8fGRvY3RvcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
     },
-    ,
     {
       id: 204,
       name: "Robert Johnson",
