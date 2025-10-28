@@ -45,7 +45,6 @@ const Doctors = () => {
       photo:
         "https://images.unsplash.com/photo-1643297654416-05795d62e39c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTZ8fGRvY3RvcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
     },
-    ,
     {
       id: 204,
       name: "Robert Johnson",
