@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NavBar from "../components/header/NavBar";
-import AddDoctorView from "./components/AddDoctorView";
 import DashList from "./Components/DashList";
+import AddDoctorView from "./components/AddDoctorView";
 const AdminLayout = () => {
   const [doctors] = useState([
     {
