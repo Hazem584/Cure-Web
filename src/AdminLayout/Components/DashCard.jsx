@@ -37,15 +37,21 @@ const DashCard = ({ doctor }) => {
             >
               <div className="flex items-center gap-x-3">
                 <Avatar size="sm" src={doctor.photo} alt={doctor.name} />
-                <div>
+                <div className="flex flex-col mt-4">
                   <Typography color="blue-gray" variant="h6">
                     {doctor.name}
                   </Typography>
+                  <Typography
+                    color="gray"
+                    variant="h6"
+                    className="text-gray-700"
+                  >
+                    {doctor.email}
+                  </Typography>
                 </div>
               </div>
-              <div className="flex gap-5">
-                <Button color="blue">View</Button>
-                <Button color="amber">Edit</Button>
+              <div className="flex gap-5 mt-3">
+                <Button>Edit</Button>
                 <Button
                   onClick={() => {
                     show();
