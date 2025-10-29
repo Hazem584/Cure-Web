@@ -64,7 +64,7 @@ const AddDoctorView = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+    <div className="min-h-screen bg-dark-textPrimary">
       {showSuccess && (
         <div className="fixed top-4 right-4 z-50 animate-slide-in">
           <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3">
