@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "@material-tailwind/react";
-import ProfileHeader from "../../components/profile/ProfileHeader";
+import ProfileHeader from "../../components/profile/ProfileHeader"
 import ProfileForm from "../../components/profile/ProfileForm";
 import Footer from "../../components/footer/Footer";
 import NavBar from "../../components/header/NavBar"

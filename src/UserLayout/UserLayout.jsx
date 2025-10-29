@@ -8,13 +8,14 @@ import Appointments from "./pages/appointments/Appointments";
 import NotFound from "../components/not_found/NotFound";
 import Doctors from "./pages/doctors/Doctors";
 import Contacts from "./pages/contact-us/Contacts";
-
+import Profile from "./pages/profile/Profile"
 const UserLayout = () => {
   return (
     <>
       <Routes>
         <Route index element={<Home />} />
         <Route path="signin" element={<Login />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="booking" element={<Booking />} />
         <Route path="appointments" element={<Appointments />} />
