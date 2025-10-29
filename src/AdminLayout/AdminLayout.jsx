@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NavBar from "../components/header/NavBar";
 import DashList from "./components/DashList";
-import EditDoctors from "./components/EditDoctors";
+import EditDoctor from "./components/EditDoctor";
 
 const AdminLayout = () => {
   const [doctors, setDoctor] = useState([
@@ -78,7 +78,7 @@ const AdminLayout = () => {
       <Routes>
         <Route index element={<Dashboard />} />
         <Route path="doctors-list" element={<DashList doctors={doctors} />} />
-        <Route path="edit-doctors" element={<EditDoctors />} />
+        <Route path="edit-doctors" element={<EditDoctor />} />
       </Routes>
     </>
   );
