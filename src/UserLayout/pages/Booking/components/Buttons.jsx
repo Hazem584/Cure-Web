@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-const Buttons = () => {
-  const [activeButton, setActiveButton] = useState("All");
+const Buttons = ({ activeButton, setActiveButton }) => {
   const Buttons = ["All", "Upcoming", "Completed", "Canceled"];
   return (
     <div className="flex gap-8 [@media(max-width:639px)]:gap-5 [@media(max-width:639px)]:flex-wrap">
