@@ -1,7 +1,7 @@
 import React from "react";
 
-import GoCard from "../components/GoCard";
-import AddCard from "../components/AddCard";
+import GoCard from "../Components/GoCard";
+import AddCard from "../Components/AddCard";
 
 const Dashboard = () => {
   return (

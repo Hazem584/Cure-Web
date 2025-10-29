@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import NavBar from "../Components/header/NavBar";
+import NavBar from "../components/header/NavBar";
 import DashList from "./Components/DashList";
 import AddDoctorView from "./Components/AddDoctorView";
 import EditDoctor from "./Components/EditDoctor";
