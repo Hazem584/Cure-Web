@@ -52,7 +52,7 @@ const DashCards = ({ doctor }) => {
                 </div>
               </div>
               <div className="flex gap-5 mt-3">
-                <Link to="/admin/edit-doctors">
+                <Link to="/admin/edit-doctors" state={{ doctor }}>
                   <Button>Edit</Button>
                 </Link>
 
