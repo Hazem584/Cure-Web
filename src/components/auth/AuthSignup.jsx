@@ -1,11 +1,108 @@
-import React from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF, FaApple } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const AuthSignup = () => {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    terms: false,
+  });
+
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    terms: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+    setUser({
+      ...user,
+      [id]: type === "checkbox" ? checked : value,
+    });
+    setErrors({ ...errors, [id]: "" });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let newErrors = {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      terms: "",
+    };
+    let valid = true;
+
+    // Name validation
+    if (!user.name.trim()) {
+      newErrors.name = "Please enter your name";
+      valid = false;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!user.email) {
+      newErrors.email = "Please enter your email";
+      valid = false;
+    } else if (!emailRegex.test(user.email)) {
+      newErrors.email = "Please enter a valid email";
+      valid = false;
+    }
+
+    // Password validation
+    if (!user.password) {
+      newErrors.password = "Please enter your password";
+      valid = false;
+    } else if (user.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+      valid = false;
+    }
+
+    // Confirm Password validation
+    if (!user.confirmPassword) {
+      newErrors.confirmPassword = "Please confirm your password";
+      valid = false;
+    } else if (user.password !== user.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+      valid = false;
+    }
+
+    // Terms validation
+    if (!user.terms) {
+      newErrors.terms = "You must agree to the terms";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (valid) {
+      setLoading(true);
+
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/signin");
+      }, 1000);
+    }
+  };
+
   return (
-    <div className="flex  items-center justify-center  lg:block">
-      <form className="w-full max-w-md bg-transparent rounded-lg mt-20">
+    <div className="flex items-center justify-center lg:block">
+      <form
+        className="w-full max-w-md bg-transparent rounded-lg mt-10"
+        onSubmit={handleSubmit}
+      >
         <h2 className="text-3xl font-semibold text-center text-gray-900 mb-2">
           Create new account
         </h2>
@@ -15,81 +112,131 @@ const AuthSignup = () => {
         </p>
 
         <div className="mb-5">
-          <label
-            htmlFor="name"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Name
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            {errors.name ? (
+              <span className="text-red-500">{errors.name}</span>
+            ) : (
+              "Name"
+            )}
           </label>
           <input
             type="text"
             id="name"
             placeholder="Name"
-            required
-            className="w-full p-2.5 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            value={user.name}
+            onChange={handleChange}
+            className={`w-full p-2.5 border rounded-lg focus:ring-2 outline-none ${
+              errors.name
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-400 focus:ring-blue-500"
+            }`}
           />
         </div>
 
         <div className="mb-5">
-          <label
-            htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Email
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            {errors.email ? (
+              <span className="text-red-500">{errors.email}</span>
+            ) : (
+              "Email"
+            )}
           </label>
           <input
             type="email"
             id="email"
             placeholder="Email"
-            required
-            className="w-full p-2.5 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            value={user.email}
+            onChange={handleChange}
+            className={`w-full p-2.5 border rounded-lg focus:ring-2 outline-none ${
+              errors.email
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-400 focus:ring-blue-500"
+            }`}
           />
         </div>
 
         <div className="mb-2">
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Password
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            {errors.password ? (
+              <span className="text-red-500">{errors.password}</span>
+            ) : (
+              "Password"
+            )}
           </label>
           <input
             type="password"
             id="password"
             placeholder="Password"
-            required
-            className="w-full p-2.5 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            value={user.password}
+            onChange={handleChange}
+            className={`w-full p-2.5 border rounded-lg focus:ring-2 outline-none ${
+              errors.password
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-400 focus:ring-blue-500"
+            }`}
           />
         </div>
 
         <p className="text-xs text-gray-500 mb-5">
-          Must be at least eight characters
+          Must be at least 8 characters
         </p>
+
+        <div className="mb-5">
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            {errors.confirmPassword ? (
+              <span className="text-red-500">{errors.confirmPassword}</span>
+            ) : (
+              "Confirm Password"
+            )}
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            value={user.confirmPassword}
+            onChange={handleChange}
+            className={`w-full p-2.5 border rounded-lg focus:ring-2 outline-none ${
+              errors.confirmPassword
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-400 focus:ring-blue-500"
+            }`}
+          />
+        </div>
 
         <div className="flex items-center mb-6">
           <input
             type="checkbox"
             id="terms"
-            required
+            checked={user.terms}
+            onChange={handleChange}
             className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
           <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
-            I agree to the{" "}
-            <a href="#" className="text-blue-700 hover:underline">
-              Terms of Service
-            </a>{" "}
-            and{" "}
-            <a href="#" className="text-blue-700 hover:underline">
-              Privacy Policy
-            </a>
+            {errors.terms ? (
+              <span className="text-red-500">{errors.terms}</span>
+            ) : (
+              <>
+                I agree to the{" "}
+                <a href="#" className="text-blue-700 hover:underline">
+                  Terms of Service
+                </a>{" "}
+                and{" "}
+                <a href="#" className="text-blue-700 hover:underline">
+                  Privacy Policy
+                </a>
+              </>
+            )}
           </label>
         </div>
 
         <button
           type="submit"
-          className="w-full py-3.5 bg-blue-900 text-white font-medium rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 transition-all"
+          disabled={loading}
+          className={`w-full py-3.5 bg-blue-900 text-white font-medium rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 transition-all ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Create an account
+          {loading ? "Creating account..." : "Create an account"}
         </button>
 
         <div className="flex items-center my-6">
