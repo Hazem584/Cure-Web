@@ -79,6 +79,12 @@ const Booking = () => {
         "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
     },
   ]);
+  const [activeButton, setActiveButton] = useState("All");
+
+  const filteredDoctors =
+    activeButton === "All"
+      ? Doctors
+      : Doctors.filter((doctor) => doctor.status === activeButton);
 
   return (
     <>
@@ -92,10 +98,13 @@ const Booking = () => {
             <Calendar />
           </div>
           <div>
-            <Buttons />
+            <Buttons
+              activeButton={activeButton}
+              setActiveButton={setActiveButton}
+            />
           </div>
           <div>
-            <List Doctors={Doctors} />
+            <List Doctors={filteredDoctors} />
           </div>
         </div>
         <Footer />
