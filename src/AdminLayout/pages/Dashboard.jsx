@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import DashList from "../components/DashList";
+import React from "react";
 
 import GoCard from "../components/GoCard";
 import AddCard from "../components/AddCard";
