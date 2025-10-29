@@ -38,11 +38,7 @@ const AddDoctorView = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Doctor Data:", formData);
-
-    // Show success notification
     setShowSuccess(true);
-
-    // Reset form
     setFormData({
       name: "",
       email: "",
@@ -51,11 +47,9 @@ const AddDoctorView = () => {
       image: "",
     });
     setPreviewImage(null);
-
-    // Hide notification after 3 seconds
     setTimeout(() => {
       setShowSuccess(false);
-    }, 3000);
+    }, 5000);
   };
 
   const handleReset = () => {
@@ -71,7 +65,6 @@ const AddDoctorView = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
-      {/* Success Notification */}
       {showSuccess && (
         <div className="fixed top-4 right-4 z-50 animate-slide-in">
           <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3">
