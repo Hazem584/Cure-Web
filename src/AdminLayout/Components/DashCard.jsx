@@ -7,6 +7,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const DashCard = ({ doctor }) => {
   const show = () => {
@@ -51,7 +52,10 @@ const DashCard = ({ doctor }) => {
                 </div>
               </div>
               <div className="flex gap-5 mt-3">
-                <Button>Edit</Button>
+                <Link to="/admin/edit-doctors">
+                  <Button>Edit</Button>
+                </Link>
+
                 <Button
                   onClick={() => {
                     show();
