@@ -3,10 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NavBar from "../components/header/NavBar";
 import DashList from "./components/DashList";
+import AddDoctorView from "./components/AddDoctorView";
 import EditDoctor from "./components/EditDoctor";
 
 const AdminLayout = () => {
-  const [doctors, setDoctor] = useState([
+  const [doctors] = useState([
     {
       id: 101,
       name: "Robert Johnson",
@@ -78,6 +79,7 @@ const AdminLayout = () => {
       <Routes>
         <Route index element={<Dashboard />} />
         <Route path="doctors-list" element={<DashList doctors={doctors} />} />
+        <Route path="add-doctor" element={<AddDoctorView />} />
         <Route path="edit-doctors" element={<EditDoctor />} />
       </Routes>
     </>
