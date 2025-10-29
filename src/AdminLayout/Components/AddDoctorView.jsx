@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Swal from "sweetalert2";
 
 const AddDoctorView = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +10,7 @@ const AddDoctorView = () => {
   });
 
   const [previewImage, setPreviewImage] = useState(null);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +22,7 @@ const AddDoctorView = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) { 
+    if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewImage(reader.result);
@@ -38,7 +38,11 @@ const AddDoctorView = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Doctor Data:", formData);
-    Swal.fire("Success!", "Doctor added successfully.", "success");
+
+    // Show success notification
+    setShowSuccess(true);
+
+    // Reset form
     setFormData({
       name: "",
       email: "",
@@ -47,6 +51,11 @@ const AddDoctorView = () => {
       image: "",
     });
     setPreviewImage(null);
+
+    // Hide notification after 3 seconds
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 3000);
   };
 
   const handleReset = () => {
@@ -62,6 +71,49 @@ const AddDoctorView = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+      {/* Success Notification */}
+      {showSuccess && (
+        <div className="fixed top-4 right-4 z-50 animate-slide-in">
+          <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            <div>
+              <p className="font-semibold">Success!</p>
+              <p className="text-sm">Doctor added successfully.</p>
+            </div>
+            <button
+              onClick={() => setShowSuccess(false)}
+              className="ml-4 text-white hover:text-gray-200"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">
@@ -70,7 +122,7 @@ const AddDoctorView = () => {
           <p className="text-gray-600 text-center mb-8">
             Fill in the details to add a new doctor
           </p>
-          <div className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex flex-col items-center mb-6">
               <div className="relative w-32 h-32 mb-4">
                 {previewImage ? (
@@ -166,19 +218,20 @@ const AddDoctorView = () => {
             </div>
             <div className="flex gap-4 pt-4">
               <button
-                onClick={handleSubmit}
+                type="submit"
                 className="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg"
               >
                 Add Doctor
               </button>
               <button
+                type="button"
                 onClick={handleReset}
                 className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
               >
                 Reset
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
