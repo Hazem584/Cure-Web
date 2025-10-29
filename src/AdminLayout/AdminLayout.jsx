@@ -4,9 +4,9 @@ import Dashboard from "./pages/Dashboard";
 import NavBar from "../components/header/NavBar";
 import DashList from "./components/DashList";
 import EditDoctors from "./components/EditDoctors";
-
+import AddDoctorView from "./components/AddDoctorView";
 const AdminLayout = () => {
-  const [doctors, setDoctor] = useState([
+  const [doctors] = useState([
     {
       id: 101,
       name: "Robert Johnson",
@@ -79,6 +79,7 @@ const AdminLayout = () => {
         <Route index element={<Dashboard />} />
         <Route path="doctors-list" element={<DashList doctors={doctors} />} />
         <Route path="edit-doctors" element={<EditDoctors />} />
+        <Route path="add-doctor" element={<AddDoctorView />} />
       </Routes>
     </>
   );

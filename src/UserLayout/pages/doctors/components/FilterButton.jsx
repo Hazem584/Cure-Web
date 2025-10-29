@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const FilterButton = () => {
   const [activeButton, setActiveButton] = useState("All");
-  const Buttons = ["male", "falme"];
+  const Buttons = ["Male", "Female"];
   return (
     <div className="flex gap-3  [@media(max-width:639px)]:gap-2 [@media(max-width:639px)]:flex-wrap">
       {Buttons.map((ButtonValue, index) => (
