@@ -1,7 +1,7 @@
 import React from "react";
 
-const EditDoctors = () => {
+const EditDoctor = () => {
   return <div>EditDoctors</div>;
 };
 
-export default EditDoctors;
+export default EditDoctor;

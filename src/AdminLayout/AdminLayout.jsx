@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NavBar from "../components/header/NavBar";
-import DashList from "./components/DashList";
-import EditDoctors from "./components/EditDoctors";
+import DashList from "./Components/DashList";
 import AddDoctorView from "./components/AddDoctorView";
+import EditDoctor from "./components/EditDoctor";
+
 const AdminLayout = () => {
   const [doctors] = useState([
     {
@@ -78,8 +79,8 @@ const AdminLayout = () => {
       <Routes>
         <Route index element={<Dashboard />} />
         <Route path="doctors-list" element={<DashList doctors={doctors} />} />
-        <Route path="edit-doctors" element={<EditDoctors />} />
         <Route path="add-doctor" element={<AddDoctorView />} />
+        <Route path="edit-doctors" element={<EditDoctor />} />
       </Routes>
     </>
   );
