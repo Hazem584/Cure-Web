@@ -68,6 +68,10 @@ const AuthForm = () => {
           Please provide all information required to access your account
         </p>
 
+        {/* {error && (
+          <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+        )} */}
+
         <div className="mb-5">
           <label className="block mb-2 text-sm font-medium text-gray-900">
             {errors.email ? (
@@ -157,10 +161,7 @@ const AuthForm = () => {
 
         <p className="text-center text-gray-600 text-sm">
           Don’t have an account?{" "}
-          <a
-            href="/signup"
-            className="text-blue-700 font-medium hover:underline"
-          >
+          <a href="/signup" className="text-blue-700 font-medium hover:underline">
             Sign up
           </a>
         </p>
