@@ -9,7 +9,7 @@ import {
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-const DashCard = ({ doctor }) => {
+const DashCards = ({ doctor }) => {
   const show = () => {
     Swal.fire({
       title: "Do you want to delete the doctor ?",
@@ -73,4 +73,4 @@ const DashCard = ({ doctor }) => {
   );
 };
 
-export default DashCard;
+export default DashCards;

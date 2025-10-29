@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NavBar from "../components/header/NavBar";
-import DashList from "./components/DashList";
+import DashList from "./Components/DashList";
 import AddDoctorView from "./components/AddDoctorView";
 import EditDoctor from "./components/EditDoctor";
 
