@@ -74,7 +74,7 @@ const Doctors = () => {
   return (
     <div className=" dark:bg-dark-darkBg ">
       <NavBar />
-      <div className=" flex justify-center items-center ">
+      <div className=" mr-10 ml-10  ">
         <Top onToggleFilter={toggleFilter} />
         <div className="flex flex-row [@media(max-width:1400px)]:flex-col mt-10  ">
           {isFilterOpen && <FilterOptions />}
