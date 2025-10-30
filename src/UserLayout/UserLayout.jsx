@@ -8,6 +8,7 @@ import Appointments from "./pages/appointments/Appointments";
 import NotFound from "../components/not_found/NotFound";
 import Doctors from "./pages/doctors/Doctors";
 import Contacts from "./pages/contact-us/Contacts";
+import Privacy from "./pages/Privacy-policy/Privacy";
 
 const UserLayout = () => {
   return (
@@ -20,6 +21,7 @@ const UserLayout = () => {
         <Route path="appointments" element={<Appointments />} />
         <Route path="doctors" element={<Doctors />} />
         <Route path="contact-us" element={<Contacts />} />
+        <Route path="privacy-policy" element={<Privacy />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
