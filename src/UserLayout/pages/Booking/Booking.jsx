@@ -4,6 +4,7 @@ import Buttons from "./components/Buttons";
 import List from "./components/List";
 import Footer from "../../../components/footer/Footer";
 import Calendar from "./components/Calendar";
+import withAuthUser from "../../../components/hoc/withAuthUser";
 
 const Booking = () => {
   const [Doctors] = useState([
@@ -67,7 +68,7 @@ const Booking = () => {
       photo:
         "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
     },
-    ,
+    
     {
       id: 204,
       name: "Dr. Peter Scott",
@@ -113,4 +114,5 @@ const Booking = () => {
   );
 };
 
-export default Booking;
+const ProtectedBooking = withAuthUser(Booking);
+export default ProtectedBooking;
