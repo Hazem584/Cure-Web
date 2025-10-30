@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GrNotification } from "react-icons/gr";
-import { FaBarsStaggered } from "react-icons/fa6";
+import { FaBarsStaggered, FaRegCircleXmark } from "react-icons/fa6";
 import Dropdown from "./Dropdown";
 import {
      Avatar,
@@ -11,19 +11,35 @@ import {
      MenuList,
      Typography,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 
 
 const ProfileAvatar = ({theme ,setTheme}) => {
      const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+     const [open, setOpen] = useState(false)
 
      return (
           <div className="flex gap-8 items-center">
+               <div className={`flex gap-5 font-montserrat text-xs overflow-hidden transition-all duration-200 ${open ? 'w-100 !overflow-visible':'w-0'}`}>
+                    <div className={`flex gap-5 dark:text-dark-textSecondary  transition-transform duration-300 translate-x-36 ${open ? "!translate-x-0": "" }`}>
+                    <Link to="/"><button className="bg-lighttertiary dark:bg-dark-bgSurface p-2 rounded-lg hover:scale-110 transition-transform duration-150">Home</button></Link>
+                    <Link to="booking"><button className="bg-lighttertiary dark:bg-dark-bgSurface p-2 rounded-lg hover:scale-110 transition-transform duration-150">Booking</button></Link>
+                    </div>
+               </div>
                <div className="flex gap-3 text-1xl dark:text-dark-textSecondary">
-                    <FaBarsStaggered />
-
-                    <GrNotification />
+                     <Typography as='button' className="hover:scale-110" onClick={()=>setOpen(!open)}> 
+                         {open ? 
+                         <FaRegCircleXmark />
+                         :
+                         <FaBarsStaggered />
+                         
+                         } 
+                    </Typography>
+                    <Typography as='button' className="hover:scale-110">
+                         <GrNotification />
+                    </Typography>
+                    
                </div>
                <Menu
                     open={isMenuOpen}

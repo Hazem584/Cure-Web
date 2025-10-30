@@ -1,84 +1,112 @@
 
-
 import React, { useState } from "react";
 import { Input, Button } from "@material-tailwind/react";
 import { FaUser, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import Date from "../../components/profile/Date"
+import Date from "../../components/profile/Date";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const FloatingInputWithIcon = ({
   label,
   type = "text",
   icon: Icon,
-  placeholder,
   value,
   onChange,
   disabled = false,
   error,
 }) => {
-  const [focused, setFocused] = useState(false)
-  const hasValue = value && value.length > 0
+  const [focused, setFocused] = useState(false);
+  const hasValue = value && value.length > 0;
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
+      {hasValue && (
+        <label className="block text-gray-500 mb-1 text-sm font-medium">
+          {label}
+        </label>
+      )}
+
       <div className="relative">
-        <Icon
-          className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 pointer-events-none z-10 transition-colors duration-300 ${
-            focused ? "text-blue-500" : "text-gray-400"
-          } ${disabled ? "opacity-50" : ""}`}
-        />
+        {!hasValue && Icon && (
+          <Icon
+            className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 pointer-events-none z-10 transition-colors duration-300 ${
+              focused ? "text-blue-500" : "text-gray-400"
+            } ${disabled ? "opacity-50" : ""}`}
+          />
+        )}
 
         <Input
           type={type}
-          placeholder={placeholder || " "}
+          placeholder={!hasValue ? label : ""}
           value={value}
           onChange={onChange}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           disabled={disabled}
-          className={`pl-10 pt-6 pb-2 peer transition-colors duration-300 ${
+          className={`pl-10 pt-3 pb-2 transition-colors duration-300 ${
             error ? "border-red-500 focus-visible:ring-red-500" : ""
-          }`}
-          crossOrigin={undefined}
+          } ${hasValue ? "text-gray-500 placeholder-gray-400" : "text-black"}`}
         />
-
-        <label
-          className={`absolute transition-all duration-300 pointer-events-none z-20 bg-white px-1 flex items-center gap-1 ${
-            focused || hasValue
-              ? "top-0 -translate-y-1/2 left-3 text-xs font-medium text-blue-500 flex items-center gap-1"
-              : "top-1/2 -translate-y-1/2 left-10 text-base text-gray-500"
-          } ${disabled ? "opacity-50" : ""}`}
-        >
-          {label}
-        </label>
       </div>
 
       {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
-  )
-}
+  );
+};
+
 const ProfileForm = () => {
-  const [phone, setPhone] = useState("");
+  const [fullName, setFullName] = useState("Seif Mohamed");
+  const [email, setEmail] = useState("seifMohamed22@gmail.com");
+  const [address, setAddress] = useState("129, El-Nasr Street, Cairo");
+  const [phone, setPhone] = useState("201234567890");
   const [focusedPhone, setFocusedPhone] = useState(false);
   const isPhoneActive = focusedPhone || phone !== "";
 
+  const handleEdit = () => {
+    if (!fullName || !email || !address || !phone) {
+      toast.error("Please fill all fields!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+
+    toast.success("Profile updated!", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+  };
 
   return (
-    <div className="flex flex-col gap-3 w-full  pb-6">
-      <FloatingInputWithIcon icon={FaUser} label="Full Name" />
-      <FloatingInputWithIcon icon={FaEnvelope} label="Email Address" type="email" />
-      <FloatingInputWithIcon icon={FaMapMarkerAlt} label="Address" />
+    <div className="flex flex-col gap-3 w-full pb-6">
+      <FloatingInputWithIcon
+        icon={FaUser}
+        label="Full Name"
+        value={fullName}
+        onChange={(e) => setFullName(e.target.value)}
+      />
+      <FloatingInputWithIcon
+        icon={FaEnvelope}
+        label="Email Address"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <FloatingInputWithIcon
+        icon={FaMapMarkerAlt}
+        label="Address"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+      />
 
       <div className="relative w-full mb-6">
-        <label
-          className={`absolute left-[80px] px-1 bg-white transition-all duration-300 ease-in-out pointer-events-none ${
-            isPhoneActive
-              ? "text-blue-500 text-sm top-0 translate-y-[-50%] scale-90"
-              : "text-gray-500 top-1/2 -translate-y-[50%] scale-100"
-          }`}
-        >
-          Phone Number
-        </label>
+        {phone && (
+          <label className="block text-gray-500 mb-1 text-sm font-medium">
+            Phone Number
+          </label>
+        )}
 
         <div
           onFocus={() => setFocusedPhone(true)}
@@ -97,7 +125,7 @@ const ProfileForm = () => {
               width: "100%",
               height: "48px",
               border: "none",
-              color: "#000",
+              color: "#555",
               paddingLeft: "40px",
               background: "transparent",
               fontSize: "15px",
@@ -114,10 +142,16 @@ const ProfileForm = () => {
         </div>
       </div>
 
-<Date/>
-      <Button className="w-full rounded-md mt-4 bg-blue-900">
+      <Date />
+
+      <Button
+        onClick={handleEdit}
+        className="w-full rounded-md mt-4 bg-blue-900"
+      >
         Edit Profile
       </Button>
+
+      <ToastContainer />
     </div>
   );
 };

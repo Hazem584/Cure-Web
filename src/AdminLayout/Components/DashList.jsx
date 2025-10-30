@@ -1,13 +1,14 @@
 import React from "react";
-import DashCard from "./DashCard";
-
+import DashCards from "./DashCards";
 const DashList = ({ doctors }) => {
   console.log(doctors);
   return (
-    <div className="flex flex-col gap-6">
-      {doctors.map((doctor) => (
-        <DashCard doctor={doctor} key={doctor.id} />
-      ))}
+    <div className="flex justify-center ">
+      <div className="flex flex-col gap-6 w-10/12">
+        {doctors.map((doctor) => (
+          <DashCards doctor={doctor} key={doctor.id} />
+        ))}
+      </div>
     </div>
   );
 };

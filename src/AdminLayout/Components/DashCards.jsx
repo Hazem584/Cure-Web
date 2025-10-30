@@ -7,8 +7,9 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
-const DashCard = ({ doctor }) => {
+const DashCards = ({ doctor }) => {
   const show = () => {
     Swal.fire({
       title: "Do you want to delete the doctor ?",
@@ -30,22 +31,32 @@ const DashCard = ({ doctor }) => {
     <div>
       <Card className="">
         <CardBody>
-          <div className="divide-y divide-gray-200">
+          <div className="">
             <div
               key={doctor.id}
-              className="flex items-center justify-between pb-3 pt-3 last:pb-0"
+              className="flex items-center flex-wrap justify-between pb-3 pt-3 last:pb-0 xl:flex-nowrap"
             >
               <div className="flex items-center gap-x-3">
                 <Avatar size="sm" src={doctor.photo} alt={doctor.name} />
-                <div>
+                <div className="flex flex-col mt-4">
                   <Typography color="blue-gray" variant="h6">
                     {doctor.name}
                   </Typography>
+
+                  <Typography
+                    color="gray"
+                    variant="h6"
+                    className="text-gray-700 text-sm sm:text-base"
+                  >
+                    {doctor.email}
+                  </Typography>
                 </div>
               </div>
-              <div className="flex gap-5">
-                <Button color="blue">View</Button>
-                <Button color="amber">Edit</Button>
+              <div className="flex gap-5 mt-3 ">
+                <Link to="/admin/edit-doctors" state={{ doctor }}>
+                  <Button>Edit</Button>
+                </Link>
+
                 <Button
                   onClick={() => {
                     show();
@@ -63,4 +74,4 @@ const DashCard = ({ doctor }) => {
   );
 };
 
-export default DashCard;
+export default DashCards;

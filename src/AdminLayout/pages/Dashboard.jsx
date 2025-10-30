@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import DashList from "../Components/DashList";
 
-import GoCard from "../components/GoCard";
+import GoCard from "../Components/GoCard";
+import AddCard from "../Components/AddCard";
 
 const Dashboard = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex flex-col justify-center items-center min-h-screen gap-8 sm:flex-row">
+      <AddCard />
       <GoCard />
     </div>
   );
