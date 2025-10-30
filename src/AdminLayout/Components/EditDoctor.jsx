@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 
-const AddDoctorView = () => {
+const EditDoctor = () => {
+  const location = useLocation();
+  const { doctor } = location.state || {};
+
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    phoneNumber: "",
-    image: "",
+    name: doctor?.name || "",
+    email: doctor?.email || "",
+    address: doctor?.address || "",
+    phoneNumber: doctor?.phone || "",
+    image: doctor?.photo || "",
   });
 
   const [previewImage, setPreviewImage] = useState(null);
@@ -66,8 +70,8 @@ const AddDoctorView = () => {
   return (
     <div className="min-h-screen bg-dark-textPrimary">
       {showSuccess && (
-        <div className="fixed top-4 right-4 z-50 animate-slide-in">
-          <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3">
+        <div className="fixed top-4 right-4 z-50 animate-slide-in ">
+          <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 ">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -83,7 +87,7 @@ const AddDoctorView = () => {
             </svg>
             <div>
               <p className="font-semibold">Success!</p>
-              <p className="text-sm">Doctor added successfully.</p>
+              <p className="text-sm">Doctor Edited successfully.</p>
             </div>
             <button
               onClick={() => setShowSuccess(false)}
@@ -110,17 +114,17 @@ const AddDoctorView = () => {
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">
-            Add New Doctor
+            Edit the Doctor
           </h1>
           <p className="text-gray-600 text-center mb-8">
-            Fill in the details to add a new doctor
+            Fill in the details to edit the doctor
           </p>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex flex-col items-center mb-6">
               <div className="relative w-32 h-32 mb-4">
-                {previewImage ? (
+                {previewImage || formData.image ? (
                   <img
-                    src={previewImage}
+                    src={previewImage || formData.image}
                     alt="Preview"
                     className="w-full h-full object-cover rounded-full border-4 border-indigo-200"
                   />
@@ -214,7 +218,7 @@ const AddDoctorView = () => {
                 type="submit"
                 className="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg"
               >
-                Add Doctor
+                Edit Doctor
               </button>
               <button
                 type="button"
@@ -231,4 +235,4 @@ const AddDoctorView = () => {
   );
 };
 
-export default AddDoctorView;
+export default EditDoctor;

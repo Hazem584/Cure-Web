@@ -10,7 +10,7 @@ import React from "react";
 
 const AddCard = () => {
   return (
-    <Card className="mt-6 w-96">
+    <Card className="mt-6 w-96 p-3">
       <CardBody>
         <svg
           xmlns="http://www.w3.org/2000/svg"

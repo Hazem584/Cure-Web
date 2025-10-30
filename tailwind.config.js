@@ -19,6 +19,7 @@ export default withMT({
      
       colors: {
         primary: "#145DB8",
+        lighttertiary: "#F5F6F7",
         primarylighter: "#6292CF",
         secondry: "#05162C",
         neutral: "#6D7379",

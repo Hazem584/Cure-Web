@@ -13,10 +13,6 @@ import Themetoggler from "./Themetoggler";
 const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
   const profileMenuItems = [
     {
-      label: "Payment Method",
-      icon: CiCreditCard1,
-    },
-    {
       label: "Settings",
       icon: PiGearSixLight,
     },
@@ -58,7 +54,7 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
           </div>
 
           <div>
-            <PiGearSixLight className="text-primary text-2xl" />
+            <PiGearSixLight className="text-primary text-2xl hover:rotate-180 duaration-200 transition-transform" />
           </div>
         </div>
       </MenuItem>
@@ -68,7 +64,7 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
           <MenuItem
             key={label}
             onClick={closeMenu}
-            className={`flex items-center justify-between gap-2 rounded text-secondry active:bg-blue-gray-300 ${
+            className={`flex items-center group justify-between gap-2 rounded text-secondry active:bg-blue-gray-300 ${
               isLastItem
                 ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                 : ""
@@ -76,7 +72,7 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
           >
             <div className="flex gap-2">
               {React.createElement(icon, {
-                className: `h-6 w-6 ${isLastItem ? "text-red-500" : ""}`,
+                className: `h-6 w-6 ${label=="Settings" ? "group-hover:rotate-180 duaration-200 transition-transform":""} ${isLastItem ? "text-red-500" : ""}`,
               })}
               <Typography
                 as="span"
