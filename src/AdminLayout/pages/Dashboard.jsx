@@ -1,5 +1,3 @@
-import React from "react";
-
 import GoCard from "../Components/GoCard";
 import AddCard from "../Components/AddCard";
 
