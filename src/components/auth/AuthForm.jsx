@@ -45,7 +45,10 @@ const AuthForm = () => {
       setLoading(true);
       setTimeout(() => {
         if (user.email === "admin@gmail.com" && user.password === "123456") {
-          navigate("/home");
+           const loggedUser = { email: user.email, name: "Sara" };
+      localStorage.setItem("user", JSON.stringify(loggedUser));
+
+          navigate("/");
         } else {
           setErrors({ ...newErrors, password: "Invalid email or password" });
         }

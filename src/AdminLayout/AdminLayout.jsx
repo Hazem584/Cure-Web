@@ -5,6 +5,7 @@ import NavBar from "../components/header/NavBar";
 import DashList from "./Components/DashList";
 import AddDoctorView from "./Components/AddDoctorView";
 import EditDoctor from "./Components/EditDoctor";
+import withAuthUser from "../components/hoc/withAuthAdmin";
 
 const AdminLayout = () => {
   const [doctors] = useState([
@@ -104,4 +105,5 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+const ProtectedBooking = withAuthUser(AdminLayout);
+export default ProtectedBooking;

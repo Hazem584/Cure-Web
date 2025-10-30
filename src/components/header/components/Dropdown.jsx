@@ -31,7 +31,7 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
       <MenuItem>
         <div className="user flex !hover:border-0 justify-between items-center justify-items-center ">
           <div className="flex items-center gap-3">
-            <Link to="/">
+            <Link to="/profile">
               <div className="flex items-center gap-4">
                 <Avatar
                   src="https://i.postimg.cc/hhFXM7tG/ba06b3e7882ffb9e60838270ea0dd9b82b74eda6.jpg"
@@ -72,7 +72,11 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
           >
             <div className="flex gap-2">
               {React.createElement(icon, {
-                className: `h-6 w-6 ${label=="Settings" ? "group-hover:rotate-180 duaration-200 transition-transform":""} ${isLastItem ? "text-red-500" : ""}`,
+                className: `h-6 w-6 ${
+                  label == "Settings"
+                    ? "group-hover:rotate-180 duaration-200 transition-transform"
+                    : ""
+                } ${isLastItem ? "text-red-500" : ""}`,
               })}
               <Typography
                 as="span"
