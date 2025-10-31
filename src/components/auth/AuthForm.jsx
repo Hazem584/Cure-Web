@@ -45,9 +45,25 @@ const AuthForm = () => {
       setLoading(true);
       setTimeout(() => {
         if (user.email === "admin@gmail.com" && user.password === "123456") {
-           const loggedUser = { email: user.email, name: "Sara" };
-      localStorage.setItem("user", JSON.stringify(loggedUser));
+          console.log("admin");
+          const loggedUser = {
+            email: user.email,
+            name: "Admin",
+            role: "admin",
+          };
+          localStorage.setItem("admin-cure", JSON.stringify(loggedUser));
+          console.log(
+            "Admin logged in:",
+            JSON.parse(localStorage.getItem("admin-cure"))
+          );
 
+          navigate("/admin");
+        } else if (
+          user.email === "user@gmail.com" &&
+          user.password === "123456"
+        ) {
+          const loggedUser = { email: user.email, name: "User", role: "user" };
+          localStorage.setItem("user", JSON.stringify(loggedUser));
           navigate("/");
         } else {
           setErrors({ ...newErrors, password: "Invalid email or password" });
@@ -164,7 +180,10 @@ const AuthForm = () => {
 
         <p className="text-center text-gray-600 text-sm">
           Don’t have an account?{" "}
-          <a href="/signup" className="text-blue-700 font-medium hover:underline">
+          <a
+            href="/signup"
+            className="text-blue-700 font-medium hover:underline"
+          >
             Sign up
           </a>
         </p>
