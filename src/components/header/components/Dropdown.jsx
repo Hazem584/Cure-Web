@@ -26,6 +26,10 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
     },
   ];
   const closeMenu = () => setIsMenuOpen(false);
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("admin-cure");
+  };
   return (
     <>
       <MenuItem>
@@ -63,7 +67,12 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
         return (
           <MenuItem
             key={label}
-            onClick={closeMenu}
+            onClick={() => {
+              if (label === "Log Out") {
+                handleLogOut();
+              }
+              closeMenu();
+            }}
             className={`flex items-center group justify-between gap-2 rounded text-secondry active:bg-blue-gray-300 ${
               isLastItem
                 ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
