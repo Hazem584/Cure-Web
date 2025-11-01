@@ -12,13 +12,37 @@ import {
      Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-
+import Notification from "./Notification";
+import NotificationMenu from "./NotificationMenu";
 
 
 const ProfileAvatar = ({theme ,setTheme}) => {
      const [isMenuOpen, setIsMenuOpen] = useState(false);
      const [open, setOpen] = useState(false)
-
+     const [notificationMenu ,setNotificationMenu] = useState(false)
+const notifications = [
+  {
+    title: "Upcoming Appointment",
+    details: "Reminder: You have an appointment with...",
+    type: "upcoming",
+    elpased: "1h",
+  },
+  {
+    title: "Appointment completed",
+    details:
+      "You have successfully booked your appointment with Dr. Emily Walker.",
+    type: "completed",
+    elpased: "1h",
+  },
+  {
+    title: "Appointment Cancelled",
+    details:
+      "You have successfully cancelled your appointment with Dr. David Patel.",
+    type: "canceled",
+    elpased: "1h",
+  },
+];
+const Nonotifications = []
      return (
        <div className="flex gap-8 items-center">
          <div
@@ -52,12 +76,18 @@ const ProfileAvatar = ({theme ,setTheme}) => {
            >
              {open ? <FaRegCircleXmark /> : <FaBarsStaggered />}
            </Typography>
-           <Typography
-             as="button"
-             className="hover:scale-110 rounded-lg bg-lighttertiary dark:bg-dark-bgSurface p-2"
-           >
-             <GrNotification />
-           </Typography>
+           <div className="notificationmenu relative">
+             <Typography
+               as="button"
+               onClick={() => setNotificationMenu(!notificationMenu)}
+               className="hover:scale-110 rounded-lg bg-lighttertiary dark:bg-dark-bgSurface p-2"
+             >
+               <GrNotification />
+             </Typography>
+             {notificationMenu && (
+               <NotificationMenu notifications={notifications} />
+             )}
+           </div>
          </div>
          <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
            <MenuHandler>
@@ -78,7 +108,7 @@ const ProfileAvatar = ({theme ,setTheme}) => {
              </Button>
            </MenuHandler>
 
-           <MenuList className="p-3 sm:w-1/3 sm:max-w-[300px]">
+           <MenuList className="p-3 sm:w-1/3 sm:max-w-[300px] rounded-[20px] border-0 bg-lighttertiary">
              {/* the drop down menu */}
              <Dropdown
                setIsMenuOpen={setIsMenuOpen}
