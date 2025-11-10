@@ -81,11 +81,13 @@ const Booking = () => {
     },
   ]);
   const [activeButton, setActiveButton] = useState("All");
+  const [selectedDate, setSelectedDate] = useState(null);
 
-  const filteredDoctors =
-    activeButton === "All"
-      ? Doctors
-      : Doctors.filter((doctor) => doctor.status === activeButton);
+  const filteredDoctors = Doctors.filter(
+    (doctor) =>
+      (activeButton === "All" || doctor.status === activeButton) &&
+      (!selectedDate || doctor.appointment_time.includes(selectedDate))
+  );
 
   return (
     <>
@@ -96,7 +98,7 @@ const Booking = () => {
             Your appointments
           </h1>
           <div className="flex justify-end [@media(max-width:639px)]:justify-center ">
-            <Calendar />
+            <Calendar setSelectedDate={setSelectedDate} />
           </div>
           <div>
             <Buttons

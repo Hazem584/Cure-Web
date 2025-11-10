@@ -99,7 +99,7 @@ const AdminLayout = () => {
         <Route index element={<Dashboard />} />
         <Route path="doctors-list" element={<DashList doctors={doctors} />} />
         <Route path="add-doctor" element={<AddDoctorView />} />
-        <Route path="edit-doctors" element={<EditDoctor />} />
+        <Route path="edit-doctors/:id" element={<EditDoctor />} />
       </Routes>
     </>
   );

@@ -3,10 +3,15 @@ import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
-function Calendar() {
+function Calendar({ setSelectedDate }) {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState(null);
   const formatted = date ? format(date, "PPP") : "Select a date";
+
+  const handleClear = () => {
+    setDate(null);
+    setSelectedDate(null); // ✅ يرجع كل المواعيد
+  };
 
   return (
     <div className="relative w-64 [@media(max-width:639px)]:w-full">
@@ -26,11 +31,19 @@ function Calendar() {
             selected={date}
             onSelect={(d) => {
               setDate(d);
+              const formattedDate = format(d, "MMMM d"); //
+              setSelectedDate(formattedDate);
               setOpen(false);
             }}
             showOutsideDays
             className="border-0"
           />
+          <button
+            onClick={handleClear}
+            className="mt-2 w-3/4  text-sm text-red-500 border border-red-400 rounded-md py-1 hover:bg-red-500 hover:text-white transition"
+          >
+            Clear date
+          </button>
         </div>
       )}
     </div>

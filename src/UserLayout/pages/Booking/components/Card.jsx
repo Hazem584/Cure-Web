@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar } from "@material-tailwind/react";
 import CardButttons from "./CardButttons";
 const Card = ({
-  Doctor: { name, specialty, appointment_time, address, photo, status },
+  Doctor: { id, name, specialty, appointment_time, address, photo, status },
 }) => {
   return (
     <div className="border border-[#BBC1C7] dark:border-dark-borderDark  flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
@@ -48,7 +48,7 @@ const Card = ({
         </h1>
       </div>
       <div className="mt-4">
-        <CardButttons status={status} />
+        <CardButttons status={status} id={id} />
       </div>
     </div>
   );

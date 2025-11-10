@@ -1,7 +1,27 @@
 import React from "react";
 import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-const CardButttons = ({ status }) => {
+import Swal from "sweetalert2";
+const showAlert = () => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, cancel it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Canceled!",
+        text: "Your file has been canceled.",
+        icon: "success",
+      });
+    }
+  });
+};
+const CardButttons = ({ status, id }) => {
   let FirstButton = "";
   let SecondButton = "";
   let navigat = useNavigate();
@@ -29,6 +49,9 @@ const CardButttons = ({ status }) => {
         }
             `}
         onClick={() => {
+          if (FirstButton === "Cancel") {
+            showAlert(id);
+          }
           if (FirstButton == "Book again") {
             navigat("/appointments");
           }
