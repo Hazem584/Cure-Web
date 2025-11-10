@@ -10,7 +10,7 @@ function Calendar({ setSelectedDate }) {
 
   const handleClear = () => {
     setDate(null);
-    setSelectedDate(null); // ✅ يرجع كل المواعيد
+    setSelectedDate(null);
   };
 
   return (
@@ -31,7 +31,7 @@ function Calendar({ setSelectedDate }) {
             selected={date}
             onSelect={(d) => {
               setDate(d);
-              const formattedDate = format(d, "MMMM d"); //
+              const formattedDate = format(d, "MMMM d");
               setSelectedDate(formattedDate);
               setOpen(false);
             }}
