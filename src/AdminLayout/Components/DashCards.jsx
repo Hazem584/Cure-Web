@@ -12,17 +12,20 @@ import { Link } from "react-router-dom";
 const DashCards = ({ doctor }) => {
   const show = () => {
     Swal.fire({
-      title: "Do you want to delete the doctor ?",
-      showDenyButton: true,
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "delete",
-      denyButtonText: `Don't delete`,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire("deleted !", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("Changes are not saved", "", "info");
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
       }
     });
   };
@@ -53,7 +56,10 @@ const DashCards = ({ doctor }) => {
                 </div>
               </div>
               <div className="flex gap-5 mt-3 ">
-                <Link to="/admin/edit-doctors" state={{ doctor }}>
+                <Link
+                  to={`/admin/edit-doctors/${doctor.id}`}
+                  state={{ doctor }}
+                >
                   <Button>Edit</Button>
                 </Link>
 

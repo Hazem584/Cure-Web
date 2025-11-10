@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const EditDoctor = () => {
   const location = useLocation();
+  const { id } = useParams();
   const { doctor } = location.state || {};
 
   const [formData, setFormData] = useState({
