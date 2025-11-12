@@ -61,23 +61,33 @@ const ProfileForm = () => {
   const [email, setEmail] = useState("seifMohamed22@gmail.com");
   const [address, setAddress] = useState("129, El-Nasr Street, Cairo");
   const [phone, setPhone] = useState("201234567890");
+  const [age, setAge] = useState(0);
   const [focusedPhone, setFocusedPhone] = useState(false);
   const isPhoneActive = focusedPhone || phone !== "";
 
   const handleEdit = () => {
-    if (!fullName || !email || !address || !phone) {
-      toast.error("Please fill all fields!", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-      return;
-    }
-
-    toast.success("Profile updated!", {
-      position: "top-right",
-      autoClose: 3000,
-    });
+    if(editMode){
+      if (!fullName || !email || !address || !phone || !age) {
+        toast.error("Please fill all fields!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        return;
+      } else if (age < 18 || phone.length == 11){
+        toast.error("Please  Enter valid Inputs!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        return;
+      }
+      setEditMode(false);
+        toast.success("Profile updated!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+    }else return
   };
+  const [editMode, setEditMode] = useState(false);
 
   return (
     <div className="flex flex-col gap-3 w-full pb-6">
@@ -85,6 +95,7 @@ const ProfileForm = () => {
         icon={FaUser}
         label="Full Name"
         value={fullName}
+        disabled={!editMode}
         onChange={(e) => setFullName(e.target.value)}
       />
       <FloatingInputWithIcon
@@ -92,12 +103,14 @@ const ProfileForm = () => {
         label="Email Address"
         type="email"
         value={email}
+        disabled={!editMode}
         onChange={(e) => setEmail(e.target.value)}
       />
       <FloatingInputWithIcon
         icon={FaMapMarkerAlt}
         label="Address"
         value={address}
+        disabled={!editMode}
         onChange={(e) => setAddress(e.target.value)}
       />
 
@@ -112,7 +125,7 @@ const ProfileForm = () => {
           onFocus={() => setFocusedPhone(true)}
           onBlur={() => setFocusedPhone(false)}
           className={`border rounded-lg transition-all duration-300 ${
-            isPhoneActive
+            isPhoneActive && editMode
               ? "border-blue-500 ring-1 ring-blue-300"
               : "border-gray-300"
           }`}
@@ -120,6 +133,7 @@ const ProfileForm = () => {
           <PhoneInput
             country={"eg"}
             value={phone}
+            disabled={!editMode}
             onChange={(value) => setPhone(value)}
             inputStyle={{
               width: "100%",
@@ -142,13 +156,15 @@ const ProfileForm = () => {
         </div>
       </div>
 
-      <Date />
+      <div className="w-72">
+        <Input label="Age" value={age} onChange={(e)=>setAge(Number(e.target.value))} type="number" disabled={!editMode} />
+      </div>
 
       <Button
-        onClick={handleEdit}
-        className="w-full rounded-md mt-4 bg-blue-900"
+        onClick={()=>{setEditMode(true);handleEdit();}}
+        className={`w-full rounded-md mt-4  ${editMode ? "bg-green-600":"bg-blue-900"}`}
       >
-        Edit Profile
+        {editMode ? "Save" : "Edit Profile"}
       </Button>
 
       <ToastContainer />
