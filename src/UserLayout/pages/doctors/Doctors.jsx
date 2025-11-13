@@ -7,7 +7,14 @@ import NextPageButton from "./components/NextPageButton";
 import DoctorTypes from "./components/DoctorTypes";
 import Top from "./components/Top";
 
-const API_URL = "https://cure-back.vercel.app/api/v1/doctors";
+const getApiBaseUrl = () => {
+  const base =
+    import.meta.env.VITE_API_BASE_URL ||
+    "https://cure-back.vercel.app/api/v1/";
+  return base.endsWith("/") ? base : `${base}/`;
+};
+
+const API_URL = `${getApiBaseUrl()}doctors`;
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState([]);

@@ -17,7 +17,7 @@ const UserLayout = () => {
         <Route path="signin" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="booking" element={<Booking />} />
-        <Route path="appointments" element={<Appointments />} />
+        <Route path="appointments/:doctorId?" element={<Appointments />} />
         <Route path="doctors" element={<Doctors />} />
         <Route path="contact-us" element={<Contacts />} />
         <Route path="*" element={<NotFound />} />

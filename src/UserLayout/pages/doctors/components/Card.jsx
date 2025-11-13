@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar } from "@material-tailwind/react";
 import { FaStar } from "react-icons/fa";
 import { CiClock2 } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 const workingHoursText = (workingHours) => {
   if (!workingHours || typeof workingHours !== "object") {
@@ -29,8 +30,8 @@ const workingHoursText = (workingHours) => {
   return "Not available";
 };
 
-const Card = ({
-  Doc: {
+const Card = ({ Doc }) => {
+  const {
     name = "Unknown doctor",
     photo,
     image,
@@ -39,8 +40,9 @@ const Card = ({
     specialty,
     workingHours,
     location,
-  },
-}) => {
+  } = Doc || {};
+  const navigate = useNavigate();
+
   const avatarSrc =
     photo ||
     image ||
@@ -58,6 +60,14 @@ const Card = ({
   const specialtyText = `${specialty || "Specialty not provided"}${
     locationText ? ` | ${locationText}` : ""
   }`;
+
+  const doctorId = Doc?._id || Doc?.id;
+
+  const handleBookAppointment = () => {
+    if (doctorId) {
+      navigate(`/appointments/${doctorId}`);
+    }
+  };
 
   return (
     <div className="border border-white inline-flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
@@ -100,7 +110,12 @@ const Card = ({
         </h1>
         <h1 className="text-red-300 text-xl mr-5">{priceValue}</h1>
       </div>
-      <button className="bg-blue-700 rounded-lg text-white w-full h-10 ">
+      <button
+        type="button"
+        onClick={handleBookAppointment}
+        className="bg-blue-700 rounded-lg text-white w-full h-10 "
+        disabled={!doctorId}
+      >
         Book appoienmants
       </button>
     </div>

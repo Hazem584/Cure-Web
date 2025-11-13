@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
-const ReviewModal = ({ onClose, onSubmit }) => {
+const ReviewModal = ({ onClose, onSubmit, submitting, submitError }) => {
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [review, setReview] = useState("");
+  const [comment, setComment] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (rating > 0 && review.trim()) {
-      onSubmit({ rating, review });
-      onClose();
+    if (rating > 0 && comment.trim()) {
+      const success = await onSubmit({ rating, comment: comment.trim() });
+      if (success) {
+        setRating(0);
+        setComment("");
+        onClose();
+      }
     }
   };
 
@@ -64,19 +68,24 @@ const ReviewModal = ({ onClose, onSubmit }) => {
             </label>
             <textarea
               id="review"
-              value={review}
-              onChange={(e) => setReview(e.target.value)}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
               placeholder="Write your review"
               rows={6}
               className="w-full rounded-2xl border border-slate-200 bg-white dark:bg-dark-bgSurface dark:text-dark-textOnDark  px-4 py-3 text-sm text-slate-700 placeholder-slate-400 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
+          {submitError && (
+            <p className="text-sm text-red-500" role="alert">
+              {submitError}
+            </p>
+          )}
           <button
             type="submit"
-            disabled={rating === 0 || !review.trim()}
+            disabled={rating === 0 || !comment.trim() || submitting}
             className="w-full rounded-full bg-blue-500 py-3 text-sm font-semibold text-white shadow transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
           >
-            Send your review
+            {submitting ? "Sending..." : "Send your review"}
           </button>
         </form>
       </div>

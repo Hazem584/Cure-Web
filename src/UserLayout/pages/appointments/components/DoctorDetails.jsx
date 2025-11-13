@@ -1,53 +1,105 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FaUserFriends, FaStar } from "react-icons/fa";
 import { PiMedalFill } from "react-icons/pi";
 import { TiMessages } from "react-icons/ti";
-const stats = [
-  {
-    label: "patients",
-    value: "2,000+",
-    icon: FaUserFriends,
-  },
-  {
-    label: "experience",
-    value: "10+",
-    icon: PiMedalFill,
-  },
-  {
-    label: "rating",
-    value: "4.5",
-    icon: FaStar,
-  },
-  {
-    label: "reviews",
-    value: "1,872",
-    icon: TiMessages,
-  },
-];
-const aboutMeIntro =
-  "Dr. Jessica Turner, a board-certified Pulmonologist with over 8 years of experience in diagnosing and treating a wide range of respiratory conditions, is dedicated to providing patient-centered care.";
 
-const aboutMeDetails =
-  " She completed her residency at the University of California Medical Center and leads several clinical research initiatives focused on asthma and chronic obstructive pulmonary disease (COPD). Dr. Turner believes in empowering patients through education, offering personalized treatment plans, and collaborating closely with multidisciplinary teams to ensure comprehensive respiratory wellness.";
+const DEFAULT_BIO =
+  "No biography has been provided for this doctor yet. Please check back later for more information.";
 
-const DoctorDetails = () => {
+const DoctorDetails = ({ doctor, loading, error }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const {
+    name = "Doctor profile",
+    specialty = "Specialty not provided",
+    image,
+    experience,
+    consultationPrice,
+    rating,
+    bio,
+    location,
+    languages,
+  } = doctor || {};
+
+  const stats = useMemo(() => {
+    const patientsValue =
+      doctor?.patients ??
+      (rating?.count ? `${Math.max(rating.count * 20, 50)}+` : "N/A");
+
+    return [
+      {
+        label: "patients",
+        value: patientsValue,
+        icon: FaUserFriends,
+      },
+      {
+        label: "experience",
+        value: experience ? `${experience}+ yrs` : "N/A",
+        icon: PiMedalFill,
+      },
+      {
+        label: "rating",
+        value:
+          typeof rating?.average === "number"
+            ? rating.average.toFixed(1)
+            : "N/A",
+        icon: FaStar,
+      },
+      {
+        label: "reviews",
+        value: rating?.count ?? "N/A",
+        icon: TiMessages,
+      },
+    ];
+  }, [doctor, experience, rating]);
+
+  const truncatedBio =
+    !bio || bio.length <= 220 || isExpanded
+      ? bio || DEFAULT_BIO
+      : `${bio.slice(0, 220)}...`;
+
+  const locationLine =
+    location?.address || location?.city || "Location not provided yet.";
+
+  const extraLocationInfo = location?.city && location?.address
+    ? `${location.city}`
+    : "";
+
   return (
-    <aside className={`w-full space-y-6 lg:w-80 xl:w-[540px] max-[300px]:space-y-5`}>
+    <aside className="w-full space-y-6 lg:w-80 xl:w-[540px] max-[300px]:space-y-5">
       <section className="space-y-6 rounded-3xl bg-[#F5F6F7] dark:bg-dark-darkBg p-6 shadow-sm max-[300px]:p-4">
+        {loading && (
+          <p className="text-center text-sm text-slate-500 dark:text-dark-textSecondary">
+            Loading doctor details...
+          </p>
+        )}
+        {!loading && error && (
+          <p className="text-center text-sm text-red-500" role="alert">
+            {error}
+          </p>
+        )}
+        {!loading && !error && !doctor && (
+          <p className="text-center text-sm text-slate-500 dark:text-dark-textSecondary">
+            Choose a doctor from the doctors page to see their profile here.
+          </p>
+        )}
+        {!loading && !error && doctor && (
+          <>
         <div className="flex flex-col items-center text-center">
           <div className="relative -mt-1 flex h-28 w-28 items-center justify-center rounded-full bg-slate-100 p-1 shadow-sm">
             <img
-              src="/doctor.png"
-              alt="Dr. Jessica Turner profile"
+              src={image || "/doctor.png"}
+              alt={`Photo of ${name}`}
               className="h-full w-full rounded-full object-cover dark:border-2 dark:border-dark-borderDark"
             />
           </div>
           <div className="mt-4 space-y-1">
             <h3 className="text-xl font-semibold text-slate-900 dark:text-dark-textOnDark">
-              Dr. Jessica Turner
+              {name}
             </h3>
-            <p className="text-sm font-medium text-slate-500 dark:text-dark-textOnDark">Pulmonologist</p>
+            <p className="text-sm font-medium text-slate-500 dark:text-dark-textOnDark">
+              {specialty}
+            </p>
           </div>
         </div>
 
@@ -75,10 +127,9 @@ const DoctorDetails = () => {
             About me
           </h4>
           <p className="text-sm leading-relaxed text-slate-600 dark:text-dark-textSecondary max-[300px]:text-xs max-[300px]:leading-5">
-            {aboutMeIntro}
-            {isExpanded ? aboutMeDetails : "..."}
+            {truncatedBio}
           </p>
-          {!isExpanded && (
+          {!isExpanded && bio && bio.length > 220 && (
             <button
               type="button"
               onClick={() => setIsExpanded(true)}
@@ -87,6 +138,14 @@ const DoctorDetails = () => {
               Read more
             </button>
           )}
+          {Array.isArray(languages) && languages.length > 0 && (
+            <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-dark-textSecondary">
+              Languages:{" "}
+              <span className="text-slate-700 dark:text-dark-textOnDark lowercase">
+                {languages.join(", ")}
+              </span>
+            </p>
+          )}
         </div>
         <section className="space-y-4 max-[300px]:space-y-3 max-[300px]:text-sm">
           <div>
@@ -94,8 +153,18 @@ const DoctorDetails = () => {
               Location
             </h4>
             <p className="mt-1 text-sm text-slate-500 dark:text-dark-textSecondary max-[300px]:text-xs">
-              129, El-Nasr Street, Cairo, Egypt
+              {locationLine}
             </p>
+            {extraLocationInfo && (
+              <p className="text-xs text-slate-400 dark:text-dark-textSecondary">
+                {extraLocationInfo}
+              </p>
+            )}
+            {consultationPrice && (
+              <p className="mt-2 text-sm font-semibold text-slate-700 dark:text-dark-textOnDark">
+                Consultation price: EGP {consultationPrice}
+              </p>
+            )}
           </div>
           <div className="overflow-hidden rounded-2xl">
             <img
@@ -105,6 +174,8 @@ const DoctorDetails = () => {
             />
           </div>
         </section>
+          </>
+        )}
       </section>
     </aside>
   );

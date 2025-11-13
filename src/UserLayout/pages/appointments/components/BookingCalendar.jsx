@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { HiOutlineCalendar } from "react-icons/hi";
 import PaymentModal from "./PaymentModal";
-import { FaCcVisa, FaPaypal } from "react-icons/fa";
-import { SiApplepay } from "react-icons/si";
 
 const getFormattedDate = (date) =>
   date.toLocaleDateString("en-US", {
@@ -18,6 +16,8 @@ const BookingCalendar = ({
   selectedTime,
   onSelectDate,
   onSelectTime,
+  doctor,
+  onCreateAppointment,
 }) => {
   const formattedSelectedDate = selectedDate
     ? getFormattedDate(selectedDate)
@@ -26,7 +26,11 @@ const BookingCalendar = ({
 
   const selectedAppointment =
     selectedDate && selectedTime
-      ? { date: formattedSelectedDate, time: selectedTime }
+      ? {
+          displayDate: formattedSelectedDate,
+          time: selectedTime,
+          dateValue: selectedDate,
+        }
       : null;
 
   const handleBook = () => {
@@ -114,7 +118,9 @@ const BookingCalendar = ({
       {showPaymentSummary && selectedAppointment && (
         <PaymentModal
           appointment={selectedAppointment}
+          doctor={doctor}
           onClose={() => setShowPaymentSummary(false)}
+          onCreateAppointment={onCreateAppointment}
         />
       )}
     </section>

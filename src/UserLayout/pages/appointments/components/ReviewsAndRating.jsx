@@ -1,32 +1,13 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import ReviewModal from "./ReviewModel";
 
-const testimonials = [
-  {
-    id: "nabila-reyna",
-    name: "Nabila Reyna",
-    timeAgo: "30 min ago",
-    rating: 4.5,
-    message:
-      "Excellent service! Dr. Jessica Turner was attentive and thorough. The clinic was clean, and the staff were friendly. Highly recommend for in-person care!",
-    avatar: "/doctor.png",
-  },
-  {
-    id: "ferry-ichsan",
-    name: "Ferry Ichsan A",
-    timeAgo: "A week ago",
-    rating: 4.5,
-    message:
-      "Quick and easy appointment! Dr. Jessica Turner was professional, and the staff made me feel comfortable. Highly recommend!",
-    avatar: "/doctor.png",
-  },
-];
-
 const renderStars = (rating) => {
+  const safeRating =
+    typeof rating === "number" && !Number.isNaN(rating) ? rating : 0;
   const stars = [];
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 >= 0.5;
+  const fullStars = Math.floor(safeRating);
+  const hasHalfStar = safeRating % 1 >= 0.5;
 
   for (let i = 0; i < 5; i++) {
     if (i < fullStars) {
@@ -51,8 +32,44 @@ const renderStars = (rating) => {
   return stars;
 };
 
-const ReviewsAndRating = () => {
+const ReviewsAndRating = ({
+  ratingSummary,
+  reviews,
+  loading,
+  error,
+  onSubmitReview,
+  submitting,
+  submitError,
+  canAddReview = false,
+  onResetSubmitError,
+}) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const normalizedReviews = useMemo(
+    () => (Array.isArray(reviews) ? reviews : []),
+    [reviews]
+  );
+  const averageRating =
+    typeof ratingSummary?.average === "number" ? ratingSummary.average : 0;
+  const reviewsCount = ratingSummary?.count ?? normalizedReviews.length ?? 0;
+
+  const handleOpenModal = () => {
+    if (!canAddReview) return;
+    if (onResetSubmitError) {
+      onResetSubmitError();
+    }
+    setShowReviewModal(true);
+  };
+
+  const handleSubmitReview = async (payload) => {
+    if (!onSubmitReview) {
+      return false;
+    }
+    const succeeded = await onSubmitReview(payload);
+    if (succeeded) {
+      setShowReviewModal(false);
+    }
+    return succeeded;
+  };
 
   return (
     <section
@@ -65,8 +82,9 @@ const ReviewsAndRating = () => {
         </h2>
         <button
           type="button"
-          onClick={() => setShowReviewModal(true)}
-          className="flex items-center gap-2 text-blue-500 text-sm font-medium hover:text-blue-600 transition"
+          onClick={handleOpenModal}
+          disabled={!canAddReview}
+          className="flex items-center gap-2 text-blue-500 text-sm font-medium hover:text-blue-600 transition disabled:text-slate-400 disabled:cursor-not-allowed"
         >
           <svg
             className="w-5 h-5"
@@ -84,55 +102,104 @@ const ReviewsAndRating = () => {
           add review
         </button>
       </div>
+      {error && (
+        <p className="mb-4 text-center text-sm text-red-500" role="alert">
+          {error}
+        </p>
+      )}
       <div className="flex items-center justify-between mb-8">
-        <div className="text-5xl font-semibold text-slate-900">4.5/5</div>
+        <div className="text-5xl font-semibold text-slate-900">
+          {averageRating.toFixed(1)}/5
+        </div>
         <div className="text-right">
           <div className="flex items-center justify-end gap-1 mb-1">
-            {renderStars(4.5)}
+            {renderStars(averageRating)}
           </div>
-          <p className="text-sm text-slate-600">1250+ Reviews</p>
+          <p className="text-sm text-slate-600">
+            {reviewsCount ? `${reviewsCount}+ Reviews` : "No reviews yet"}
+          </p>
         </div>
       </div>
+      {loading && (
+        <p className="text-center text-sm text-slate-500">Loading reviews...</p>
+      )}
+      {!loading && normalizedReviews.length === 0 && (
+        <p className="text-center text-sm text-slate-500">
+          No reviews have been added for this doctor yet.
+        </p>
+      )}
+      {submitError && (
+        <p className="text-center text-sm text-red-500 mt-4" role="alert">
+          {submitError}
+        </p>
+      )}
       <div className="grid gap-6 md:grid-cols-2">
-        {testimonials.map(({ id, name, timeAgo, rating, message, avatar }) => (
-          <article
-            key={id}
-            className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white dark:border-dark-borderDark dark:bg-dark-darkBg p-6"
-          >
-            <div className="flex items-start gap-4">
-              <img
-                src={avatar}
-                alt={`${name} avatar`}
-                className="h-16 w-16 rounded-full object-cover flex-shrink-0"
-                loading="lazy"
-              />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-900">
-                      {name}
-                    </h3>
-                    <p className="text-sm text-slate-500">{timeAgo}</p>
-                  </div>
-                  <div className="flex items-center gap-1 flex-shrink-0">
-                    <FaStar className="text-yellow-400 text-lg" />
-                    <span className="text-lg font-semibold text-yellow-500">
-                      {rating.toFixed(1)}
-                    </span>
+        {normalizedReviews.map((review, index) => {
+          const {
+            _id,
+            id,
+            name,
+            reviewerName,
+            user,
+            patient,
+            rating: reviewRating,
+            comment,
+            message,
+            createdAt,
+            avatar,
+          } = review;
+
+          const displayName =
+            name || reviewerName || patient?.name || user?.name || "Anonymous";
+          const displayMessage = comment || message || "No comment provided.";
+          const displayRating =
+            typeof reviewRating === "number" ? reviewRating : averageRating;
+          const formattedDate = createdAt
+            ? new Date(createdAt).toLocaleDateString()
+            : "";
+
+          return (
+            <article
+              key={_id || id || index}
+              className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white dark:border-dark-borderDark dark:bg-dark-darkBg p-6"
+            >
+              <div className="flex items-start gap-4">
+                <img
+                  src={avatar || "/doctor.png"}
+                  alt={`${displayName} avatar`}
+                  className="h-16 w-16 rounded-full object-cover flex-shrink-0"
+                  loading="lazy"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-900">
+                        {displayName}
+                      </h3>
+                      <p className="text-sm text-slate-500">{formattedDate}</p>
+                    </div>
+                    <div className="flex items-center gap-1 flex-shrink-0">
+                      <FaStar className="text-yellow-400 text-lg" />
+                      <span className="text-lg font-semibold text-yellow-500">
+                        {displayRating.toFixed(1)}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <p className="text-base leading-relaxed text-slate-700">
-              {message}
-            </p>
-          </article>
-        ))}
+              <p className="text-base leading-relaxed text-slate-700">
+                {displayMessage}
+              </p>
+            </article>
+          );
+        })}
       </div>
       {showReviewModal && (
         <ReviewModal
           onClose={() => setShowReviewModal(false)}
-          onSubmit={() => setShowReviewModal(false)}
+          onSubmit={handleSubmitReview}
+          submitting={submitting}
+          submitError={submitError}
         />
       )}
     </section>
