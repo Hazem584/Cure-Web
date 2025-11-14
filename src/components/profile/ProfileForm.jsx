@@ -1,12 +1,14 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Button } from "@material-tailwind/react";
 import { FaUser, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Date from "../../components/profile/Date";
 import { ToastContainer, toast } from "react-toastify";
+import Swal from "sweetalert2";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const FloatingInputWithIcon = ({
   label,
@@ -56,16 +58,127 @@ const FloatingInputWithIcon = ({
   );
 };
 
+const getApiBaseUrl = () => {
+  const base = import.meta.env.VITE_API_BASE_URL;
+  return base.endsWith("/") ? base : `${base}/`;
+};
+
+const API_BASE_URL = getApiBaseUrl();
+
+const getAuthToken = () => {
+  if (typeof window === "undefined") return null;
+  return (
+    window.localStorage.getItem("cure_token") ||
+    window.localStorage.getItem("token") ||
+    window.localStorage.getItem("authToken") ||
+    null
+  );
+};
+const getOneUser = async (id) => {
+  const token = getAuthToken()
+
+  try {
+    const { data } = await axios.get(
+      `${API_BASE_URL}user/get_one_user/${id}`,
+      {
+        headers: {
+          Authorization: {token},
+        },
+      }
+    );
+
+    return data
+
+  } catch (err) {
+    console.log(err)
+        Swal.fire({
+          icon: "error",
+          title: `${err.response ? err.response.status : "Network Error"}`,
+          text:
+            err.response?.data?.message || "Network error. Check URL or server",
+        });
+  }
+};
+const handleUpdateUser = async (id) => {
+  const token = getAuthToken();
+
+  try {
+    const { data } = await axios.post(`${API_BASE_URL}user/update_user/${id}`, {
+      headers: {
+        Authorization: { token },
+      },
+      body:{
+        name:"MA",
+        email:"m@gmail.com"
+      },
+    });
+
+    return data;
+  } catch (err) {
+    console.log(err);
+    return err
+  }
+};
+const handleDeleteAccount = async (id) => {
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    html: `
+      <p class="mb-2">To confirm, type:</p>
+      <b>I WANT TO DELETE ACCOUNT</b>
+    `,
+    input: "text",
+    inputPlaceholder: "Type the phrase here...",
+    showCancelButton: true,
+    confirmButtonText: "Delete",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "#d33",
+    preConfirm: (value) => {
+      if (value !== "I WANT TO DELETE ACCOUNT") {
+        Swal.showValidationMessage("You must type the exact phrase!");
+        return false;
+      }
+      return true;
+    },
+  });
+
+  if (!result.isConfirmed) return;
+
+  try {
+    const token = getAuthToken()
+
+    const response = await axios.post(`${API_BASE_URL}user/delete_user/${id}`, {
+      headers: {
+        Authorization: { token },
+      },
+    });
+
+    Swal.fire({
+      icon: "success",
+      title: "Account Deleted",
+      text: "Your account has been permanently deleted.",
+    });
+  } catch (err) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: err.response?.data?.message || "Something went wrong!",
+    });
+  }
+};
 const ProfileForm = () => {
-  const [fullName, setFullName] = useState("Seif Mohamed");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("seifMohamed22@gmail.com");
   const [address, setAddress] = useState("129, El-Nasr Street, Cairo");
   const [phone, setPhone] = useState("201234567890");
   const [age, setAge] = useState(0);
   const [focusedPhone, setFocusedPhone] = useState(false);
   const isPhoneActive = focusedPhone || phone !== "";
+  const [userData,setUserData] = useState("")
 
-  const handleEdit = () => {
+  useEffect(()=>{
+      setUserData(getOneUser("6914960bd7fa7d80b92963e9"))
+  },[])
+  const handleEdit = async (id) => {
     if(editMode){
       if (!fullName || !email || !address || !phone || !age) {
         toast.error("Please fill all fields!", {
@@ -80,11 +193,25 @@ const ProfileForm = () => {
         });
         return;
       }
+      
+      const err = await handleUpdateUser(id)
+      if(!err){
       setEditMode(false);
         toast.success("Profile updated!", {
           position: "top-right",
           autoClose: 3000,
         });
+      }else{
+        console.log("NOT EDITED");
+        Swal.fire({
+          icon: "error",
+          title: `${err.response ? err.response.status : "Network Error"}`,
+          text:
+            err.response?.data?.message ||
+            "Network error. Check URL or server",
+        });
+        return
+      }
     }else return
   };
   const [editMode, setEditMode] = useState(false);
@@ -166,7 +293,9 @@ const ProfileForm = () => {
       >
         {editMode ? "Save" : "Edit Profile"}
       </Button>
-
+            <Button className="bg-red-500" onClick={()=>handleDeleteAccount()}>
+              Delete Account
+            </Button>
       <ToastContainer />
     </div>
   );
