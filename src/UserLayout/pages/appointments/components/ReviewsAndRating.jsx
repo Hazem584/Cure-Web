@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import ReviewModal from "./ReviewModel";
+import ReviewModal from "./ReviewModal";
 
 const renderStars = (rating) => {
   const safeRating =
