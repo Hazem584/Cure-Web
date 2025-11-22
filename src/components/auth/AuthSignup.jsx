@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF, FaApple } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { SIGNUP_URL } from "../../UserLayout/pages/appointments/apiConfig";
 
 const AuthSignup = () => {
   const navigate = useNavigate();
@@ -32,8 +33,9 @@ const AuthSignup = () => {
     });
     setErrors({ ...errors, [id]: "" });
   };
+  const [message, setMessage] = useState({ type: "", text: "" });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let newErrors = {
@@ -51,7 +53,6 @@ const AuthSignup = () => {
       valid = false;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!user.email) {
       newErrors.email = "Please enter your email";
@@ -61,7 +62,6 @@ const AuthSignup = () => {
       valid = false;
     }
 
-    // Password validation
     if (!user.password) {
       newErrors.password = "Please enter your password";
       valid = false;
@@ -70,7 +70,6 @@ const AuthSignup = () => {
       valid = false;
     }
 
-    // Confirm Password validation
     if (!user.confirmPassword) {
       newErrors.confirmPassword = "Please confirm your password";
       valid = false;
@@ -79,22 +78,40 @@ const AuthSignup = () => {
       valid = false;
     }
 
-    // Terms validation
     if (!user.terms) {
       newErrors.terms = "You must agree to the terms";
       valid = false;
     }
 
     setErrors(newErrors);
+    if (!valid) return;
+    setLoading(true);
 
-    if (valid) {
-      setLoading(true);
+    try {
+      const res = await fetch(SIGNUP_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: user.name,
+          email: user.email,
+          password: user.password,
+        }),
+      });
 
-      setTimeout(() => {
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMessage({ type: "error", text: data.message || "Signup failed" });
         setLoading(false);
-        navigate("/signin");
-      }, 1000);
+        return;
+      }
+      setMessage({ type: "success", text: "Account created successfully!" });
+      navigate("/signin");
+    } catch (error) {
+      console.log("error in signup", error);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -119,6 +136,18 @@ const AuthSignup = () => {
               "Name"
             )}
           </label>
+          {message.text && (
+            <p
+              className={`mb-4 text-center p-2 rounded-lg ${
+                message.type === "success"
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+            >
+              {message.text}
+            </p>
+          )}
+
           <input
             type="text"
             id="name"
