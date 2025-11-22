@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF, FaApple } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
+import { LOGIN_URL } from "../../UserLayout/pages/appointments/apiConfig";
 const AuthForm = () => {
   const navigate = useNavigate();
 
@@ -43,33 +43,29 @@ const AuthForm = () => {
 
     if (valid) {
       setLoading(true);
-      setTimeout(() => {
-        if (user.email === "admin@gmail.com" && user.password === "123456") {
-          console.log("admin");
-          const loggedUser = {
-            email: user.email,
-            name: "Admin",
-            role: "admin",
-          };
-          localStorage.setItem("admin-cure", JSON.stringify(loggedUser));
-          console.log(
-            "Admin logged in:",
-            JSON.parse(localStorage.getItem("admin-cure"))
-          );
+       fetch(LOGIN_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setLoading(false);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        if (data.user.role === "admin") navigate("/admin");
+        else navigate("/");
+      } else {
+        setErrors({ ...newErrors, password: data.message || "Login failed" });
+      }
+    })
+    .catch((err) => {
+      setLoading(false);
+      setErrors({ ...newErrors, password: "Server error" });
+      console.error(err);
+    });
 
-          navigate("/admin");
-        } else if (
-          user.email === "user@gmail.com" &&
-          user.password === "123456"
-        ) {
-          const loggedUser = { email: user.email, name: "User", role: "user" };
-          localStorage.setItem("user", JSON.stringify(loggedUser));
-          navigate("/");
-        } else {
-          setErrors({ ...newErrors, password: "Invalid email or password" });
-        }
-        setLoading(false);
-      }, 1000);
     }
   };
 
