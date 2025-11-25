@@ -7,7 +7,7 @@ import {
 export const useDoctorReviews = (doctorId) => {
   const [reviews, setReviews] = useState([]);
   const [ratingSummary, setRatingSummary] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -17,9 +17,11 @@ export const useDoctorReviews = (doctorId) => {
       setReviews([]);
       setRatingSummary(null);
       setError("Please pick a doctor from the doctors page first.");
+      setLoading(false);
       return;
     }
 
+    let isMounted = true;
     const controller = new AbortController();
     const loadReviews = async () => {
       try {
@@ -27,21 +29,29 @@ export const useDoctorReviews = (doctorId) => {
         setError("");
         const { reviews: doctorReviews, ratingSummary: summary } =
           await fetchDoctorReviews(doctorId, { signal: controller.signal });
-        setReviews(doctorReviews);
-        setRatingSummary(summary);
+        if (isMounted) {
+          setReviews(doctorReviews);
+          setRatingSummary(summary);
+        }
       } catch (err) {
-        if (err.name !== "AbortError") {
+        if (err.name === "AbortError") return;
+        if (isMounted) {
           setError(err.message || "Unable to load reviews.");
           setReviews([]);
           setRatingSummary(null);
         }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     loadReviews();
-    return () => controller.abort();
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, [doctorId]);
 
   const submitReview = useCallback(
