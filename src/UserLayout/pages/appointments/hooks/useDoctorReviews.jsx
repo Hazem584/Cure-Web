@@ -4,6 +4,60 @@ import {
   submitDoctorReview,
 } from "../services/appointmentsApi";
 
+const getStoredUser = () => {
+  if (typeof window === "undefined") return null;
+  const raw = window.localStorage.getItem("user");
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+};
+
+const enrichReviewWithUser = (review) => {
+  if (!review) return review;
+  const currentUser = getStoredUser();
+  if (!currentUser) return review;
+
+  const userName =
+    currentUser.name || currentUser.fullName || currentUser.username;
+  const userAvatar =
+    currentUser.avatar ||
+    currentUser.image ||
+    currentUser.profileImage ||
+    currentUser.profilePicture ||
+    currentUser.profilePic ||
+    currentUser.photo;
+
+  return {
+    ...review,
+    name:
+      review.name ||
+      review.reviewerName ||
+      review?.patient?.name ||
+      review?.user?.name ||
+      userName,
+    reviewerName: review.reviewerName || review.name || userName,
+    avatar:
+      review.avatar ||
+      review?.patient?.avatar ||
+      review?.patient?.image ||
+      review?.patient?.profileImage ||
+      review?.patient?.profilePicture ||
+      review?.patient?.profilePic ||
+      review?.patient?.photo ||
+      review?.user?.avatar ||
+      review?.user?.image ||
+      review?.user?.profileImage ||
+      review?.user?.profilePicture ||
+      review?.user?.profilePic ||
+      review?.user?.photo ||
+      userAvatar,
+    user: { ...(review.user || {}), ...currentUser },
+  };
+};
+
 export const useDoctorReviews = (doctorId) => {
   const [reviews, setReviews] = useState([]);
   const [ratingSummary, setRatingSummary] = useState(null);
@@ -65,7 +119,8 @@ export const useDoctorReviews = (doctorId) => {
         );
 
         if (review) {
-          setReviews((prev) => [review, ...prev]);
+          const hydratedReview = enrichReviewWithUser(review);
+          setReviews((prev) => [hydratedReview || review, ...prev]);
         }
         if (summary) {
           setRatingSummary(summary);
