@@ -176,13 +176,13 @@ const ReviewsAndRating = ({
             : "";
           const displayAvatar =
             avatar ||
-            patient?.avatar ||
+            patient?.avatarUrl ||
             patient?.image ||
             patient?.profileImage ||
             patient?.profilePicture ||
             patient?.profilePic ||
             patient?.photo ||
-            user?.avatar ||
+            user?.avatarUrl ||
             user?.image ||
             user?.profileImage ||
             user?.profilePicture ||
