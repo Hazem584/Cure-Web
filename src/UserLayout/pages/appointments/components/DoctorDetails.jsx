@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { FaUserFriends, FaStar } from "react-icons/fa";
 import { PiMedalFill } from "react-icons/pi";
 import { TiMessages } from "react-icons/ti";
+import DoctorDetailsSkeleton from "./DoctorDetailsSkeleton";
 
 const DEFAULT_BIO =
   "No biography has been provided for this doctor yet. Please check back later for more information.";
@@ -65,25 +66,24 @@ const DoctorDetails = ({ doctor, loading, error }) => {
     ? `${location.city}`
     : "";
 
+  if (loading) {
+    return <DoctorDetailsSkeleton />;
+  }
+
   return (
     <aside className="w-full space-y-6 lg:w-80 xl:w-[540px] max-[300px]:space-y-5">
       <section className="space-y-6 rounded-3xl bg-[#F5F6F7] dark:bg-dark-darkBg p-6 shadow-sm max-[300px]:p-4">
-        {loading && (
-          <p className="text-center text-sm text-slate-500 dark:text-dark-textSecondary">
-            Loading doctor details...
-          </p>
-        )}
-        {!loading && error && (
+        {error && (
           <p className="text-center text-sm text-red-500" role="alert">
             {error}
           </p>
         )}
-        {!loading && !error && !doctor && (
+        {!error && !doctor && (
           <p className="text-center text-sm text-slate-500 dark:text-dark-textSecondary">
             Choose a doctor from the doctors page to see their profile here.
           </p>
         )}
-        {!loading && !error && doctor && (
+        {!error && doctor && (
           <>
         <div className="flex flex-col items-center text-center">
           <div className="relative -mt-1 flex h-28 w-28 items-center justify-center rounded-full bg-slate-100 p-1 shadow-sm">

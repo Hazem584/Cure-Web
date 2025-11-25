@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import ReviewModal from "./ReviewModal";
+import ReviewsLoading from "./ReviewsLoading";
 
 const renderStars = (rating) => {
   const safeRating =
@@ -108,21 +109,31 @@ const ReviewsAndRating = ({
         </p>
       )}
       <div className="flex items-center justify-between mb-8">
-        <div className="text-5xl font-semibold text-slate-900">
-          {averageRating.toFixed(1)}/5
-        </div>
-        <div className="text-right">
-          <div className="flex items-center justify-end gap-1 mb-1">
-            {renderStars(averageRating)}
+        {loading ? (
+          <div className="flex w-full items-center justify-between animate-pulse">
+            <div className="h-10 w-28 rounded bg-gray-200 dark:bg-gray-700" />
+            <div className="space-y-2 text-right">
+              <div className="h-4 w-24 rounded bg-gray-200 dark:bg-gray-700 ml-auto" />
+              <div className="h-3 w-32 rounded bg-gray-200 dark:bg-gray-700 ml-auto" />
+            </div>
           </div>
-          <p className="text-sm text-slate-600">
-            {reviewsCount ? `${reviewsCount}+ Reviews` : "No reviews yet"}
-          </p>
-        </div>
+        ) : (
+          <>
+            <div className="text-5xl font-semibold text-slate-900">
+              {averageRating.toFixed(1)}/5
+            </div>
+            <div className="text-right">
+              <div className="flex items-center justify-end gap-1 mb-1">
+                {renderStars(averageRating)}
+              </div>
+              <p className="text-sm text-slate-600">
+                {reviewsCount ? `${reviewsCount}+ Reviews` : "No reviews yet"}
+              </p>
+            </div>
+          </>
+        )}
       </div>
-      {loading && (
-        <p className="text-center text-sm text-slate-500">Loading reviews...</p>
-      )}
+      {loading && <ReviewsLoading />}
       {!loading && normalizedReviews.length === 0 && (
         <p className="text-center text-sm text-slate-500">
           No reviews have been added for this doctor yet.

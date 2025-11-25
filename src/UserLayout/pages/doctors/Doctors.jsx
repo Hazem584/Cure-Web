@@ -6,6 +6,7 @@ import FilterOptions from "./components/FilterOptions";
 import NextPageButton from "./components/NextPageButton";
 import DoctorTypes from "./components/DoctorTypes";
 import Top from "./components/Top";
+import DoctorsLoading from "./components/DoctorsLoading";
 
 const getApiBaseUrl = () => {
   const base =
@@ -23,6 +24,7 @@ const Doctors = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     const controller = new AbortController();
 
     const fetchDoctors = async () => {
@@ -51,19 +53,27 @@ const Doctors = () => {
             ? payload.doctors
             : [];
 
-        setDoctors(normalizedDoctors);
+        if (isMounted) {
+          setDoctors(normalizedDoctors);
+        }
       } catch (err) {
-        if (err.name !== "AbortError") {
+        if (err.name === "AbortError") return;
+        if (isMounted) {
           setError(err.message || "Something went wrong, please try again.");
         }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchDoctors();
 
-    return () => controller.abort();
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
   const hasDoctors = useMemo(() => doctors && doctors.length > 0, [doctors]);
@@ -82,11 +92,7 @@ const Doctors = () => {
               Choose Specialties
             </h1>
             <DoctorTypes />
-            {loading && (
-              <p className="text-gray-500 dark:text-gray-300">
-                Loading doctors...
-              </p>
-            )}
+            {loading && !error && <DoctorsLoading />}
             {error && (
               <p className="text-red-500 dark:text-red-300" role="alert">
                 {error}
