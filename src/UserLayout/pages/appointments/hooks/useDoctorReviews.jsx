@@ -41,13 +41,13 @@ const enrichReviewWithUser = (review) => {
     reviewerName: review.reviewerName || review.name || userName,
     avatar:
       review.avatar ||
-      review?.patient?.avatar ||
+      review?.patient?.avatarUrl ||
       review?.patient?.image ||
       review?.patient?.profileImage ||
       review?.patient?.profilePicture ||
       review?.patient?.profilePic ||
       review?.patient?.photo ||
-      review?.user?.avatar ||
+      review?.user?.avatarUrl ||
       review?.user?.image ||
       review?.user?.profileImage ||
       review?.user?.profilePicture ||
