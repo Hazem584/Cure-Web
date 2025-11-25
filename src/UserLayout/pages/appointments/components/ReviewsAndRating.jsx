@@ -161,13 +161,34 @@ const ReviewsAndRating = ({
           } = review;
 
           const displayName =
-            name || reviewerName || patient?.name || user?.name || "Anonymous";
+            name ||
+            reviewerName ||
+            patient?.name ||
+            user?.name ||
+            user?.fullName ||
+            user?.username ||
+            "Anonymous";
           const displayMessage = comment || message || "No comment provided.";
           const displayRating =
             typeof reviewRating === "number" ? reviewRating : averageRating;
           const formattedDate = createdAt
             ? new Date(createdAt).toLocaleDateString()
             : "";
+          const displayAvatar =
+            avatar ||
+            patient?.avatar ||
+            patient?.image ||
+            patient?.profileImage ||
+            patient?.profilePicture ||
+            patient?.profilePic ||
+            patient?.photo ||
+            user?.avatar ||
+            user?.image ||
+            user?.profileImage ||
+            user?.profilePicture ||
+            user?.profilePic ||
+            user?.photo ||
+            "/doctor.png";
 
           return (
             <article
@@ -176,7 +197,7 @@ const ReviewsAndRating = ({
             >
               <div className="flex items-start gap-4">
                 <img
-                  src={avatar || "/doctor.png"}
+                  src={displayAvatar}
                   alt={`${displayName} avatar`}
                   className="h-16 w-16 rounded-full object-cover flex-shrink-0"
                   loading="lazy"
