@@ -54,7 +54,7 @@ const getOneUser = async () => {
   const token = getAuthToken();
   try {
     const { data } = await axios.get(`${API_BASE_URL}user/get_one_user`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { authorization: `${token}` },
     });
     return data;
   } catch (err) {
@@ -112,40 +112,45 @@ const handleDeleteAccount = async (id) => {
 };
 
 const ProfileForm = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [age, setAge] = useState(0);
+  const [userInfo, setUserInfo] = useState({
+    imgURL:"",
+    name:"",
+    email:"",
+    phone:"",
+    age:"",
+  })
   const [focusedPhone, setFocusedPhone] = useState(false);
-  const isPhoneActive = focusedPhone || phone !== "";
+  const isPhoneActive = focusedPhone || userInfo.phone !== "";
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const data = await getOneUser("69299ddeec17410328b9151d");
-      if (data) {
-        setFullName(data.name);
-        setEmail(data.email);
-        setAddress(data.address);
-        setPhone(data.phone);
-        setAge(data.age);
-      }
-    };
     fetchUser();
   }, []);
 
-  const handleEdit = async (id) => {
-    if (!fullName || !email || !address || !phone || !age) {
+
+  const fetchUser = async () => {
+      const data = await getOneUser();
+      if (data) {
+        console.log(data);
+        setUserInfo(prev => ({
+      ...prev,
+      ...data.data,
+    }));
+      return data
+      }
+      
+    };
+  const handleEdit = async () => {
+    if (!userInfo.name || !userInfo.email || !userInfo.address || !userInfo.phone || !userInfo.age) {
       toast.error("Please fill all fields!", { position: "top-right", autoClose: 3000 });
       return;
     }
-    if (age < 18 || phone.length < 11) {
+    if (userInfo.age < 18 || userInfo.phone.length < 11) {
       toast.error("Please enter valid inputs!", { position: "top-right", autoClose: 3000 });
       return;
     }
 
-    const err = await handleUpdateUser(id, { name: fullName, email, address, phone, age });
+    const err = await handleUpdateUser();
     if (!err.response) {
       setEditMode(false);
       toast.success("Profile updated!", { position: "top-right", autoClose: 3000 });
@@ -160,18 +165,18 @@ const ProfileForm = () => {
 
   return (
     <div className="flex flex-col gap-3 w-full pb-6">
-      <FloatingInputWithIcon icon={FaUser} label="Full Name" value={fullName} disabled={!editMode} onChange={(e) => setFullName(e.target.value)} />
-      <FloatingInputWithIcon icon={FaEnvelope} label="Email Address" type="email" value={email} disabled={!editMode} onChange={(e) => setEmail(e.target.value)} />
-      <FloatingInputWithIcon icon={FaMapMarkerAlt} label="Address" value={address} disabled={!editMode} onChange={(e) => setAddress(e.target.value)} />
+      <FloatingInputWithIcon icon={FaUser} label="Full Name" value={userInfo.name} disabled={!editMode} onChange={(e) => setUserInfo({...userInfo,name:e.target.value})} />
+      <FloatingInputWithIcon icon={FaEnvelope} label="Email Address" type="email" value={userInfo.email} disabled={!editMode} onChange={(e) => setUserInfo({...userInfo,email:e.target.value})} />
+      <FloatingInputWithIcon icon={FaMapMarkerAlt} label="Address" value={userInfo.address} disabled={!editMode} onChange={(e) => setUserInfo({...userInfo,address:e.target.value})} />
 
       <div className="relative w-full mb-6">
-        {phone && <label className="block text-gray-500 mb-1 text-sm font-medium">Phone Number</label>}
+        {userInfo.phone && <label className="block text-gray-500 mb-1 text-sm font-medium">Phone Number</label>}
         <div onFocus={() => setFocusedPhone(true)} onBlur={() => setFocusedPhone(false)} className={`border rounded-lg transition-all duration-300 ${isPhoneActive && editMode ? "border-blue-500 ring-1 ring-blue-300" : "border-gray-300"}`}>
           <PhoneInput
             country={"eg"}
-            value={phone}
+            value={userInfo.phone}
             disabled={!editMode}
-            onChange={(value) => setPhone(value)}
+            onChange={(value) => setInfo({...userInfo,phone:e.target.value})}
             inputStyle={{ width: "100%", height: "48px", border: "none", color: "#555", paddingLeft: "40px", background: "transparent", fontSize: "15px" }}
             buttonStyle={{ border: "none", background: "transparent", left: "10px" }}
             containerStyle={{ width: "100%" }}
@@ -180,12 +185,12 @@ const ProfileForm = () => {
       </div>
 
       <div className="w-72">
-        <Input label="Age" value={age} onChange={(e) => setAge(Number(e.target.value))} type="number" disabled={!editMode} />
+        <Input label="Age" value={userInfo.age} onChange={(e) => setInfo({...userInfo,age:e.target.value})} type="number" disabled={!editMode} />
       </div>
 
       <Button
         className={`w-full rounded-md mt-4 ${editMode ? "bg-green-600" : "bg-blue-900"}`}
-        onClick={() => (editMode ? handleEdit("6914960bd7fa7d80b92963e9") : setEditMode(true))}
+        onClick={() => (editMode ? handleEdit() : setEditMode(true))}
       >
         {editMode ? "Save" : "Edit Profile"}
       </Button>
