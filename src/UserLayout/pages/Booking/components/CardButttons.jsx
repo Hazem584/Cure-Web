@@ -2,25 +2,9 @@ import React from "react";
 import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-const showAlert = () => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, cancel it!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "Canceled!",
-        text: "Your file has been canceled.",
-        icon: "success",
-      });
-    }
-  });
-};
+import axios from "axios";
+const URL = import.meta.env.VITE_API_URL;
+
 const CardButttons = ({ status, id }) => {
   let FirstButton = "";
   let SecondButton = "";
@@ -36,6 +20,55 @@ const CardButttons = ({ status, id }) => {
     FirstButton = "Book again";
     SecondButton = "Support";
   }
+  const showAlert = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (!result.isConfirmed) return;
+      const token = localStorage.getItem("userToken");
+      if (!token) {
+        return Swal.fire({
+          title: "Unauthorized",
+          text: "You must be logged in first!",
+          icon: "error",
+        });
+      }
+
+      const response = await axios.delete(
+        `${URL}/appointments/deleteAppointments`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          data: { appointmentId: id },
+        }
+      );
+
+      Swal.fire({
+        title: "Deleted!",
+        text: response.data.message,
+        icon: "success",
+      });
+    } catch (err) {
+      console.log("Delete Error:", err);
+      const errorMessage =
+        err.response?.data?.message || "Something went wrong while deleting.";
+      Swal.fire({
+        title: "Error!",
+        text: errorMessage,
+        icon: "error",
+      });
+    }
+  };
 
   return (
     <div className="flex gap-8 [@media(max-width:639px)]:justify-between ">
