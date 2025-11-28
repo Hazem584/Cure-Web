@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Swal from "sweetalert2";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import ProfileHeader from "./ProfileHeader";
 
 const FloatingInputWithIcon = ({ label, type = "text", icon: Icon, value, onChange, disabled = false, error }) => {
   const [focused, setFocused] = useState(false);
@@ -113,7 +114,7 @@ const handleDeleteAccount = async (id) => {
 
 const ProfileForm = () => {
   const [userInfo, setUserInfo] = useState({
-    imgURL:"",
+    imgURL:"https://i.postimg.cc/0yZR6x8X/145856997-296fe121-5dfa-43f4-98b5-db50019738a7.jpg",
     name:"",
     email:"",
     phone:"",
@@ -164,6 +165,9 @@ const ProfileForm = () => {
   };
 
   return (
+
+    <>
+     <ProfileHeader avatarUrl={userInfo.imgURL} name={userInfo.name} address={userInfo.address}/>
     <div className="flex flex-col gap-3 w-full pb-6">
       <FloatingInputWithIcon icon={FaUser} label="Full Name" value={userInfo.name} disabled={!editMode} onChange={(e) => setUserInfo({...userInfo,name:e.target.value})} />
       <FloatingInputWithIcon icon={FaEnvelope} label="Email Address" type="email" value={userInfo.email} disabled={!editMode} onChange={(e) => setUserInfo({...userInfo,email:e.target.value})} />
@@ -201,6 +205,7 @@ const ProfileForm = () => {
 
       <ToastContainer />
     </div>
+    </>
   );
 };
 

@@ -3,23 +3,24 @@ import { Avatar, Typography, IconButton } from "@material-tailwind/react";
 import { CameraIcon, MapPinIcon } from "@heroicons/react/24/solid";
 
 const ProfileHeader = ({
-  name = "Seif Mohamed",
-  address = "129, El-Nasr Street, Cairo",
+  name = "name",
+  address = "address",
+  avatarUrl
 }) => {
-  const [avatarUrl, setAvatarUrl] = useState(
-    "https://i.postimg.cc/hhFXM7tG/ba06b3e7882ffb9e60838270ea0dd9b82b74eda6.jpg"
-  );
+  // const [avatarUrl, setAvatarUrl] = useState(
+  //   "https://i.postimg.cc/hhFXM7tG/ba06b3e7882ffb9e60838270ea0dd9b82b74eda6.jpg"
+  // );
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setAvatarUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       setAvatarUrl(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   return (
     <div className="flex flex-col items-center mb-4 mt-2">
@@ -28,7 +29,6 @@ const ProfileHeader = ({
         accept="image/*"
         id="avatarInput"
         style={{ display: "none" }}
-        onChange={handleImageChange}
       />
 
       <div className="relative">
