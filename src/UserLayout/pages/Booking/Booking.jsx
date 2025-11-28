@@ -6,23 +6,22 @@ import Footer from "../../../components/footer/Footer";
 import Calendar from "./components/Calendar";
 import useAxios from "../../../hooks/useAxios";
 import withAuthUser from "../../../components/hoc/withAuthUser";
-const URL = import.meta.env.VITE_API_URL;
+const URL = import.meta.env.VITE_API_BASE_URL;
 
 const Booking = () => {
-  const token = localStorage.getItem("userToken");
+  const token = localStorage.getItem("token");
   const {
     data: Doctors,
     loading,
     error,
-  } = useAxios(`${URL}/appointments/getAppointments`, token);
+  } = useAxios(`${URL}appointments/getAppointments`, token);
   const [activeButton, setActiveButton] = useState("All");
   const [selectedDate, setSelectedDate] = useState(null);
-  console.log(Doctors);
   if (loading) return <p>Loading...</p>;
 
   if (error) return <p>Error: {error}</p>;
 
-  const filteredDoctors = Doctors.data.filter(
+  const filteredDoctors = Doctors?.data?.filter(
     (doctor) =>
       (activeButton === "All" || doctor.status === activeButton) &&
       (!selectedDate || doctor.appointmentDate.includes(selectedDate))

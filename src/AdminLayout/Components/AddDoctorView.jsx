@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const URL = import.meta.env.VITE_API_URL;
+const URL = import.meta.env.VITE_API_BASE_URL;
 
 const AddDoctorView = () => {
   const [formData, setFormData] = useState({
@@ -46,7 +46,7 @@ const AddDoctorView = () => {
         });
       }
 
-      await axios.post(`${URL}/doctors/`, updatedDoctor, {
+      await axios.post(`${URL}doctors/`, updatedDoctor, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

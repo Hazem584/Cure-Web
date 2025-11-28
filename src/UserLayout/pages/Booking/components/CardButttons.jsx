@@ -3,7 +3,7 @@ import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
-const URL = import.meta.env.VITE_API_URL;
+const URL = import.meta.env.VITE_API_BASE_URL;
 
 const CardButttons = ({ status, id }) => {
   let FirstButton = "";
@@ -33,7 +33,7 @@ const CardButttons = ({ status, id }) => {
       });
 
       if (!result.isConfirmed) return;
-      const token = localStorage.getItem("userToken");
+      const token = localStorage.getItem("token");
       if (!token) {
         return Swal.fire({
           title: "Unauthorized",
@@ -43,7 +43,7 @@ const CardButttons = ({ status, id }) => {
       }
 
       const response = await axios.delete(
-        `${URL}/appointments/deleteAppointments`,
+        `${URL}appointments/deleteAppointments`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

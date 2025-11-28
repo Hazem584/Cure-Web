@@ -11,4 +11,3 @@ export const DOCTORS_API_URL = `${API_BASE_URL}doctors`;
 export const APPOINTMENTS_API_URL = `${API_BASE_URL}appointments`;
 export const LOGIN_URL = `${API_BASE_URL}auth/login`;
 export const SIGNUP_URL = `${API_BASE_URL}auth/register`;
-

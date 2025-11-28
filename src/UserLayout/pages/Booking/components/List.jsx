@@ -7,7 +7,7 @@ const List = ({ Doctors }) => {
       
     [@media(max-width:1020px)]:grid-cols-2 "
     >
-      {Doctors.map((Doctor) => (
+      {Doctors?.map((Doctor) => (
         <Card Doctor={Doctor} key={Doctor._id} />
       ))}
     </div>
