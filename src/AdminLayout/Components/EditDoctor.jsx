@@ -1,17 +1,28 @@
 import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import axios from "axios";
+
+const URL = import.meta.env.VITE_API_URL;
 
 const EditDoctor = () => {
   const location = useLocation();
-  const { id } = useParams();
   const { doctor } = location.state || {};
+  const { id } = useParams();
 
   const [formData, setFormData] = useState({
     name: doctor?.name || "",
     email: doctor?.email || "",
-    address: doctor?.address || "",
+    location: {
+      city: doctor?.location?.city || "",
+      address: doctor?.location?.address || "",
+    },
     phoneNumber: doctor?.phone || "",
-    image: doctor?.photo || "",
+    image: doctor?.image || "",
+    specialty: doctor?.specialty || "",
+    consultationPrice: doctor?.consultationPrice || "",
+    experience: doctor?.experience || "",
+    bio: doctor?.bio || "",
+    education: doctor?.education || "",
   });
 
   const [previewImage, setPreviewImage] = useState(null);
@@ -25,33 +36,21 @@ const EditDoctor = () => {
     }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result);
-        setFormData((prev) => ({
-          ...prev,
-          image: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Doctor Data:", formData);
-    setShowSuccess(true);
-    setFormData({
-      name: "",
-      email: "",
-      address: "",
-      phoneNumber: "",
-      image: "",
-    });
-    setPreviewImage(null);
+
+    const updatedDoctor = { ...formData };
+    try {
+      await axios.put(`${URL}/doctors/${id}`, updatedDoctor, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setShowSuccess(true);
+    } catch (err) {
+      console.log(err);
+    }
+
     setTimeout(() => {
       setShowSuccess(false);
     }, 5000);
@@ -61,10 +60,19 @@ const EditDoctor = () => {
     setFormData({
       name: "",
       email: "",
-      address: "",
+      location: {
+        city: "",
+        address: "",
+      },
       phoneNumber: "",
       image: "",
+      specialty: "",
+      consultationPrice: "",
+      experience: "",
+      bio: "",
+      education: "",
     });
+
     setPreviewImage(null);
   };
 
@@ -86,10 +94,12 @@ const EditDoctor = () => {
                 d="M5 13l4 4L19 7"
               />
             </svg>
+
             <div>
               <p className="font-semibold">Success!</p>
               <p className="text-sm">Doctor Edited successfully.</p>
             </div>
+
             <button
               onClick={() => setShowSuccess(false)}
               className="ml-4 text-white hover:text-gray-200"
@@ -120,6 +130,7 @@ const EditDoctor = () => {
           <p className="text-gray-600 dark:text-dark-textSecondary text-center mb-8">
             Fill in the details to edit the doctor
           </p>
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex flex-col items-center mb-6">
               <div className="relative w-32 h-32 mb-4">
@@ -147,15 +158,20 @@ const EditDoctor = () => {
                   </div>
                 )}
               </div>
-              <label className="cursor-pointer bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                <span>Choose Image</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </label>
+              <input
+                type="text"
+                name="image"
+                value={formData.image}
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    image: e.target.value,
+                  }));
+                  setPreviewImage(e.target.value);
+                }}
+                placeholder="Enter image URL (https://...)"
+                className="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              />
             </div>
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
@@ -185,7 +201,6 @@ const EditDoctor = () => {
                 className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
               />
             </div>
-
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
                 Phone Number
@@ -202,18 +217,102 @@ const EditDoctor = () => {
             </div>
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
+                City
+              </label>
+              <textarea
+                name="city"
+                value={formData.location.city}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    location: { ...formData.location, city: e.target.value },
+                  })
+                }
+                placeholder="Enter clinic address"
+                required
+                rows="2"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
                 Address
               </label>
               <textarea
                 name="address"
-                value={formData.address}
-                onChange={handleChange}
+                value={formData.location.address}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    location: { ...formData.location, address: e.target.value },
+                  })
+                }
                 placeholder="Enter clinic address"
+                required
+                rows="2"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Specialty
+              </label>
+              <input
+                type="text"
+                name="specialty"
+                value={formData.specialty}
+                onChange={handleChange}
+                placeholder="Enter the specialty"
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Consultation Price
+              </label>
+              <input
+                type="number"
+                name="consultationPrice"
+                value={formData.consultationPrice}
+                onChange={handleChange}
+                placeholder="Enter the consultation price"
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Experience Years
+              </label>
+              <input
+                type="number"
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+                placeholder="Enter the experience years"
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Bio
+              </label>
+              <textarea
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                placeholder="Enter Bio"
                 required
                 rows="3"
                 className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
               />
             </div>
+
             <div className="flex gap-4 pt-4">
               <button
                 type="submit"
@@ -221,6 +320,7 @@ const EditDoctor = () => {
               >
                 Edit Doctor
               </button>
+
               <button
                 type="button"
                 onClick={handleReset}
