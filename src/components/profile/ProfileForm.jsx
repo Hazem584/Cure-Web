@@ -47,13 +47,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.endsWith("/")
 
 const getAuthToken = () => {
   if (typeof window === "undefined") return null;
-  return window.localStorage.getItem("cure_token") || window.localStorage.getItem("token") || window.localStorage.getItem("authToken") || null;
+  return  window.localStorage.getItem("token") || window.localStorage.getItem("authToken") || null;
 };
 
-const getOneUser = async (id) => {
+const getOneUser = async () => {
   const token = getAuthToken();
   try {
-    const { data } = await axios.get(`${API_BASE_URL}user/get_one_user/${id}`, {
+    const { data } = await axios.get(`${API_BASE_URL}user/get_one_user`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;
@@ -123,7 +123,7 @@ const ProfileForm = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const data = await getOneUser("6914960bd7fa7d80b92963e9");
+      const data = await getOneUser("69299ddeec17410328b9151d");
       if (data) {
         setFullName(data.name);
         setEmail(data.email);
