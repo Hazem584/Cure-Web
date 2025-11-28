@@ -43,29 +43,31 @@ const AuthForm = () => {
 
     if (valid) {
       setLoading(true);
-       fetch(LOGIN_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      setLoading(false);
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        if (data.user.role === "admin") navigate("/admin");
-        else navigate("/");
-      } else {
-        setErrors({ ...newErrors, password: data.message || "Login failed" });
-      }
-    })
-    .catch((err) => {
-      setLoading(false);
-      setErrors({ ...newErrors, password: "Server error" });
-      console.error(err);
-    });
-
+      fetch(LOGIN_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          if (data.token) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+            if (data.user.role === "admin") navigate("/admin");
+            else navigate("/");
+          } else {
+            setErrors({
+              ...newErrors,
+              password: data.message || "Login failed",
+            });
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          setErrors({ ...newErrors, password: "Server error" });
+          console.error(err);
+        });
     }
   };
 

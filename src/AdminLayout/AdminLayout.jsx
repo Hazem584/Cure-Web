@@ -7,13 +7,13 @@ import AddDoctorView from "./Components/AddDoctorView";
 import EditDoctor from "./Components/EditDoctor";
 import useAxios from "../hooks/useAxios";
 
-const URL = import.meta.env.VITE_API_URL;
+const URL = import.meta.env.VITE_API_BASE_URL;
 import withAuthAdmin from "../components/hoc/withAuthAdmin";
 
 const AdminLayout = () => {
   const token = localStorage.getItem("token");
 
-  const { data: doctors, loading, error } = useAxios(`${URL}/doctors`, token);
+  const { data: doctors, loading, error } = useAxios(`${URL}doctors`, token);
 
   if (loading) return <p>Loading...</p>;
 

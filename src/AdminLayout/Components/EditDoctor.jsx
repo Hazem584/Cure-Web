@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 
-const URL = import.meta.env.VITE_API_URL;
+const URL = import.meta.env.VITE_API_BASE_URL;
 
 const EditDoctor = () => {
   const location = useLocation();
@@ -41,7 +41,7 @@ const EditDoctor = () => {
 
     const updatedDoctor = { ...formData };
     try {
-      await axios.put(`${URL}/doctors/${id}`, updatedDoctor, {
+      await axios.put(`${URL}doctors/${id}`, updatedDoctor, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

@@ -13,6 +13,7 @@ const Card = ({
     status,
   },
 }) => {
+  const date = appointmentDate?.slice(0, 10);
   return (
     <div className="border border-[#BBC1C7] dark:border-dark-borderDark  flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
       <div className="flex justify-between items-center mt-3 ">
@@ -25,7 +26,7 @@ const Card = ({
                 : "text-[#6D7379]"
             }`}
           >
-            {appointmentDate}
+            {date}
           </h1>
         </div>
         <h1
