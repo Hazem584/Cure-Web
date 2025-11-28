@@ -77,7 +77,7 @@ const EditDoctor = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-textPrimary">
+    <div className="min-h-screen bg-white dark:bg-dark-darkBg">
       {showSuccess && (
         <div className="fixed top-4 right-4 z-50 animate-slide-in ">
           <div className="bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 ">
@@ -123,11 +123,11 @@ const EditDoctor = () => {
       )}
 
       <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">
+        <div className="bg-white dark:bg-dark-bgSurface rounded-2xl  shadow-xl p-8">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-dark-textOnDark mb-2 text-center">
             Edit the Doctor
           </h1>
-          <p className="text-gray-600 text-center mb-8">
+          <p className="text-gray-600 dark:text-dark-textSecondary text-center mb-8">
             Fill in the details to edit the doctor
           </p>
 
@@ -184,7 +184,7 @@ const EditDoctor = () => {
                 onChange={handleChange}
                 placeholder="Enter doctor's name"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
               />
             </div>
             <div>
@@ -198,7 +198,7 @@ const EditDoctor = () => {
                 onChange={handleChange}
                 placeholder="doctor@example.com"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
               />
             </div>
             <div>
@@ -212,7 +212,7 @@ const EditDoctor = () => {
                 onChange={handleChange}
                 placeholder="+20 123 456 7890"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
               />
             </div>
             <div>
@@ -309,7 +309,7 @@ const EditDoctor = () => {
                 placeholder="Enter Bio"
                 required
                 rows="3"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
+                className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
               />
             </div>
 

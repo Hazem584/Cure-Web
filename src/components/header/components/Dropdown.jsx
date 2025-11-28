@@ -26,12 +26,16 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
     },
   ];
   const closeMenu = () => setIsMenuOpen(false);
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("admin-cure");
+  };
   return (
     <>
       <MenuItem>
         <div className="user flex !hover:border-0 justify-between items-center justify-items-center ">
           <div className="flex items-center gap-3">
-            <Link to="/">
+            <Link to="/profile">
               <div className="flex items-center gap-4">
                 <Avatar
                   src="https://i.postimg.cc/hhFXM7tG/ba06b3e7882ffb9e60838270ea0dd9b82b74eda6.jpg"
@@ -63,7 +67,12 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
         return (
           <MenuItem
             key={label}
-            onClick={closeMenu}
+            onClick={() => {
+              if (label === "Log Out") {
+                handleLogOut();
+              }
+              closeMenu();
+            }}
             className={`flex items-center group justify-between gap-2 rounded text-secondry active:bg-blue-gray-300 ${
               isLastItem
                 ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -72,7 +81,11 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
           >
             <div className="flex gap-2">
               {React.createElement(icon, {
-                className: `h-6 w-6 ${label=="Settings" ? "group-hover:rotate-180 duaration-200 transition-transform":""} ${isLastItem ? "text-red-500" : ""}`,
+                className: `h-6 w-6 ${
+                  label == "Settings"
+                    ? "group-hover:rotate-180 duaration-200 transition-transform"
+                    : ""
+                } ${isLastItem ? "text-red-500" : ""}`,
               })}
               <Typography
                 as="span"

@@ -5,6 +5,7 @@ import List from "./components/List";
 import Footer from "../../../components/footer/Footer";
 import Calendar from "./components/Calendar";
 import useAxios from "../../../hooks/useAxios";
+import withAuthUser from "../../../components/hoc/withAuthUser";
 const URL = import.meta.env.VITE_API_URL;
 
 const Booking = () => {
@@ -54,4 +55,5 @@ const Booking = () => {
   );
 };
 
-export default Booking;
+const ProtectedBooking = withAuthUser(Booking);
+export default ProtectedBooking;

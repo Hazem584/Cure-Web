@@ -1,31 +1,79 @@
-
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF, FaApple } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
+import { LOGIN_URL } from "../../UserLayout/pages/appointments/apiConfig";
 const AuthForm = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [user, setUser] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setUser({ ...user, [id]: value });
+    setErrors({ ...errors, [id]: "" });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (email === "admin@gmail.com" && password === "123456") {
-      navigate("/home"); 
-    } else {
-      setError("Invalid email or password!");
+    let newErrors = { email: "", password: "" };
+    let valid = true;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!user.email) {
+      newErrors.email = "Please enter your email";
+      valid = false;
+    } else if (!emailRegex.test(user.email)) {
+      newErrors.email = "Please enter a valid email";
+      valid = false;
+    }
+
+    if (!user.password) {
+      newErrors.password = "Please enter your password";
+      valid = false;
+    } else if (user.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (valid) {
+      setLoading(true);
+       fetch(LOGIN_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setLoading(false);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        if (data.user.role === "admin") navigate("/admin");
+        else navigate("/");
+      } else {
+        setErrors({ ...newErrors, password: data.message || "Login failed" });
+      }
+    })
+    .catch((err) => {
+      setLoading(false);
+      setErrors({ ...newErrors, password: "Server error" });
+      console.error(err);
+    });
+
     }
   };
 
   return (
     <div className="flex items-center justify-center lg:block">
       <form
-        onSubmit={handleSubmit}
         className="w-full max-w-md bg-transparent rounded-lg mt-28"
+        onSubmit={handleSubmit}
       >
         <h2 className="text-3xl font-semibold text-center text-gray-900 mb-2">
           Sign in
@@ -35,43 +83,51 @@ const AuthForm = () => {
           Please provide all information required to access your account
         </p>
 
-        {error && (
+        {/* {error && (
           <p className="text-red-500 text-sm text-center mb-4">{error}</p>
-        )}
+        )} */}
 
         <div className="mb-5">
-          <label
-            htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Email
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            {errors.email ? (
+              <span className="text-red-500">{errors.email}</span>
+            ) : (
+              "Email"
+            )}
           </label>
           <input
             type="email"
             id="email"
             placeholder="Email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border border-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            value={user.email}
+            onChange={handleChange}
+            className={`w-full p-2 border rounded-lg focus:ring-2 outline-none ${
+              errors.email
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-500 focus:ring-blue-500"
+            }`}
           />
         </div>
 
         <div className="mb-3">
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Password
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            {errors.password ? (
+              <span className="text-red-500">{errors.password}</span>
+            ) : (
+              "Password"
+            )}
           </label>
           <input
             type="password"
             id="password"
             placeholder="Password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border border-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            value={user.password}
+            onChange={handleChange}
+            className={`w-full p-2 border rounded-lg focus:ring-2 outline-none ${
+              errors.password
+                ? "border-red-500 focus:ring-red-500"
+                : "border-gray-500 focus:ring-blue-500"
+            }`}
           />
         </div>
 
@@ -83,9 +139,12 @@ const AuthForm = () => {
 
         <button
           type="submit"
-          className="w-full py-3.5 bg-blue-900 text-white font-medium rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 transition-all"
+          disabled={loading}
+          className={`w-full py-3.5 bg-blue-900 text-white font-medium rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 transition-all ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Sign in
+          {loading ? "Signing in..." : "Sign in"}
         </button>
 
         <div className="flex items-center my-6">
@@ -117,7 +176,10 @@ const AuthForm = () => {
 
         <p className="text-center text-gray-600 text-sm">
           Don’t have an account?{" "}
-          <a href="/signup" className="text-blue-700 font-medium hover:underline">
+          <a
+            href="/signup"
+            className="text-blue-700 font-medium hover:underline"
+          >
             Sign up
           </a>
         </p>

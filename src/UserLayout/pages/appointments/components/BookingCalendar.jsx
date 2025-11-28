@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { HiOutlineCalendar } from "react-icons/hi";
 import PaymentModal from "./PaymentModal";
-import { FaCcVisa, FaPaypal } from "react-icons/fa";
-import { SiApplepay } from "react-icons/si";
-
-const getFormattedDate = (date) =>
-  date.toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
+import { formatFullDate } from "../utils/dateUtils";
 
 const BookingCalendar = ({
   dates,
@@ -18,15 +10,19 @@ const BookingCalendar = ({
   selectedTime,
   onSelectDate,
   onSelectTime,
+  doctor,
+  onCreateAppointment,
 }) => {
-  const formattedSelectedDate = selectedDate
-    ? getFormattedDate(selectedDate)
-    : "";
+  const formattedSelectedDate = selectedDate ? formatFullDate(selectedDate) : "";
   const [showPaymentSummary, setShowPaymentSummary] = useState(false);
 
   const selectedAppointment =
     selectedDate && selectedTime
-      ? { date: formattedSelectedDate, time: selectedTime }
+      ? {
+          displayDate: formattedSelectedDate,
+          time: selectedTime,
+          dateValue: selectedDate,
+        }
       : null;
 
   const handleBook = () => {
@@ -45,7 +41,7 @@ const BookingCalendar = ({
       </div>
       <div className="mt-4 rounded-3xl border border-slate-100 dark:border-dark-borderDark bg-slate-50 p-6 max-[300px]:p-4">
         <div className="flex items-center justify-between gap-3 rounded-full bg-slate-100 px-4 py-2 text-sm text-slate-600 max-[300px]:flex-col max-[300px]:items-start max-[300px]:gap-2 max-[300px]:rounded-3xl max-[300px]:px-3">
-          <h2 className="text-xl font-semibold text-slate-900 dark:text-dark-textOnDark flex items-center gap-2">
+          <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-900 dark:text-dark-textOnDark">
             Choose date and time
           </h2>
           <div className="flex items-center gap-2 text-slate-600 dark:text-dark-textOnDark">
@@ -95,10 +91,10 @@ const BookingCalendar = ({
             );
           })}
         </div>
-        <div className="mt-6 flex flex-col gap-4 border-t border-slate-200  pt-6 md:flex-row md:items-center md:justify-between max-[300px]:gap-3">
+        <div className="mt-6 flex flex-col gap-4 border-t border-slate-200 pt-6 md:flex-row md:items-center md:justify-between max-[300px]:gap-3">
           <div className="text-sm text-slate-500 dark:text-dark-textSecondary max-[300px]:text-xs max-[300px]:leading-5">
             {selectedDate && selectedTime
-              ? `${formattedSelectedDate} · ${selectedTime}`
+              ? `${formattedSelectedDate} at ${selectedTime}`
               : "Select a date and time"}
           </div>
           <button
@@ -114,7 +110,9 @@ const BookingCalendar = ({
       {showPaymentSummary && selectedAppointment && (
         <PaymentModal
           appointment={selectedAppointment}
+          doctor={doctor}
           onClose={() => setShowPaymentSummary(false)}
+          onCreateAppointment={onCreateAppointment}
         />
       )}
     </section>

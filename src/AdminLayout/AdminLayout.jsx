@@ -8,6 +8,7 @@ import EditDoctor from "./Components/EditDoctor";
 import useAxios from "../hooks/useAxios";
 
 const URL = import.meta.env.VITE_API_URL;
+import withAuthAdmin from "../components/hoc/withAuthAdmin";
 
 const AdminLayout = () => {
   const token = localStorage.getItem("token");
@@ -34,4 +35,5 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+const ProtectedAdmin = withAuthAdmin(AdminLayout);
+export default ProtectedAdmin;

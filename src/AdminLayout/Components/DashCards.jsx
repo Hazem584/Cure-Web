@@ -58,7 +58,7 @@ const DashCards = ({ doctor, reFetch }) => {
 
   return (
     <div>
-      <Card className="">
+      <Card className="dark:bg-dark-bgSurface dark:border dark:border-dark-borderDark">
         <CardBody>
           <div className="">
             <div
@@ -68,14 +68,18 @@ const DashCards = ({ doctor, reFetch }) => {
               <div className="flex items-center gap-x-3">
                 <Avatar size="sm" src={doctor.image} alt={doctor.name} />
                 <div className="flex flex-col mt-4">
-                  <Typography color="blue-gray" variant="h6">
+                  <Typography
+                    color="blue-gray"
+                    className="dark:text-dark-textOnDark"
+                    variant="h6"
+                  >
                     {doctor.name}
                   </Typography>
 
                   <Typography
                     color="gray"
                     variant="h6"
-                    className="text-gray-700 text-sm sm:text-base"
+                    className="text-gray-700 text-sm sm:text-base dark:text-dark-textSecondary"
                   >
                     {doctor.email}
                   </Typography>

@@ -1,8 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { IoClose } from "react-icons/io5";
+import ConfirmationModal from "./ConfirmationModal";
 
-const PaymentModal = ({ appointment, onClose }) => {
-  const [selectedPayment, setSelectedPayment] = useState("credit-card");
+const PaymentModal = ({
+  appointment,
+  doctor,
+  onClose,
+  onCreateAppointment,
+}) => {
+  const [patientName, setPatientName] = useState("");
+  const [patientPhone, setPatientPhone] = useState("");
+  const [notes, setNotes] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [successPayload, setSuccessPayload] = useState(null);
 
   useEffect(() => {
     const handleKeydown = (event) => {
@@ -12,300 +23,213 @@ const PaymentModal = ({ appointment, onClose }) => {
     };
 
     window.addEventListener("keydown", handleKeydown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeydown);
-    };
+    return () => window.removeEventListener("keydown", handleKeydown);
   }, [onClose]);
+
+  const doctorImage =
+    doctor?.image ||
+    doctor?.photo ||
+    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80";
+  const doctorName = doctor?.name || "Doctor";
+  const doctorSpecialty = doctor?.specialty || "Specialty";
+  const doctorLocation =
+    doctor?.location?.address ||
+    doctor?.location?.city ||
+    "Clinic location is not available yet.";
+  const consultationPrice = useMemo(() => {
+    if (typeof doctor?.consultationPrice === "number") {
+      return `EGP ${doctor.consultationPrice}`;
+    }
+    return "Not provided";
+  }, [doctor]);
 
   if (!appointment) {
     return null;
   }
 
+  const handleSubmit = async () => {
+    if (!appointment?.dateValue) {
+      setError("Please select a date and time before booking.");
+      return;
+    }
+    if (!patientName.trim() || !patientPhone.trim()) {
+      setError("Patient name and phone are required.");
+      return;
+    }
+    if (typeof onCreateAppointment !== "function") {
+      setError("Booking is currently unavailable. Please try again later.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const result = await onCreateAppointment({
+        appointmentDate: appointment.dateValue,
+        appointmentTime: appointment.time,
+        paymentMethod: "clinic",
+        patientName: patientName.trim(),
+        patientPhone: patientPhone.trim(),
+        notes: notes.trim(),
+      });
+
+      setSuccessPayload(result || {});
+    } catch (err) {
+      setError(err.message || "Unable to book appointment, please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleConfirmationClose = () => {
+    setSuccessPayload(null);
+    onClose?.();
+  };
+
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-4 py-8"
-      role="dialog"
-      aria-modal="true"
-    >
+    <>
       <div
-        className="absolute inset-0 h-full w-full cursor-pointer"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 w-full max-w-lg space-y-6 rounded-3xl bg-white  dark:bg-dark-darkBg dark:border-2 dark:text-dark-textOnDark dark:border-dark-borderDark p-8 shadow-2xl">
-        <button
-          type="button"
+        className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/60 px-4 py-8"
+        role="dialog"
+        aria-modal="true"
+      >
+        <div
+          className="absolute inset-0 cursor-pointer"
           onClick={onClose}
-          className="absolute right-6 top-6 rounded-full p-2 text-slate-400 transition hover:text-slate-600"
-          aria-label="Close"
-        >
-          <IoClose size={24} />
-        </button>
-
-        {/* Doctor Info */}
-        <div className="flex items-center gap-4">
-          <div className="relative h-20 w-20 overflow-hidden rounded-full">
-            <img
-              src="/doctor.png"
-              alt="Dr. Jessica Turner"
-              className="h-full w-full object-cover"
-            />
-            <div className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full bg-blue-500">
-              <svg
-                className="h-4 w-4 text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-slate-900">
-              Dr. Jessica Turner
-            </h3>
-            <p className="text-sm text-slate-500 dark:text-dark-textSecondary">Pulmonologist</p>
-            <div className="mt-1 flex items-center gap-1 text-sm text-slate-500 dark:text-dark-textSecondary">
-              <svg
-                className="h-4 w-4 text-blue-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              <span>129,El-Nasr Street, Cairo</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Appointment Info */}
-        <div className="flex items-center justify-between rounded-2xl bg-slate-50 p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl dark:text-dark-textSecondary">
-              <svg
-                className="h-5 w-5 text-blue-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-            </div>
-            <span className="font-medium text-slate-900">
-              {appointment.date} - {appointment.time}
-            </span>
-          </div>
+          aria-hidden="true"
+        />
+        <div className="relative z-10 w-full max-w-lg space-y-6 rounded-3xl bg-white p-8 shadow-2xl dark:border-2 dark:border-dark-borderDark dark:bg-dark-darkBg dark:text-dark-textOnDark">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full px-4 py-1.5 text-sm font-medium text-blue-500 transition hover:bg-blue-50"
+            className="absolute right-6 top-6 rounded-full p-2 text-slate-400 transition hover:text-slate-600"
+            aria-label="Close"
           >
-            Reschedule
+            <IoClose size={24} />
           </button>
-        </div>
 
-        {/* Payment Method */}
-        <div>
-          <h4 className="mb-4 text-lg font-semibold text-slate-900 dark:text-dark-textOnDark">
-            Payment Method
-          </h4>
+          <div className="flex items-center gap-4">
+            <div className="relative h-20 w-20 overflow-hidden rounded-full border border-slate-100">
+              <img
+                src={doctorImage}
+                alt={`Photo of ${doctorName}`}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-dark-textOnDark">
+                {doctorName}
+              </h3>
+              <p className="text-sm text-slate-500 dark:text-dark-textSecondary">
+                {doctorSpecialty}
+              </p>
+              <div className="mt-1 text-sm text-slate-500 dark:text-dark-textSecondary">
+                {doctorLocation}
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-slate-50 p-4 dark:bg-dark-bgSurface">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase text-slate-500">Appointment</p>
+                <p className="text-base font-semibold text-slate-900 dark:text-dark-textOnDark">
+                  {appointment.displayDate} - {appointment.time}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-sm font-medium text-blue-500 hover:underline"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
 
           <div className="space-y-3">
-            {/* Credit Card */}
-            <label
-              className={`flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all ${
-                selectedPayment === "credit-card"
-                  ? "border-transparent bg-green-50 dark:bg-dark-bgSurface dark:border-dark-borderDark"
-                  : "border-slate-200 bg-white hover:border-slate-300 dark:bg-dark-darkBg dark:border-transparent"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className={`flex h-6 w-6 items-center justify-center rounded-full border-2 ${
-                    selectedPayment === "credit-card"
-                      ? "border-green-500 bg-green-500"
-                      : "border-slate-300 bg-white "
-                  }`}
-                >
-                  {selectedPayment === "credit-card" && (
-                    <svg
-                      className="h-4 w-4 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <input
-                  type="radio"
-                  name="payment"
-                  value="credit-card"
-                  checked={selectedPayment === "credit-card"}
-                  onChange={() => setSelectedPayment("credit-card")}
-                  className="sr-only"
-                />
-                <span className="font-medium text-slate-900">Credit Card</span>
-              </div>
-              <div className="flex h-8 w-12 items-center justify-center rounded bg-blue-600 text-white font-bold text-xs">
-                VISA
-              </div>
-            </label>
+            <h4 className="text-sm font-semibold text-slate-700 dark:text-dark-textOnDark">
+              Patient details
+            </h4>
+            <input
+              type="text"
+              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-dark-borderDark dark:bg-dark-bgSurface dark:text-dark-textOnDark"
+              placeholder="Patient name"
+              value={patientName}
+              onChange={(event) => setPatientName(event.target.value)}
+            />
+            <input
+              type="tel"
+              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-dark-borderDark dark:bg-dark-bgSurface dark:text-dark-textOnDark"
+              placeholder="Patient phone"
+              value={patientPhone}
+              onChange={(event) => setPatientPhone(event.target.value)}
+            />
+            <textarea
+              rows={3}
+              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-dark-borderDark dark:bg-dark-bgSurface dark:text-dark-textOnDark"
+              placeholder="Notes (optional)"
+              value={notes}
+              onChange={(event) => setNotes(event.target.value)}
+            />
+          </div>
 
-            {/* PayPal */}
-            <label
-              className={`flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all ${
-                selectedPayment === "paypal"
-                  ? "border-transparent bg-green-50 dark:bg-dark-bgSurface dark:border-dark-borderDark"
-                  : "border-slate-200 bg-white hover:border-slate-300 dark:bg-dark-darkBg dark:border-transparent"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className={`flex h-6 w-6 items-center justify-center rounded-full border-2 ${
-                    selectedPayment === "paypal"
-                      ? "border-green-500 bg-green-500"
-                      : "border-slate-300 bg-white"
-                  }`}
-                >
-                  {selectedPayment === "paypal" && (
-                    <svg
-                      className="h-4 w-4 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <input
-                  type="radio"
-                  name="payment"
-                  value="paypal"
-                  checked={selectedPayment === "paypal"}
-                  onChange={() => setSelectedPayment("paypal")}
-                  className="sr-only"
-                />
-                <span className="font-medium text-slate-900">PayPal</span>
+          <div className="space-y-3">
+            <h4 className="text-sm font-semibold text-slate-700 dark:text-dark-textOnDark">
+              Payment method
+            </h4>
+            <div className="flex items-center justify-between rounded-2xl border-2 border-blue-100 bg-blue-50/70 px-4 py-3 dark:border-dark-borderDark dark:bg-dark-bgSurface">
+              <div>
+                <p className="text-base font-semibold text-slate-900 dark:text-dark-textOnDark">
+                  Pay in clinic
+                </p>
+                <p className="text-xs text-slate-500 dark:text-dark-textSecondary">
+                  Pay at the clinic during your visit
+                </p>
               </div>
-              <svg
-                className="h-6 w-6 text-blue-700"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.773.773 0 0 1 .76-.633h8.434c3.02 0 4.964 1.537 5.033 4.46.05 2.066-.97 3.557-3.062 4.46 2.092.903 2.592 2.394 2.542 4.46-.05 2.923-1.994 4.964-5.014 4.964l-6.56.006z" />
-              </svg>
-            </label>
+              <span className="rounded-full bg-blue-500 px-3 py-1 text-xs font-semibold text-white">
+                Cash
+              </span>
+            </div>
+          </div>
 
-            {/* Apple Pay */}
-            <label
-              className={`flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all ${
-                selectedPayment === "apple-pay"
-                  ? "border-transparent bg-green-50 dark:bg-dark-bgSurface dark:border-dark-borderDark"
-                  : "border-slate-200 bg-white hover:border-slate-300 dark:bg-dark-darkBg dark:border-transparent"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className={`flex h-6 w-6 items-center justify-center rounded-full border-2 ${
-                    selectedPayment === "apple-pay"
-                      ? "border-green-500 bg-green-500"
-                      : "border-slate-300 bg-white"
-                  }`}
-                >
-                  {selectedPayment === "apple-pay" && (
-                    <svg
-                      className="h-4 w-4 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <input
-                  type="radio"
-                  name="payment"
-                  value="apple-pay"
-                  checked={selectedPayment === "apple-pay"}
-                  onChange={() => setSelectedPayment("apple-pay")}
-                  className="sr-only"
-                />
-                <span className="font-medium text-slate-900">Apple Pay</span>
-              </div>
-              <svg
-                className="h-6 w-6 text-slate-900"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
-              </svg>
-            </label>
-
-            {/* Add New Card */}
+          <div className="space-y-4">
+            <div className="flex items-baseline justify-between">
+              <span className="text-lg font-semibold text-slate-900 dark:text-dark-textOnDark">
+                Price
+                <span className="text-sm font-normal text-slate-500 dark:text-dark-textSecondary">
+                  /visit
+                </span>
+              </span>
+              <span className="text-2xl font-bold text-red-500">
+                {consultationPrice}
+              </span>
+            </div>
+            {error && (
+              <p className="text-sm text-red-500" role="alert">
+                {error}
+              </p>
+            )}
             <button
               type="button"
-              className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-blue-300 bg-white dark:bg-dark-bgSurface p-4 text-sm font-medium text-blue-500 transition hover:border-blue-400 hover:bg-blue-50"
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full rounded-full bg-blue-500 py-4 text-center font-semibold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-slate-300"
             >
-              <span className="text-xl">+</span>
-              <span>Add new card</span>
+              {loading ? "Processing..." : "Confirm Appointment"}
             </button>
           </div>
         </div>
-
-        {/* Price and Pay Button */}
-        <div className="space-y-4 pt-4">
-          <div className="flex items-baseline justify-between">
-            <span className="text-lg font-semibold text-slate-900">
-              Price
-              <span className="text-sm font-normal text-slate-500 dark:text-dark-textSecondary">/hour</span>
-            </span>
-            <span className="text-2xl font-bold text-red-500">350$</span>
-          </div>
-          <button
-            type="button"
-            className="w-full rounded-full bg-blue-500 py-4 text-center font-semibold text-white transition hover:bg-blue-600"
-          >
-            Pay
-          </button>
-        </div>
       </div>
-    </div>
+
+      <ConfirmationModal
+        visible={Boolean(successPayload)}
+        doctor={doctor}
+        appointment={appointment}
+        onClose={handleConfirmationClose}
+      />
+    </>
   );
 };
 
