@@ -31,7 +31,8 @@ function Calendar({ setSelectedDate }) {
             selected={date}
             onSelect={(d) => {
               setDate(d);
-              const formattedDate = format(d, "MMMM d");
+              const formattedDate = format(d, "yyyy-MM-dd");
+
               setSelectedDate(formattedDate);
               setOpen(false);
             }}
