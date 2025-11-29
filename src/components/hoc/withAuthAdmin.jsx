@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 const withAuthAdmin = (WrappedComponent) => {
   return (props) => {
-    const user = JSON.parse(localStorage.getItem("admin-cure"));
+    const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user) {
       return <Navigate to="/signin" replace />;
