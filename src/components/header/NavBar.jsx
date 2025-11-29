@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
      const [theme,setTheme] = useTheme()
+
      return (
           <div className="navbar relative z-50 flex items-center bg-white dark:bg-dark-darkBg h-28 justify-between px-10">
                <Link to="/"> <div className="logo hover:scale-125 duration-200">
