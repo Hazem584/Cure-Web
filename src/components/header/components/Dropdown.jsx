@@ -10,101 +10,112 @@ import { Avatar } from "@material-tailwind/react";
 
 import Themetoggler from "./Themetoggler";
 
-const Dropdown = ({ setIsMenuOpen, theme, setTheme }) => {
-  const profileMenuItems = [
-    {
-      label: "Settings",
-      icon: PiGearSixLight,
-    },
-    {
-      label: "Privacy Policy",
-      icon: IoIosLock,
-    },
-    {
-      label: "Log Out",
-      icon: HiOutlineLogout,
-    },
-  ];
-  const closeMenu = () => setIsMenuOpen(false);
-  const handleLogOut = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("admin-cure");
-  };
-  return (
-    <>
-      <MenuItem>
-        <div className="user flex !hover:border-0 justify-between items-center justify-items-center ">
-          <div className="flex items-center gap-3">
-            <Link to="/profile">
-              <div className="flex items-center gap-4">
-                <Avatar
-                  src="https://i.postimg.cc/hhFXM7tG/ba06b3e7882ffb9e60838270ea0dd9b82b74eda6.jpg"
-                  alt="avatar"
-                />
-                <div>
-                  <Typography variant="h6" className="font-georgia">
-                    Seif Mohamed
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className="font-normal text-[0.8rem]"
-                  >
-                    129,El-Nasr Street, Cairo
-                  </Typography>
-                </div>
-              </div>
-            </Link>
-          </div>
+const Dropdown = ({ setIsMenuOpen, theme, setTheme,user }) => {
+     const profileMenuItems = [
+          {
+               label: "Settings",
+               icon: PiGearSixLight,
+          },
+          {
+               label: "Privacy Policy",
+               icon: IoIosLock,
+          },
+          {
+               label: "Log Out",
+               icon: HiOutlineLogout,
+          },
+     ];
+     const closeMenu = () => setIsMenuOpen(false);
+     const handleLogOut = () => {
+          localStorage.removeItem("user");
+          // remove token also and navigate refresh
+          localStorage.removeItem("token");
+          // ---
+          localStorage.removeItem("admin-cure");
 
-          <div>
-            <PiGearSixLight className="text-primary text-2xl hover:rotate-180 duaration-200 transition-transform" />
-          </div>
-        </div>
-      </MenuItem>
-      {profileMenuItems.map(({ label, icon }, key) => {
-        const isLastItem = key === profileMenuItems.length - 1;
-        return (
-          <MenuItem
-            key={label}
-            onClick={() => {
-              if (label === "Log Out") {
-                handleLogOut();
-              }
-              closeMenu();
-            }}
-            className={`flex items-center group justify-between gap-2 rounded text-secondry active:bg-blue-gray-300 ${
-              isLastItem
-                ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                : ""
-            }`}
-          >
-            <div className="flex gap-2">
-              {React.createElement(icon, {
-                className: `h-6 w-6 ${
-                  label == "Settings"
-                    ? "group-hover:rotate-180 duaration-200 transition-transform"
-                    : ""
-                } ${isLastItem ? "text-red-500" : ""}`,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </div>
-            <IoIosArrowForward />
-          </MenuItem>
-        );
-      })}
-      <MenuItem>
-        <Themetoggler theme={theme} setTheme={setTheme} />
-      </MenuItem>
-    </>
-  );
+          window.location.reload();
+     };
+
+     // console.log(JSON.parse(user));
+
+     return (
+          <>
+               <MenuItem>
+                    <div className="user flex !hover:border-0 justify-between items-center justify-items-center ">
+                         <div className="flex items-center gap-3">
+                              <Link to="/profile">
+                                   <div className="flex items-center gap-4">
+                                        <Avatar
+                                             src={user?.avatarUrl}
+                                             alt="avatar"
+                                        />
+                                        <div>
+                                             <Typography
+                                                  variant="h6"
+                                                  className="font-georgia"
+                                             >
+                                                  {user?.name}
+                                             </Typography>
+                                             <Typography
+                                                  variant="small"
+                                                  color="gray"
+                                                  className="font-normal text-[0.8rem]"
+                                             >
+                                                  {user?.address || ""}
+                                             </Typography>
+                                        </div>
+                                   </div>
+                              </Link>
+                         </div>
+
+                         <div>
+                              <PiGearSixLight className="text-primary text-2xl hover:rotate-180 duaration-200 transition-transform" />
+                         </div>
+                    </div>
+               </MenuItem>
+               {profileMenuItems.map(({ label, icon }, key) => {
+                    const isLastItem = key === profileMenuItems.length - 1;
+                    return (
+                         <MenuItem
+                              key={label}
+                              onClick={() => {
+                                   if (label === "Log Out") {
+                                        handleLogOut();
+                                   }
+                                   closeMenu();
+                              }}
+                              className={`flex items-center group justify-between gap-2 rounded text-secondry active:bg-blue-gray-300 ${
+                                   isLastItem
+                                        ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                                        : ""
+                              }`}
+                         >
+                              <div className="flex gap-2">
+                                   {React.createElement(icon, {
+                                        className: `h-6 w-6 ${
+                                             label == "Settings"
+                                                  ? "group-hover:rotate-180 duaration-200 transition-transform"
+                                                  : ""
+                                        } ${isLastItem ? "text-red-500" : ""}`,
+                                   })}
+                                   <Typography
+                                        as="span"
+                                        variant="small"
+                                        className="font-normal"
+                                        color={isLastItem ? "red" : "inherit"}
+                                   >
+                                        {label}
+                                   </Typography>
+                              </div>
+                              <IoIosArrowForward />
+                         </MenuItem>
+                    );
+               })}
+               <MenuItem>
+                    <Themetoggler theme={theme} setTheme={setTheme} />
+               </MenuItem>
+          </>
+     );
 };
 
 export default Dropdown;
