@@ -1,19 +1,23 @@
 import React from "react";
 import { Avatar } from "@material-tailwind/react";
 import CardButttons from "./CardButttons";
+import { format } from "date-fns";
 const Card = ({
   Doctor: {
     _id,
     patientName,
     patientPhone,
     specialty,
-    appointmentDate,
+    createdAt,
     notes,
     photo,
     status,
+    doctorId,
   },
+  refetch,
 }) => {
-  const date = appointmentDate?.slice(0, 10);
+  const date = new Date(createdAt);
+  const formatted = format(date, "EEEE, MMMM dd - hh:mm a");
   return (
     <div className="border border-[#BBC1C7] dark:border-dark-borderDark  flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
       <div className="flex justify-between items-center mt-3 ">
@@ -26,7 +30,7 @@ const Card = ({
                 : "text-[#6D7379]"
             }`}
           >
-            {date}
+            {formatted}
           </h1>
         </div>
         <h1
@@ -58,7 +62,12 @@ const Card = ({
         </h1>
       </div>
       <div className="mt-4">
-        <CardButttons status={status} id={_id} />
+        <CardButttons
+          status={status}
+          id={_id}
+          refetch={refetch}
+          doctorId={doctorId}
+        />
       </div>
     </div>
   );

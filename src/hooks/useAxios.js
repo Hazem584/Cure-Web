@@ -30,7 +30,7 @@ const useAxios = (url, token = null) => {
     getData();
   }, [url]);
 
-  return { data, loading, error };
+  return { data, loading, error, refetch: getData };
 };
 
 export default useAxios;

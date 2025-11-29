@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 const URL = import.meta.env.VITE_API_BASE_URL;
 
-const CardButttons = ({ status, id }) => {
+const CardButttons = ({ status, id, refetch, doctorId }) => {
   let FirstButton = "";
   let SecondButton = "";
   let navigat = useNavigate();
@@ -58,6 +58,7 @@ const CardButttons = ({ status, id }) => {
         text: response.data.message,
         icon: "success",
       });
+      refetch();
     } catch (err) {
       console.log("Delete Error:", err);
       const errorMessage =
@@ -69,6 +70,7 @@ const CardButttons = ({ status, id }) => {
       });
     }
   };
+  console.log("doctorId in CardButtons:", doctorId);
 
   return (
     <div className="flex gap-8 [@media(max-width:639px)]:justify-between ">
@@ -86,7 +88,7 @@ const CardButttons = ({ status, id }) => {
             showAlert(id);
           }
           if (FirstButton == "Book again") {
-            navigat("/appointments");
+            navigat(`/appointments/${doctorId}`);
           }
         }}
       >
@@ -97,7 +99,7 @@ const CardButttons = ({ status, id }) => {
           [@media(max-width:1020px)]:px-3 [@media(max-width:1020px)]:w-1/2 [@media(max-width:1320px)]:px-4 [@media(max-width:1320px)]:w-1/2  "
         onClick={() => {
           if (SecondButton == "Reschedule") {
-            navigat("/appointments");
+            navigat(`/appointments/${doctorId}`);
           }
           if (SecondButton == "Feedback") {
             navigat("/appointments");
