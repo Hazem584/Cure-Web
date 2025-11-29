@@ -15,7 +15,6 @@ const Profile = () => {
       </div>
       <div className="flex-grow flex justify-center items-center pt-10 pb-10">
         <Card className="w-full max-w-xl p-10 shadow-md">
-          <ProfileHeader />
           <ProfileForm />
         </Card>
       </div>
