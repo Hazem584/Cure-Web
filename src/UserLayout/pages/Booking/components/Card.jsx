@@ -1,9 +1,23 @@
 import React from "react";
 import { Avatar } from "@material-tailwind/react";
 import CardButttons from "./CardButttons";
+import { format } from "date-fns";
 const Card = ({
-  Doctor: { id, name, specialty, appointment_time, address, photo, status },
+  Doctor: {
+    _id,
+    patientName,
+    patientPhone,
+    specialty,
+    createdAt,
+    notes,
+    photo,
+    status,
+    doctorId,
+  },
+  refetch,
 }) => {
+  const date = new Date(createdAt);
+  const formatted = format(date, "EEEE, MMMM dd - hh:mm a");
   return (
     <div className="border border-[#BBC1C7] dark:border-dark-borderDark  flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
       <div className="flex justify-between items-center mt-3 ">
@@ -16,7 +30,7 @@ const Card = ({
                 : "text-[#6D7379]"
             }`}
           >
-            {appointment_time}
+            {formatted}
           </h1>
         </div>
         <h1
@@ -34,21 +48,26 @@ const Card = ({
         <Avatar src={photo} alt="avatar" />
         <div className="flex flex-col">
           <h1 className="text-[#33384B] font-semibold dark:text-dark-textOnDark">
-            {name}
+            {patientName}
           </h1>
           <h1 className="text-[#6D7379] dark:text-dark-textSecondary">
-            {specialty}
+            {patientPhone}
           </h1>
         </div>
       </div>
       <div className="flex gap-3 px-3">
         <img src="/location-icon.svg" alt="location" />
         <h1 className="mt-2 text-[#6D7379] dark:text-dark-textSecondary">
-          {address}
+          {notes}
         </h1>
       </div>
       <div className="mt-4">
-        <CardButttons status={status} id={id} />
+        <CardButttons
+          status={status}
+          id={_id}
+          refetch={refetch}
+          doctorId={doctorId}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import React from "react";
 import { Card } from "@material-tailwind/react";
-import ProfileHeader from "../../components/profile/ProfileHeader"
 import ProfileForm from "../../components/profile/ProfileForm";
 import Footer from "../../components/footer/Footer";
 import NavBar from "../../components/header/NavBar"
@@ -10,7 +9,6 @@ const Profile = () => {
       <div><NavBar/></div>
       <div className="flex-grow flex justify-center items-center pt-10 pb-10">
         <Card className="w-full max-w-xl p-10 shadow-md ">
-          <ProfileHeader />
           <ProfileForm />
         </Card>
       </div>

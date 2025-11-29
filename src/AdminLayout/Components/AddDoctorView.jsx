@@ -1,14 +1,24 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+const URL = import.meta.env.VITE_API_BASE_URL;
 
 const AddDoctorView = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    address: "",
-    phoneNumber: "",
+    location: {
+      city: "",
+      address: "",
+    },
+    phone: "",
     image: "",
+    specialty: "",
+    consultationPrice: "",
+    experience: "",
+    bio: "",
   });
-
   const [previewImage, setPreviewImage] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -20,45 +30,76 @@ const AddDoctorView = () => {
     }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result);
-        setFormData((prev) => ({
-          ...prev,
-          image: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Doctor Data:", formData);
-    setShowSuccess(true);
-    setFormData({
-      name: "",
-      email: "",
-      address: "",
-      phoneNumber: "",
-      image: "",
-    });
-    setPreviewImage(null);
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 5000);
+    setShowSuccess(false);
+
+    const updatedDoctor = { ...formData };
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return Swal.fire({
+          icon: "error",
+          title: "Unauthorized",
+          text: "Login first!",
+        });
+      }
+
+      await axios.post(`${URL}doctors/`, updatedDoctor, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      setShowSuccess(true);
+
+      setFormData({
+        name: "",
+        email: "",
+        location: {
+          city: "",
+          address: "",
+        },
+        phone: "",
+        image: "",
+        specialty: "",
+        consultationPrice: "",
+        experience: "",
+        bio: "",
+      });
+
+      setPreviewImage(null);
+
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 5000);
+    } catch (err) {
+      console.log("UPDATE ERROR:", err);
+      Swal.fire({
+        icon: "error",
+        title: "Update Failed",
+        text: err.response?.data?.message || "Something went wrong",
+      });
+    }
   };
 
   const handleReset = () => {
     setFormData({
       name: "",
       email: "",
-      address: "",
-      phoneNumber: "",
+
+      phone: "",
       image: "",
+      specialty: "",
+      consultationPrice: "",
+      experience: "",
+      bio: "",
+      location: {
+        city: "",
+        address: "",
+      },
     });
     setPreviewImage(null);
   };
@@ -115,12 +156,13 @@ const AddDoctorView = () => {
           <p className="text-gray-600 dark:text-dark-textSecondary text-center mb-8">
             Fill in the details to add a new doctor
           </p>
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex flex-col items-center mb-6">
               <div className="relative w-32 h-32 mb-4">
-                {previewImage ? (
+                {previewImage || formData.image ? (
                   <img
-                    src={previewImage}
+                    src={previewImage || formData.image}
                     alt="Preview"
                     className="w-full h-full object-cover rounded-full border-4 border-indigo-200"
                   />
@@ -142,16 +184,23 @@ const AddDoctorView = () => {
                   </div>
                 )}
               </div>
-              <label className="cursor-pointer bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                <span>Choose Image</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </label>
+
+              <input
+                type="text"
+                name="image"
+                value={formData.image}
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    image: e.target.value,
+                  }));
+                  setPreviewImage(e.target.value);
+                }}
+                placeholder="Enter image URL (https://...)"
+                className="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              />
             </div>
+
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
                 Name
@@ -166,6 +215,7 @@ const AddDoctorView = () => {
                 className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
               />
             </div>
+
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
                 Email
@@ -187,12 +237,32 @@ const AddDoctorView = () => {
               </label>
               <input
                 type="tel"
-                name="phoneNumber"
-                value={formData.phoneNumber}
+                name="phone"
+                value={formData.phone}
                 onChange={handleChange}
                 placeholder="+20 123 456 7890"
                 required
                 className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                City
+              </label>
+              <textarea
+                name="city"
+                value={formData.location.city}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    location: { ...formData.location, city: e.target.value },
+                  })
+                }
+                placeholder="Enter clinic address"
+                required
+                rows="2"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
               />
             </div>
             <div>
@@ -201,14 +271,80 @@ const AddDoctorView = () => {
               </label>
               <textarea
                 name="address"
-                value={formData.address}
-                onChange={handleChange}
+                value={formData.location.address}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    location: { ...formData.location, address: e.target.value },
+                  })
+                }
                 placeholder="Enter clinic address"
+                required
+                rows="2"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Specialty
+              </label>
+              <input
+                type="text"
+                name="specialty"
+                value={formData.specialty}
+                onChange={handleChange}
+                placeholder="Enter the specialty"
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Consultation Price
+              </label>
+              <input
+                type="text"
+                name="consultationPrice"
+                value={formData.consultationPrice}
+                onChange={handleChange}
+                placeholder="Enter the consultation price"
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Experience Years
+              </label>
+              <input
+                type="number"
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+                placeholder="Enter the experience years"
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2">
+                Bio
+              </label>
+              <textarea
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                placeholder="Enter Bio"
                 required
                 rows="3"
                 className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition resize-none"
               />
             </div>
+
             <div className="flex gap-4 pt-4">
               <button
                 type="submit"
@@ -216,6 +352,7 @@ const AddDoctorView = () => {
               >
                 Add Doctor
               </button>
+
               <button
                 type="button"
                 onClick={handleReset}

@@ -14,7 +14,7 @@ function Calendar({ setSelectedDate }) {
   };
 
   return (
-    <div className="relative w-64 [@media(max-width:639px)]:w-full">
+    <div className="relative  w-full sm:w-64">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -31,7 +31,8 @@ function Calendar({ setSelectedDate }) {
             selected={date}
             onSelect={(d) => {
               setDate(d);
-              const formattedDate = format(d, "MMMM d");
+              const formattedDate = format(d, "yyyy-MM-dd");
+
               setSelectedDate(formattedDate);
               setOpen(false);
             }}

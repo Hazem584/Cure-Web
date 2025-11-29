@@ -4,115 +4,73 @@ import Buttons from "./components/Buttons";
 import List from "./components/List";
 import Footer from "../../../components/footer/Footer";
 import Calendar from "./components/Calendar";
+import useAxios from "../../../hooks/useAxios";
 import withAuthUser from "../../../components/hoc/withAuthUser";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { format } from "date-fns";
+import Loading from "../../../components/Loading/Loading";
+const URL = import.meta.env.VITE_API_BASE_URL;
 
 const Booking = () => {
-  const [Doctors] = useState([
-    {
-      id: 101,
-      name: "Dr. Sarah Mitchell",
-      specialty: "Cardiologist",
-      appointment_time: "Saturday, October 18 - 09:30 AM",
-      address: "22 Baker St, London, UK",
-      status: "Upcoming",
-      photo:
-        "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
-    },
-    {
-      id: 102,
-      name: "Dr. James Carter",
-      specialty: "Dentist",
-      appointment_time: "Wednesday, October 15 - 10:15 AM",
-      address: "47 King’s Rd, Manchester, UK",
-      status: "Completed",
-      photo:
-        "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
-    },
-    {
-      id: 103,
-      name: "Dr. Emily Johnson",
-      specialty: "Dermatologist",
-      appointment_time: "Tuesday, October 14 - 11:00 AM",
-      address: "8 Queen St, Birmingham, UK",
-      status: "Canceled",
-      photo:
-        "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
-    },
-    {
-      id: 104,
-      name: "Dr. Robert Smith",
-      specialty: "Neurologist",
-      appointment_time: "Sunday, October 19 - 12:30 PM",
-      address: "15 Park Ave, Leeds, UK",
-      status: "Upcoming",
-      photo:
-        "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
-    },
-    {
-      id: 105,
-      name: "Dr. Olivia Brown",
-      specialty: "Pediatrician",
-      appointment_time: "Sunday, October 12 - 02:00 PM",
-      address: "33 Oxford Rd, Liverpool, UK",
-      status: "Completed",
-      photo:
-        "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
-    },
-    {
-      id: 106,
-      name: "Dr. Ethan Wilson",
-      specialty: "Orthopedic Surgeon",
-      appointment_time: "Friday, October 17 - 03:15 PM",
-      address: "90 Church St, Bristol, UK",
-      status: "Canceled",
-      photo:
-        "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
-    },
-    
-    {
-      id: 204,
-      name: "Dr. Peter Scott",
-      specialty: "Neurologist",
-      appointment_time: "Friday, November 7 - 02:00 PM",
-      address: "24 Green Park, Leeds, UK",
-      status: "Upcoming",
-      photo:
-        "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=300&q=80",
-    },
-  ]);
+  const token = localStorage.getItem("token");
+  const {
+    data: Doctors,
+    loading,
+    error,
+    refetch,
+  } = useAxios(`${URL}appointments/getAppointments`, token);
   const [activeButton, setActiveButton] = useState("All");
   const [selectedDate, setSelectedDate] = useState(null);
+  console.log("Doctors data:", Doctors);
+  if (error) return <p>Error: {error}</p>;
 
-  const filteredDoctors = Doctors.filter(
-    (doctor) =>
+  const filteredDoctors = Doctors?.data?.filter((doctor) => {
+    const formattedDoctorDate = format(
+      new Date(doctor.createdAt),
+      "yyyy-MM-dd"
+    );
+    const formattedSelectedDate = selectedDate
+      ? format(new Date(selectedDate), "yyyy-MM-dd")
+      : null;
+    console.log("formattedDoctorDate:", formattedDoctorDate);
+    return (
       (activeButton === "All" || doctor.status === activeButton) &&
-      (!selectedDate || doctor.appointment_time.includes(selectedDate))
-  );
+      (!formattedSelectedDate || formattedDoctorDate === formattedSelectedDate)
+    );
+  });
 
   return (
-    <>
-      <div className="bg dark:bg-dark-darkBg ">
-        <NavBar />
-        <div className="container mx-auto px-4 flex flex-col gap-1 mt-8 ">
+    <div className="min-h-screen flex flex-col bg dark:bg-dark-darkBg">
+      <NavBar />
+
+      <div className="flex-grow flex flex-col mt-8">
+        <div className="container mx-auto px-4 flex flex-col gap-1">
           <h1 className="font-georgia text-2xl dark:text-dark-textOnDark">
             Your appointments
           </h1>
-          <div className="flex justify-end [@media(max-width:639px)]:justify-center ">
+
+          <div className="flex justify-center sm:justify-end ">
             <Calendar setSelectedDate={setSelectedDate} />
           </div>
-          <div>
-            <Buttons
-              activeButton={activeButton}
-              setActiveButton={setActiveButton}
-            />
-          </div>
-          <div>
-            <List Doctors={filteredDoctors} />
+
+          <Buttons
+            activeButton={activeButton}
+            setActiveButton={setActiveButton}
+          />
+
+          <div className="flex-grow flex justify-center items-center mt-6">
+            {loading ? (
+              <Loading />
+            ) : (
+              <List Doctors={filteredDoctors} refetch={refetch} />
+            )}
           </div>
         </div>
-        <Footer />
       </div>
-    </>
+
+      <Footer />
+    </div>
   );
 };
 
