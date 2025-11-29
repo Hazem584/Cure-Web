@@ -46,7 +46,7 @@ const FloatingInputWithIcon = ({
                          onFocus={() => setFocused(true)}
                          onBlur={() => setFocused(false)}
                          disabled={disabled}
-                         className={`pl-10 pt-3 pb-2 transition-colors duration-300 ${
+                         className={`pl-10 pt-3 pb-2 dark:bg-dark-bgSurface dark:border-dark-borderDark transition-colors duration-300 ${
                               error
                                    ? "border-red-500 focus-visible:ring-red-500"
                                    : ""
@@ -226,7 +226,7 @@ const ProfileForm = () => {
      };
 
      return (
-          <>
+          <div>
                <ProfileHeader
                     avatarUrl={userInfo.avatarUrl}
                     name={userInfo.name}
@@ -310,7 +310,7 @@ const ProfileForm = () => {
                                         width: "100%",
                                         height: "48px",
                                         border: "none",
-                                        color: "#555",
+                                        color: "",
                                         paddingLeft: "40px",
                                         background: "transparent",
                                         fontSize: "15px",
@@ -362,7 +362,7 @@ const ProfileForm = () => {
 
                     <ToastContainer />
                </div>
-          </>
+          </div>
      );
 };
 

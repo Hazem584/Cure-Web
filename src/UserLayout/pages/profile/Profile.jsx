@@ -9,12 +9,12 @@ import withAuthUser from "../../../components/hoc/withAuthUser";
 
 const Profile = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen dark:bg-dark-darkBg">
       <div>
         <NavBar />
       </div>
       <div className="flex-grow flex justify-center items-center pt-10 pb-10">
-        <Card className="w-full max-w-xl p-10 shadow-md">
+        <Card className="w-full dark:bg-dark-darkBg border-2 dark:border-dark-borderDark max-w-xl p-10 shadow-md">
           <ProfileForm />
         </Card>
       </div>
