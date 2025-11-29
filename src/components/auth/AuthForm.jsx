@@ -155,7 +155,7 @@ const AuthForm = () => {
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        <div className="flex justify-center lg:space-x-24 md:space-x-20 space-x-14 mb-6">
+        {/* <div className="flex justify-center lg:space-x-24 md:space-x-20 space-x-14 mb-6">
           <button
             type="button"
             className="p-5 border border-gray-300 rounded-2xl hover:bg-gray-100 transition"
@@ -174,7 +174,7 @@ const AuthForm = () => {
           >
             <FaApple className="w-5 h-5" />
           </button>
-        </div>
+        </div> */}
 
         <p className="text-center text-gray-600 text-sm">
           Don’t have an account?{" "}

@@ -274,7 +274,7 @@ const AuthSignup = () => {
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        <div className="flex justify-center space-x-20 lg:space-x-24 mb-6">
+        {/* <div className="flex justify-center space-x-20 lg:space-x-24 mb-6">
           <button
             type="button"
             className="p-5 border border-gray-300 rounded-xl hover:bg-gray-100 transition text-blue-600"
@@ -293,7 +293,7 @@ const AuthSignup = () => {
           >
             <FaApple className="w-5 h-5" />
           </button>
-        </div>
+        </div> */}
 
         <p className="text-center text-gray-600 text-sm">
           Already have an account?{" "}
