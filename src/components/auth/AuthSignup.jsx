@@ -268,11 +268,11 @@ const AuthSignup = () => {
           {loading ? "Creating account..." : "Create an account"}
         </button>
 
-        {/* <div className="flex items-center my-6">
+        <div className="flex items-center my-6">
           <div className="flex-grow h-px bg-gray-300"></div>
           <span className="px-3 text-gray-500 text-sm">or</span>
           <div className="flex-grow h-px bg-gray-300"></div>
-        </div> */}
+        </div>
 
          <div className="flex justify-center space-x-10 lg:space-x-24 mb-6">
           <button
