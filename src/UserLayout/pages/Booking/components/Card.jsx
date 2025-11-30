@@ -3,21 +3,11 @@ import { Avatar } from "@material-tailwind/react";
 import CardButttons from "./CardButttons";
 import { format } from "date-fns";
 const Card = ({
-  Doctor: {
-    _id,
-    patientName,
-    patientPhone,
-    specialty,
-    createdAt,
-    notes,
-    photo,
-    status,
-    doctorId,
-  },
+  Doctor: { appointmentDate, appointmentTime, status, doctor, id },
   refetch,
 }) => {
-  const date = new Date(createdAt);
-  const formatted = format(date, "EEEE, MMMM dd - hh:mm a");
+  const date = new Date(appointmentDate);
+  const formatted = format(date, "EEEE, MMMM dd ");
   return (
     <div className="border border-[#BBC1C7] dark:border-dark-borderDark  flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
       <div className="flex justify-between items-center mt-3 ">
@@ -30,7 +20,7 @@ const Card = ({
                 : "text-[#6D7379]"
             }`}
           >
-            {formatted}
+            {formatted}-{appointmentTime}
           </h1>
         </div>
         <h1
@@ -45,28 +35,28 @@ const Card = ({
       </div>
       <hr className=" border-gray-300 my-2 w-[97%] " />
       <div className="flex gap-3 px-2">
-        <Avatar src={photo} alt="avatar" />
+        <Avatar src={doctor.image} alt="avatar" />
         <div className="flex flex-col">
           <h1 className="text-[#33384B] font-semibold dark:text-dark-textOnDark">
-            {patientName}
+            {doctor.name}
           </h1>
           <h1 className="text-[#6D7379] dark:text-dark-textSecondary">
-            {patientPhone}
+            {doctor.specialty}
           </h1>
         </div>
       </div>
       <div className="flex gap-3 px-3">
         <img src="/location-icon.svg" alt="location" />
         <h1 className="mt-2 text-[#6D7379] dark:text-dark-textSecondary">
-          {notes}
+          {doctor.address}
         </h1>
       </div>
       <div className="mt-4">
         <CardButttons
           status={status}
-          id={_id}
+          id={id}
           refetch={refetch}
-          doctorId={doctorId}
+          doctorId={doctor.id}
         />
       </div>
     </div>

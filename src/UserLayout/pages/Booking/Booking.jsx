@@ -22,18 +22,17 @@ const Booking = () => {
   } = useAxios(`${URL}appointments/getAppointments`, token);
   const [activeButton, setActiveButton] = useState("All");
   const [selectedDate, setSelectedDate] = useState(null);
-  console.log("Doctors data:", Doctors);
+
   if (error) return <p>Error: {error}</p>;
 
   const filteredDoctors = Doctors?.data?.filter((doctor) => {
     const formattedDoctorDate = format(
-      new Date(doctor.createdAt),
+      new Date(doctor.appointmentDate),
       "yyyy-MM-dd"
     );
     const formattedSelectedDate = selectedDate
       ? format(new Date(selectedDate), "yyyy-MM-dd")
       : null;
-    console.log("formattedDoctorDate:", formattedDoctorDate);
     return (
       (activeButton === "All" || doctor.status === activeButton) &&
       (!formattedSelectedDate || formattedDoctorDate === formattedSelectedDate)
