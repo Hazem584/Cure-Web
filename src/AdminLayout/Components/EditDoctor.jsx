@@ -4,7 +4,7 @@ import axios from "axios";
 
 const URL = import.meta.env.VITE_API_BASE_URL;
 
-const EditDoctor = () => {
+const EditDoctor = ({ refetch }) => {
   const location = useLocation();
   const { doctor } = location.state || {};
   const { id } = useParams();
@@ -46,7 +46,14 @@ const EditDoctor = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
       setShowSuccess(true);
+
+      if (refetch) {
+        setTimeout(() => {
+          refetch();
+        }, 800);
+      }
     } catch (err) {
       console.log(err);
     }
