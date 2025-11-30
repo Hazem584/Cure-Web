@@ -22,7 +22,7 @@ const DashCards = ({ doctor, refetch }) => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
       });
-
+      if (!result.isConfirmed) return;
       const token = localStorage.getItem("token");
       if (!token) {
         return Swal.fire({

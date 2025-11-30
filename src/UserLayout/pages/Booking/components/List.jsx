@@ -8,7 +8,7 @@ const List = ({ Doctors, refetch }) => {
     [@media(max-width:1020px)]:grid-cols-2 "
     >
       {Doctors?.map((Doctor) => (
-        <Card Doctor={Doctor} key={Doctor._id} refetch={refetch} />
+        <Card Doctor={Doctor} key={Doctor.id} refetch={refetch} />
       ))}
     </div>
   );

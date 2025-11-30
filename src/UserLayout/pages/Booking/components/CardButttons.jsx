@@ -70,7 +70,6 @@ const CardButttons = ({ status, id, refetch, doctorId }) => {
       });
     }
   };
-  console.log("doctorId in CardButtons:", doctorId);
 
   return (
     <div className="flex gap-8 [@media(max-width:639px)]:justify-between ">
