@@ -9,8 +9,8 @@ import {
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import axios from "axios";
-const URL = import.meta.env.VITE_API_URL;
-const DashCards = ({ doctor, reFetch }) => {
+const URL = import.meta.env.VITE_API_BASE_URL;
+const DashCards = ({ doctor, refetch }) => {
   const show = async (id) => {
     try {
       const result = await Swal.fire({
@@ -31,7 +31,7 @@ const DashCards = ({ doctor, reFetch }) => {
           icon: "error",
         });
       }
-      const response = await axios.delete(`${URL}/doctors`, {
+      const response = await axios.delete(`${URL}doctors`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -44,6 +44,11 @@ const DashCards = ({ doctor, reFetch }) => {
         text: response.data.message,
         icon: "success",
       });
+      if (refetch) {
+        setTimeout(() => {
+          refetch();
+        }, 800);
+      }
     } catch (err) {
       console.log("DELETE ERROR:", err);
       const errorMessage =

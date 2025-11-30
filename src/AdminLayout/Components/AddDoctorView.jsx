@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 const URL = import.meta.env.VITE_API_BASE_URL;
 
-const AddDoctorView = () => {
+const AddDoctorView = ({ refetch }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -54,6 +54,10 @@ const AddDoctorView = () => {
       });
 
       setShowSuccess(true);
+
+      setTimeout(() => {
+        refetch();
+      }, 800);
 
       setFormData({
         name: "",
