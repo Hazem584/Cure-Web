@@ -10,8 +10,8 @@ const Card = ({
   const formatted = format(date, "EEEE, MMMM dd ");
   return (
     <div className="border border-[#BBC1C7] dark:border-dark-borderDark  flex flex-col p-2 rounded-2xl   max-[639px]:w-11/12  ">
-      <div className="flex justify-between items-center mt-3 ">
-        <div className="flex gap-2 dark:text-dark-textSecondary">
+      <div className="flex justify-between items-center mt-3 gap-4 ">
+        <div className="flex gap-3 dark:text-dark-textSecondary">
           <img src="./calendar-02.svg" alt="calendar" />
           <h1
             className={`text-xs ${
@@ -20,7 +20,10 @@ const Card = ({
                 : "text-[#6D7379]"
             }`}
           >
-            {formatted}-{appointmentTime}
+            {formatted}
+          </h1>
+          <h1 className="text-xs  dark:text-dark-textSecondary">
+            {appointmentTime}
           </h1>
         </div>
         <h1
