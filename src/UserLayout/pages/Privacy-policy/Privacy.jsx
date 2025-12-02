@@ -7,7 +7,7 @@ const Privacy = () => {
   return (
     <>
       <NavBar />
-      <div className="px-6 py-8 text-gray-800">
+      <div className="px-6 py-8 text-gray-800 [&>h1]:dark:text-dark-textPrimary [&>h2]:dark:text-dark-textPrimary dark:text-dark-textSecondary dark:bg-dark-darkBg">
         <h1 className="text-2xl font-semibold  mb-4">Privacy Policy</h1>
 
         <p className="text-sm text-gray-500 mb-6">
@@ -20,7 +20,7 @@ const Privacy = () => {
           when you use our doctor appointment booking app.
         </p>
 
-        <h2 className="text-xl font-semibold mb-2">terms & conditions</h2>
+        <h2 className="text-xl font-semibold mb-2 ">terms & conditions</h2>
 
         <p className="mb-4 leading-relaxed">
           By registering, accessing, or using this app, you confirm that you are

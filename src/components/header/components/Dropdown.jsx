@@ -5,17 +5,16 @@ import { CiCreditCard1 } from "react-icons/ci";
 import { IoIosLock } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button, MenuItem, Typography } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar } from "@material-tailwind/react";
 
 import Themetoggler from "./Themetoggler";
 
 const Dropdown = ({ setIsMenuOpen, theme, setTheme,user }) => {
+     //will use it to add navigation to privacy policy page
+     const navigate = useNavigate();
+
      const profileMenuItems = [
-          {
-               label: "Settings",
-               icon: PiGearSixLight,
-          },
           {
                label: "Privacy Policy",
                icon: IoIosLock,
@@ -54,7 +53,7 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme,user }) => {
                                                   variant="h6"
                                                   className="font-georgia"
                                              >
-                                                  {user?.name}
+                                                  {user?.name.split(" ")[0]}
                                              </Typography>
                                              <Typography
                                                   variant="small"
@@ -69,7 +68,9 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme,user }) => {
                          </div>
 
                          <div>
-                              <PiGearSixLight className="text-primary text-2xl hover:rotate-180 duaration-200 transition-transform" />
+                              <Link to="/profile">
+                              <PiGearSixLight className="text-primary text-2xl hover:rotate-180 duaration-200 transition-transform" />                              
+                              </Link>
                          </div>
                     </div>
                </MenuItem>
@@ -81,6 +82,9 @@ const Dropdown = ({ setIsMenuOpen, theme, setTheme,user }) => {
                               onClick={() => {
                                    if (label === "Log Out") {
                                         handleLogOut();
+                                   }
+                                   else if(label == "Privacy Policy"){
+                                        navigate("/privacy-policy")
                                    }
                                    closeMenu();
                               }}
