@@ -80,17 +80,17 @@ const Footer = () => {
                                              Help Center
                                         </div>
                                    </Link >
-                                   <Link to="/home">
+                                   <Link to="/">
                                         <div className="li-item">
                                              How it works
                                         </div>
                                    </Link >
-                                   <Link to="/">
+                                   <Link to="/privacy-policy">
                                         <div className="li-item">
                                              Privacy Policy
                                         </div>
                                    </Link >
-                                   <Link to="/">
+                                   <Link to="/privacy-policy">
                                         <div className="li-item">
                                              Terms & Conditions
                                         </div>

@@ -9,7 +9,10 @@ import Swal from "sweetalert2";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import ProfileHeader from "./ProfileHeader";
-
+import { DELETE_USER_URL, GET_USER_URL,UPDATE_USER_URL } from "../../UserLayout/pages/appointments/apiConfig";
+import { getAuthToken } from "../../UserLayout/pages/appointments/utils/auth";
+import Loading from "../Loading/Loading";
+import { useLocation } from "react-router-dom";
 const FloatingInputWithIcon = ({
      label,
      type = "text",
@@ -62,25 +65,14 @@ const FloatingInputWithIcon = ({
      );
 };
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.endsWith("/")
-     ? import.meta.env.VITE_API_BASE_URL
-     : `${import.meta.env.VITE_API_BASE_URL}/`;
-
-const getAuthToken = () => {
-     if (typeof window === "undefined") return null;
-     return (
-          window.localStorage.getItem("token") ||
-          window.localStorage.getItem("authToken") ||
-          null
-     );
-};
-
 const getOneUser = async () => {
-     const token = getAuthToken();
      try {
-          const { data } = await axios.get(`${API_BASE_URL}user/get_one_user`, {
-               headers: { authorization: `${token}` },
+          const { data } = await axios.get(GET_USER_URL, {
+               headers: {
+                    Authorization: getAuthToken(),
+               },
           });
+
           return data;
      } catch (err) {
           Swal.fire({
@@ -94,25 +86,36 @@ const getOneUser = async () => {
 };
 
 const handleUpdateUser = async (updatedData) => {
-     const token = getAuthToken();
      try {
-          const { data } = await axios.put(
-               `${API_BASE_URL}user/update_user`,
+          const res = await axios.put(
+               UPDATE_USER_URL,
                updatedData,
                {
-                    headers: { Authorization: `${token}` },
+                    headers: {
+                         Authorization: getAuthToken(),
+                    },
                }
           );
-          console.log(data);
-
-          return data;
+          return res.data
      } catch (err) {
           console.log(err);
           return err;
      }
 };
 
-const handleDeleteAccount = async (id) => {
+
+// to logout when delete account
+     const handleLogOut = () => {
+          localStorage.removeItem("user");
+          // remove token also and navigate refresh
+          localStorage.removeItem("token");
+          // ---
+          localStorage.removeItem("admin-cure");
+
+          window.location.reload();
+     };
+// ---------------------
+const handleDeleteAccount = async () => {
      const result = await Swal.fire({
           title: "Are you sure?",
           html: `<p class="mb-2">To confirm, type:</p><b>I WANT TO DELETE ACCOUNT</b>`,
@@ -136,15 +139,12 @@ const handleDeleteAccount = async (id) => {
      if (!result.isConfirmed) return;
 
      try {
-          const token = getAuthToken();
-          await axios.post(`${API_BASE_URL}user/delete_user/${id}`, null, {
-               headers: { Authorization: `Bearer ${token}` },
+          
+          await axios.get(DELETE_USER_URL, {
+               headers: { Authorization: getAuthToken() },
           });
-          Swal.fire({
-               icon: "success",
-               title: "Account Deleted",
-               text: "Your account has been permanently deleted.",
-          });
+          handleLogOut()
+          useLocation("/")
      } catch (err) {
           Swal.fire({
                icon: "error",
@@ -161,27 +161,30 @@ const ProfileForm = () => {
           name: "",
           email: "",
           phone: "",
-          age: "",
+          age: 0,
           address: "",
      });
      const [focusedPhone, setFocusedPhone] = useState(false);
      const isPhoneActive = focusedPhone || userInfo.phone !== "";
      const [editMode, setEditMode] = useState(false);
+     const [userLoading, setUserLoading] = useState(false);
 
      useEffect(() => {
           fetchUser();
      }, []);
 
      const fetchUser = async () => {
+          setUserLoading(true);
           const data = await getOneUser();
           if (data) {
-               console.log(data);
+               //console.log(data);
                setUserInfo((prev) => ({
                     ...prev,
                     ...data.data,
                }));
-               return data;
           }
+          setUserLoading(false);
+          return data;
      };
      const handleEdit = async () => {
           if (
@@ -197,15 +200,25 @@ const ProfileForm = () => {
                });
                return;
           }
-          if (userInfo.age < 18 || userInfo.phone.length < 11) {
-               toast.error("Please enter valid inputs!", {
+          if (userInfo.age < 18) {
+               toast.error("Please enter valid inputs! age > 18", {
+                    position: "top-right",
+                    autoClose: 3000,
+               })
+               return;
+          }
+          else if(userInfo.phone.length < 11){
+               toast.error("Please enter valid phone number", {
                     position: "top-right",
                     autoClose: 3000,
                });
-               return;
+               return
           }
-
+          setUserLoading(true)
+          //console.log("user",userInfo);
           const err = await handleUpdateUser(userInfo);
+          setUserLoading(false)
+
           if (!err.response) {
                setEditMode(false);
                toast.success("Profile updated!", {
@@ -226,7 +239,14 @@ const ProfileForm = () => {
      };
 
      return (
-          <div>
+          <>
+          {userLoading ?
+               (<div className="fixed inset-0 z-[100] flex justify-center items-center bg-white/60 w-[100vw] h-[100vh]">
+                    <Loading />
+               </div>)
+               :
+               ""
+               }
                <ProfileHeader
                     avatarUrl={userInfo.avatarUrl}
                     name={userInfo.name}
@@ -332,7 +352,7 @@ const ProfileForm = () => {
                               onChange={(e) =>
                                    setUserInfo({
                                         ...userInfo,
-                                        age: e.target.value,
+                                        age: Number(e.target.value),
                                    })
                               }
                               type="number"
@@ -354,7 +374,7 @@ const ProfileForm = () => {
                     <Button
                          className="bg-red-500 mt-2"
                          onClick={() =>
-                              handleDeleteAccount("6914960bd7fa7d80b92963e9")
+                              handleDeleteAccount()
                          }
                     >
                          Delete Account
@@ -362,7 +382,7 @@ const ProfileForm = () => {
 
                     <ToastContainer />
                </div>
-          </div>
+          </>
      );
 };
 
