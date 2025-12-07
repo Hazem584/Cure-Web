@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Buttons = ({ activeButton, setActiveButton }) => {
-  const Buttons = ["All", "Upcoming", "Completed", "Canceled"];
+  const Buttons = ["All", "Upcoming", "Completed", "Cancelled"];
   return (
     <div className="flex gap-8 [@media(max-width:639px)]:gap-5 [@media(max-width:639px)]:flex-wrap">
       {Buttons.map((ButtonValue, index) => (
