@@ -29,7 +29,7 @@ const Card = ({
         </div>
         <h1
           className={`text-sm font-medium mr-3
-            ${status === "Canceled" ? "text-[#FC4B4E]" : ""}
+            ${status === "Cancelled" ? "text-[#FC4B4E]" : ""}
             ${status === "Upcoming" ? "text-[#145DB8]" : ""}
             ${status === "Completed" ? "text-[#4CAF50]" : ""}
         `}

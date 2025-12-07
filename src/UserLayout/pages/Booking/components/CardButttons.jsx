@@ -16,7 +16,7 @@ const CardButttons = ({ status, id, refetch, doctorId }) => {
     FirstButton = "Book again";
 
     SecondButton = "Feedback";
-  } else if (status == "Canceled") {
+  } else if (status == "Cancelled") {
     FirstButton = "Book again";
     SecondButton = "Support";
   }
