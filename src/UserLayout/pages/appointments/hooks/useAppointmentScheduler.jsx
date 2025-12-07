@@ -7,9 +7,7 @@ import {
 import { buildDateOptions, normalizeDateValue } from "../utils/dateUtils";
 
 const getFallbackDate = (dates) =>
-  dates[DEFAULT_SELECTED_SLOT_INDEX]?.value ||
-  dates[0]?.value ||
-  normalizeDateValue(new Date());
+  dates[0]?.value || normalizeDateValue(new Date());
 
 export const useAppointmentScheduler = () => {
   const [dates, setDates] = useState(() => buildDateOptions(new Date()));

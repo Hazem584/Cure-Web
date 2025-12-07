@@ -10,7 +10,11 @@ export const normalizeDateValue = (value) => {
   return parsed;
 };
 
-export const buildDateOptions = (centerDate = new Date(), daysBefore = 3, totalDays = 7) => {
+export const buildDateOptions = (
+  centerDate = new Date(),
+  daysBefore = 0,
+  totalDays = 7
+) => {
   const baseDate = normalizeDateValue(centerDate) || new Date();
   const startDate = new Date(baseDate);
   startDate.setDate(baseDate.getDate() - daysBefore);
