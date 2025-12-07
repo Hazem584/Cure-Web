@@ -42,19 +42,19 @@ const CardButttons = ({ status, id, refetch, doctorId }) => {
         });
       }
 
-      const response = await axios.delete(
-        `${URL}appointments/deleteAppointments`,
+      const response = await axios.patch(
+        `${URL}appointments/cancelAppointments`,
+        { appointmentId: id },
         {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          data: { appointmentId: id },
         }
       );
 
       Swal.fire({
-        title: "Deleted!",
+        title: "Canceled!",
         text: response.data.message,
         icon: "success",
       });
