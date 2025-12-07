@@ -50,7 +50,7 @@ const Card = ({
         </div>
       </div>
       <div className="flex gap-3 px-3">
-        <img src="/location-icon.svg" alt="location" />
+        <img src="/location-icon.svg" alt="location" className="w-4 " />
         <h1 className="mt-2 text-[#6D7379] dark:text-dark-textSecondary">
           {doctor?.address}
         </h1>
