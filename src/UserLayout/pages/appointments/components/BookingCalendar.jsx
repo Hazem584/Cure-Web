@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { HiOutlineCalendar } from "react-icons/hi";
 import PaymentModal from "./PaymentModal";
-import { formatFullDate } from "../utils/dateUtils";
+import { formatFullDate, isSameDay } from "../utils/dateUtils";
 
 const BookingCalendar = ({
   dates,
@@ -15,6 +15,9 @@ const BookingCalendar = ({
 }) => {
   const formattedSelectedDate = selectedDate ? formatFullDate(selectedDate) : "";
   const [showPaymentSummary, setShowPaymentSummary] = useState(false);
+  const isCurrentDaySelected =
+    selectedDate && isSameDay(selectedDate, new Date());
+  const isCurrentDayFullyBooked = isCurrentDaySelected && !timeSlots.length;
 
   const selectedAppointment =
     selectedDate && selectedTime
@@ -73,23 +76,31 @@ const BookingCalendar = ({
           })}
         </div>
         <div className="mt-6 grid gap-3 sm:grid-cols-3 md:grid-cols-4 max-[300px]:grid-cols-2 max-[300px]:gap-2">
-          {timeSlots.map((slot) => {
-            const isSelected = selectedTime === slot.value;
-            return (
-              <button
-                key={slot.value}
-                type="button"
-                onClick={() => onSelectTime(slot.value)}
-                className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition-all max-[300px]:px-3 max-[300px]:py-2 max-[300px]:text-xs ${
-                  isSelected
-                    ? "border-blue-500 bg-blue-500 text-white dark:text-dark-textOnDark shadow"
-                    : "border-slate-200 bg-white dark:border-dark-borderDark dark:bg-dark-bgSurface dark:text-dark-textSecondary text-slate-600 hover:border-blue-300 hover:text-blue-500"
-                }`}
-              >
-                {slot.label}
-              </button>
-            );
-          })}
+          {timeSlots.length ? (
+            timeSlots.map((slot) => {
+              const isSelected = selectedTime === slot.value;
+              return (
+                <button
+                  key={slot.value}
+                  type="button"
+                  onClick={() => onSelectTime(slot.value)}
+                  className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition-all max-[300px]:px-3 max-[300px]:py-2 max-[300px]:text-xs ${
+                    isSelected
+                      ? "border-blue-500 bg-blue-500 text-white dark:text-dark-textOnDark shadow"
+                      : "border-slate-200 bg-white dark:border-dark-borderDark dark:bg-dark-bgSurface dark:text-dark-textSecondary text-slate-600 hover:border-blue-300 hover:text-blue-500"
+                  }`}
+                >
+                  {slot.label}
+                </button>
+              );
+            })
+          ) : (
+            <div className="col-span-full rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
+              {isCurrentDayFullyBooked
+                ? "All appointments for today are booked. Please choose another day."
+                : "No available time slots for this date."}
+            </div>
+          )}
         </div>
         <div className="mt-6 flex flex-col gap-4 border-t border-slate-200 pt-6 md:flex-row md:items-center md:justify-between max-[300px]:gap-3">
           <div className="text-sm text-slate-500 dark:text-dark-textSecondary max-[300px]:text-xs max-[300px]:leading-5">
