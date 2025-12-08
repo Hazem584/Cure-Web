@@ -28,7 +28,7 @@ const Card = ({ Doc }) => {
   const avatarSrc =
     photo ||
     image ||
-    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80";
+    "https://upload.wikimedia.org/wikipedia/commons/0/03/Twitter_default_profile_400x400.png";
 
   const ratingValue =
     typeof rating === "object" ? rating?.average : rating ?? "N/A";
