@@ -8,7 +8,9 @@ const FilterButton = ({ value, onChange }) => {
         <button
           key={buttonValue}
           type="button"
-          onClick={() => onChange(buttonValue)}
+          onClick={() =>
+            onChange(value === buttonValue ? "" : buttonValue)
+          }
           className={` w-auto h-10 border border-blue-gray-300 px-4 py-2 rounded-lg font-small [@media(max-width:639px)]:px-4  
             ${
               value === buttonValue

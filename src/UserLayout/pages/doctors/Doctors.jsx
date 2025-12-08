@@ -238,7 +238,7 @@ const Doctors = () => {
             />
           )}
 
-          <div className="w-full flex-col gap-5 ml-5  sm:flex-row  ">
+          <div className="w-full flex-col gap-5 ml-5 sm:flex-row pb-16 min-h-[320px] ">
             <h1 className="text-2xl  dark:text-white mb-5">
               Choose Specialties
             </h1>
@@ -256,9 +256,9 @@ const Doctors = () => {
               <Cards doctors={filteredDoctors} />
             )}
             {!loading && !error && hasDoctors && !hasFilteredDoctors && (
-              <p className="text-gray-500 dark:text-gray-300">
-                No doctors match your filters. Try adjusting your search.
-              </p>
+              <div className="mt-4 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-medium text-blue-800 dark:border-dark-borderDark dark:bg-dark-bgSurface dark:text-dark-textSecondary">
+                We couldn’t find doctors for these filters. Try changing the specialty or clearing gender to see more options.
+              </div>
             )}
             {!loading && !error && !hasDoctors && (
               <p className="text-gray-500 dark:text-gray-300">
