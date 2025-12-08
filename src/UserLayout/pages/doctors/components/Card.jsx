@@ -4,30 +4,12 @@ import { FaStar } from "react-icons/fa";
 import { CiClock2 } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 
-const workingHoursText = (workingHours) => {
-  if (!workingHours || typeof workingHours !== "object") {
-    return "Not available";
-  }
+const workingHoursText = () => {
+  const todayLabel = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+  });
 
-  const orderedDays = [
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-    "sunday",
-  ];
-
-  for (const day of orderedDays) {
-    const info = workingHours?.[day];
-    if (info?.available && info?.start && info?.end) {
-      const capitalized = day.charAt(0).toUpperCase() + day.slice(1);
-      return `${capitalized}: ${info.start} - ${info.end}`;
-    }
-  }
-
-  return "Not available";
+  return `${todayLabel}: 9:00 AM - 2:30 PM`;
 };
 
 const Card = ({ Doc }) => {
