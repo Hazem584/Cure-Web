@@ -18,6 +18,8 @@ const AddDoctorView = ({ refetch }) => {
     consultationPrice: "",
     experience: "",
     bio: "",
+    gender: "",
+    consultationType: "In-clinic",
   });
   const [previewImage, setPreviewImage] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -72,6 +74,8 @@ const AddDoctorView = ({ refetch }) => {
         consultationPrice: "",
         experience: "",
         bio: "",
+        gender: "",
+        consultationType: "In-clinic",
       });
 
       setPreviewImage(null);
@@ -302,6 +306,43 @@ const AddDoctorView = ({ refetch }) => {
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
               />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Gender
+                </label>
+                <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                >
+                  <option value="">Select gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Consultation Type
+                </label>
+                <select
+                  name="consultationType"
+                  value={formData.consultationType}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 dark:bg-dark-bgSurface dark:border-dark-borderDark dark:text-dark-textOnDark rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition"
+                >
+                  <option value="In-clinic">In-clinic</option>
+                  <option value="Home Visit">Home Visit</option>
+                  <option value="Online">Online</option>
+                </select>
+              </div>
             </div>
 
             <div>
