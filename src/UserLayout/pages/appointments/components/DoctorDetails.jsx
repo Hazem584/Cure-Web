@@ -88,7 +88,10 @@ const DoctorDetails = ({ doctor, loading, error }) => {
         <div className="flex flex-col items-center text-center">
           <div className="relative -mt-1 flex h-28 w-28 items-center justify-center rounded-full bg-slate-100 p-1 shadow-sm">
             <img
-              src={image || "/doctor.png"}
+              src={
+                image ||
+                "https://upload.wikimedia.org/wikipedia/commons/0/03/Twitter_default_profile_400x400.png"
+              }
               alt={`Photo of ${name}`}
               className="h-full w-full rounded-full object-cover dark:border-2 dark:border-dark-borderDark"
             />

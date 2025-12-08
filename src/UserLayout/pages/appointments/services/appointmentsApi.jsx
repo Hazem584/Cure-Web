@@ -21,7 +21,15 @@ export const fetchDoctorById = async (doctorId, { signal } = {}) => {
   }
 
   const payload = await parseJsonSafe(response);
-  return payload?.data || payload;
+  const data = payload?.data || payload;
+  const doctor = data?.doctor || data;
+
+  // If the API returns workingHours alongside doctor, merge it in for convenience.
+  if (data?.workingHours && !doctor?.workingHours) {
+    return { ...doctor, workingHours: data.workingHours };
+  }
+
+  return doctor;
 };
 
 export const fetchDoctorReviews = async (doctorId, { signal } = {}) => {
