@@ -101,7 +101,7 @@ const CardButttons = ({ status, id, refetch, doctorId }) => {
             navigat(`/appointments/${doctorId}`);
           }
           if (SecondButton == "Feedback") {
-            navigat("/appointments");
+            navigat(`/appointments/${doctorId}`);
           }
         }}
       >
