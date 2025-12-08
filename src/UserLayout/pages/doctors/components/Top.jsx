@@ -3,7 +3,7 @@ import { PiMapPinThin } from "react-icons/pi";
 import { IoFilterSharp } from "react-icons/io5";
 import { TiChevronLeft } from "react-icons/ti";
 
-const Top = ({ onToggleFilter }) => {
+const Top = ({ onToggleFilter, searchTerm, onSearchChange }) => {
   return (
     <div className="flex justify-between gap-5">
       <button
@@ -33,13 +33,15 @@ const Top = ({ onToggleFilter }) => {
       <input
         type="text"
         placeholder="Search doctors"
+        value={searchTerm}
+        onChange={(e) => onSearchChange(e.target.value)}
         className="
              border border-gray-300 rounded-lg 
             w-full px-2 py-2
             text-gray-900 placeholder-gray-500
           dark:bg-dark-darkBg dark:text-white
             focus:ring-0
-            sm:text-sm "
+            sm:text-sm"
       />
 
       <button
@@ -62,7 +64,6 @@ const Top = ({ onToggleFilter }) => {
         <span className="hidden sm:inline dark:text-white text-sm font-medium">
           Map
         </span>
-              
       </button>
     </div>
   );

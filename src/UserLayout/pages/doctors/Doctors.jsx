@@ -22,6 +22,12 @@ const Doctors = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSpecialty, setSelectedSpecialty] = useState("All");
+  const [availability, setAvailability] = useState([]);
+  const [gender, setGender] = useState("");
+  const [consultationTypes, setConsultationTypes] = useState([]);
+  const [sortOption, setSortOption] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -78,27 +84,182 @@ const Doctors = () => {
 
   const hasDoctors = useMemo(() => doctors && doctors.length > 0, [doctors]);
 
+  const dayKeys = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  const todayKey = dayKeys[new Date().getDay()];
+  const tomorrowKey = dayKeys[new Date(Date.now() + 24 * 60 * 60 * 1000).getDay()];
+
+  const availabilityMap = {
+    today: todayKey,
+    tomorrow: tomorrowKey,
+  };
+
+  const isDoctorAvailableOn = (doctor, dayKey) => {
+    const info = doctor?.workingHours?.[dayKey];
+    if (!info) return false;
+    if (info.available === false) return false;
+    return Boolean(info.available || info.start || info.end);
+  };
+
+  const normalizeConsultationTypes = (doctor) => {
+    const rawTypes =
+      doctor?.consultationType ||
+      doctor?.consultationTypes ||
+      doctor?.consultation_type;
+
+    const collected = Array.isArray(rawTypes)
+      ? rawTypes
+      : rawTypes
+      ? [rawTypes]
+      : [];
+
+    if (doctor?.inClinic || doctor?.in_clinic) {
+      collected.push("in-clinic");
+    }
+    if (doctor?.homeVisit || doctor?.home_visit) {
+      collected.push("home visit");
+    }
+
+    return collected
+      .filter(Boolean)
+      .map((type) => type.toString().toLowerCase().trim());
+  };
+
+  const sortDoctors = (list) => {
+    const sorted = [...list];
+    switch (sortOption) {
+      case "recommended":
+        return sorted.sort(
+          (a, b) =>
+            (b?.rating?.average || 0) - (a?.rating?.average || 0)
+        );
+      case "priceLowHigh":
+        return sorted.sort(
+          (a, b) => (a?.consultationPrice || 0) - (b?.consultationPrice || 0)
+        );
+      case "priceHighLow":
+        return sorted.sort(
+          (a, b) => (b?.consultationPrice || 0) - (a?.consultationPrice || 0)
+        );
+      default:
+        return sorted;
+    }
+  };
+
+  const filteredDoctors = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    return sortDoctors(
+      doctors.filter((doctor) => {
+        if (
+          selectedSpecialty !== "All" &&
+          doctor?.specialty?.toLowerCase() !==
+            selectedSpecialty.toLowerCase()
+        ) {
+          return false;
+        }
+
+        if (term) {
+          const searchable = `${doctor?.name || ""} ${doctor?.specialty || ""} ${
+            doctor?.location?.city || ""
+          } ${doctor?.location?.address || ""}`.toLowerCase();
+          if (!searchable.includes(term)) {
+            return false;
+          }
+        }
+
+        if (availability.length) {
+          const requestedDays = availability
+            .map((key) => availabilityMap[key])
+            .filter(Boolean);
+
+          const matchesDay = requestedDays.some((day) =>
+            isDoctorAvailableOn(doctor, day)
+          );
+
+          if (!matchesDay) {
+            return false;
+          }
+        }
+
+        if (gender) {
+          const doctorGender = doctor?.gender?.toString().toLowerCase();
+          if (!doctorGender || doctorGender !== gender.toLowerCase()) {
+            return false;
+          }
+        }
+
+        if (consultationTypes.length) {
+          const doctorTypes = normalizeConsultationTypes(doctor);
+          const matchesType = consultationTypes.some((type) =>
+            doctorTypes.includes(type)
+          );
+          if (!matchesType) {
+            return false;
+          }
+        }
+
+        return true;
+      })
+    );
+  }, [
+    availability,
+    consultationTypes,
+    doctors,
+    gender,
+    searchTerm,
+    selectedSpecialty,
+    sortOption,
+  ]);
+  const hasFilteredDoctors = useMemo(
+    () => filteredDoctors && filteredDoctors.length > 0,
+    [filteredDoctors]
+  );
+
   const toggleFilter = () => setIsFilterOpen((prev) => !prev);
   return (
     <div className=" dark:bg-dark-darkBg ">
       <NavBar />
       <div className=" mr-10 ml-10  ">
-        <Top onToggleFilter={toggleFilter} />
+        <Top
+          onToggleFilter={toggleFilter}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+        />
         <div className="flex flex-row [@media(max-width:1400px)]:flex-col mt-10  ">
-          {isFilterOpen && <FilterOptions />}
+          {isFilterOpen && (
+            <FilterOptions
+              availability={availability}
+              onAvailabilityChange={setAvailability}
+              gender={gender}
+              onGenderChange={setGender}
+              consultationTypes={consultationTypes}
+              onConsultationTypeChange={setConsultationTypes}
+              sortOption={sortOption}
+              onSortChange={setSortOption}
+            />
+          )}
 
           <div className="w-full flex-col gap-5 ml-5  sm:flex-row  ">
             <h1 className="text-2xl  dark:text-white mb-5">
               Choose Specialties
             </h1>
-            <DoctorTypes />
+            <DoctorTypes
+              selected={selectedSpecialty}
+              onSelect={setSelectedSpecialty}
+            />
             {loading && !error && <DoctorsLoading />}
             {error && (
               <p className="text-red-500 dark:text-red-300" role="alert">
                 {error}
               </p>
             )}
-            {!loading && !error && hasDoctors && <Cards doctors={doctors} />}
+            {!loading && !error && hasDoctors && hasFilteredDoctors && (
+              <Cards doctors={filteredDoctors} />
+            )}
+            {!loading && !error && hasDoctors && !hasFilteredDoctors && (
+              <p className="text-gray-500 dark:text-gray-300">
+                No doctors match your filters. Try adjusting your search.
+              </p>
+            )}
             {!loading && !error && !hasDoctors && (
               <p className="text-gray-500 dark:text-gray-300">
                 No doctors are available right now.

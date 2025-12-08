@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaTooth } from "react-icons/fa";
 import { BsLungs } from "react-icons/bs";
 import { GiBrain } from "react-icons/gi";
@@ -8,10 +8,9 @@ import { GiHeartOrgan } from "react-icons/gi";
 
 import { FaRegEye } from "react-icons/fa";
 
-const DoctorTypes = () => {
-  const [activeButton, setActiveButton] = useState("All");
-
-  const Buttons = [
+const DoctorTypes = ({ selected, onSelect }) => {
+  const buttons = [
+    { name: "All", icon: null },
     { name: "Dentist", icon: <FaTooth /> },
     { name: "Cardiologist", icon: <GiHeartOrgan /> },
     { name: "ENT", icon: <GiNoseSide /> },
@@ -27,17 +26,19 @@ const DoctorTypes = () => {
 
 "
     >
-      {Buttons.map((button, index) => (
+      {buttons.map((button, index) => (
         <button
           key={index}
-          onClick={() => setActiveButton(button.name)}
+          onClick={() => onSelect(button.name)}
           className={`border border-blue-gray-300 px-4 py-2 rounded-lg font-small [@media(max-width:639px)]:px-4 items-center gap-2 inline-flex mr-2 mb-2 ${
-            activeButton === button.name
+            selected === button.name
               ? "bg-[#145DB8] text-white dark:text-dark-textOnDark dark:bg-dark-bgSurface border-2 border-[#145DB8]"
               : "bg-[#FFFFFF] text-[#6D7379] border-[#FFFFFF] dark:bg-dark-darkBg dark:border-2 dark:border-dark-borderDark hover:text-blue-600"
           }`}
         >
-          <span className="text-lg inline-block">{button.icon}</span>
+          {button.icon && (
+            <span className="text-lg inline-block">{button.icon}</span>
+          )}
           <span>{button.name}</span>
         </button>
       ))}
