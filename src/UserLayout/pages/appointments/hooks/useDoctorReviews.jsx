@@ -15,10 +15,36 @@ const getStoredUser = () => {
   }
 };
 
-const enrichReviewWithUser = (review) => {
+const enrichReviewWithUser = (review, { assumeCurrentUser = false } = {}) => {
   if (!review) return review;
   const currentUser = getStoredUser();
   if (!currentUser) return review;
+
+  const currentUserId = currentUser._id || currentUser.id;
+  const currentUserEmail = currentUser.email?.toLowerCase();
+  const reviewOwnerId =
+    review.user?._id ||
+    review.user?.id ||
+    review.userId ||
+    review.patientId ||
+    review.patient?._id ||
+    review.patient?.id;
+  const reviewOwnerEmail =
+    review.user?.email ||
+    review.patient?.email ||
+    review.email ||
+    review.reviewerEmail;
+
+  const isCurrentUsersReview =
+    assumeCurrentUser ||
+    (currentUserId &&
+      reviewOwnerId &&
+      String(reviewOwnerId) === String(currentUserId)) ||
+    (currentUserEmail &&
+      reviewOwnerEmail &&
+      String(reviewOwnerEmail).toLowerCase() === currentUserEmail);
+
+  if (!isCurrentUsersReview) return review;
 
   const userName =
     currentUser.name || currentUser.fullName || currentUser.username;
@@ -87,7 +113,10 @@ export const useDoctorReviews = (doctorId) => {
         const { reviews: doctorReviews, ratingSummary: summary } =
           await fetchDoctorReviews(doctorId, { signal: controller.signal });
         if (isMounted) {
-          setReviews(doctorReviews);
+          const hydrated = Array.isArray(doctorReviews)
+            ? doctorReviews.map(enrichReviewWithUser)
+            : [];
+          setReviews(hydrated);
           setRatingSummary(summary);
         }
       } catch (err) {
@@ -122,7 +151,9 @@ export const useDoctorReviews = (doctorId) => {
         );
 
         if (review) {
-          const hydratedReview = enrichReviewWithUser(review);
+          const hydratedReview = enrichReviewWithUser(review, {
+            assumeCurrentUser: true,
+          });
           setReviews((prev) => [hydratedReview || review, ...prev]);
         }
         if (summary) {
