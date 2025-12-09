@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import ConfirmationModal from "./ConfirmationModal";
 
@@ -13,7 +13,7 @@ const PaymentModal = ({
   const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [successPayload, setSuccessPayload] = useState(null);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   useEffect(() => {
     const handleKeydown = (event) => {
@@ -36,12 +36,10 @@ const PaymentModal = ({
     doctor?.location?.address ||
     doctor?.location?.city ||
     "Clinic location is not available yet.";
-  const consultationPrice = useMemo(() => {
-    if (typeof doctor?.consultationPrice === "number") {
-      return `EGP ${doctor.consultationPrice}`;
-    }
-    return "Not provided";
-  }, [doctor]);
+  const consultationPrice =
+    typeof doctor?.consultationPrice === "number"
+      ? `EGP ${doctor.consultationPrice}`
+      : "Not provided";
 
   if (!appointment) {
     return null;
@@ -65,7 +63,7 @@ const PaymentModal = ({
       setLoading(true);
       setError("");
 
-      const result = await onCreateAppointment({
+      await onCreateAppointment({
         appointmentDate: appointment.dateValue,
         appointmentTime: appointment.time,
         paymentMethod: "clinic",
@@ -74,7 +72,7 @@ const PaymentModal = ({
         notes: notes.trim(),
       });
 
-      setSuccessPayload(result || {});
+      setIsConfirmed(true);
     } catch (err) {
       setError(err.message || "Unable to book appointment, please try again.");
     } finally {
@@ -83,7 +81,7 @@ const PaymentModal = ({
   };
 
   const handleConfirmationClose = () => {
-    setSuccessPayload(null);
+    setIsConfirmed(false);
     onClose?.();
   };
 
@@ -224,7 +222,7 @@ const PaymentModal = ({
       </div>
 
       <ConfirmationModal
-        visible={Boolean(successPayload)}
+        visible={isConfirmed}
         doctor={doctor}
         appointment={appointment}
         onClose={handleConfirmationClose}

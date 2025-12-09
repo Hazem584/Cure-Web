@@ -14,16 +14,17 @@ const getFallbackDate = (dates) =>
   dates[0]?.value || normalizeDateValue(new Date());
 
 export const useAppointmentScheduler = () => {
-  const [dates, setDates] = useState(() => buildDateOptions(new Date()));
-  const [selectedDate, setSelectedDate] = useState(() =>
-    normalizeDateValue(new Date())
-  );
-  const [now, setNow] = useState(() => new Date());
+  const initialNow = new Date();
+  const initialDate = normalizeDateValue(initialNow);
   const initialTimeSlots = filterAvailableTimeSlots(
     DEFAULT_TIME_SLOTS,
-    normalizeDateValue(new Date()),
-    new Date()
+    initialDate,
+    initialNow
   );
+
+  const [dates, setDates] = useState(() => buildDateOptions(initialNow));
+  const [selectedDate, setSelectedDate] = useState(initialDate);
+  const [now, setNow] = useState(initialNow);
   const [selectedTime, setSelectedTime] = useState(
     initialTimeSlots[DEFAULT_SELECTED_SLOT_INDEX]?.value ||
       initialTimeSlots[0]?.value ||
