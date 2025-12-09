@@ -10,13 +10,13 @@ const TopRated = () => {
         1,2,3,4,5,6
     ]
   const [doctors, setDoctors] = useState([]);
-  const {data,loading,error} = useFetch({DOCTORS_API_URL})
+  const {data,loading,error} = useFetch(`${DOCTORS_API_URL}`)
 
   useEffect(() => {
     if(data?.data && !loading){
     setDoctors(data?.data);
     }
-    console.log(data.data);
+    //console.log(data.data);
     
   },[data,loading])
      return (
