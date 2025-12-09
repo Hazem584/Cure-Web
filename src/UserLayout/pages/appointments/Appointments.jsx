@@ -39,7 +39,7 @@ const Appointments = () => {
     clearSubmitError,
   } = useDoctorReviews(doctorId);
 
-  const { createAppointment } = useAppointmentActions({ doctorId, doctor });
+  const { createAppointment } = useAppointmentActions({ doctorId });
 
   return (
     <div className="dark:bg-dark-darkBg">

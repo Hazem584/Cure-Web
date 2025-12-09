@@ -1,5 +1,6 @@
 import { NORMALIZED_DAY_OPTIONS } from "../constants";
 
+
 export const normalizeDateValue = (value) => {
   if (!value) {
     return null;
@@ -35,7 +36,8 @@ const parseTimeLabelToMinutes = (label = "") => {
     return null;
   }
 
-  const normalizedHours = (hours % 12) + (period.toUpperCase() === "PM" ? 12 : 0);
+  const normalizedHours =
+    (hours % 12) + (period.toUpperCase() === "PM" ? 12 : 0);
   return normalizedHours * 60 + minutes;
 };
 
