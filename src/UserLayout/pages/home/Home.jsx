@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./../../../components/header/NavBar";
 import HeroSection from "./sections/HeroSection";
 import Howitwork from "./sections/Howitwork";
@@ -10,6 +10,7 @@ import Mobilapplinks from "./sections/Mobilapplinks";
 import Footer from "../../../components/footer/Footer";
 
 const Home = () => {
+
   return (
     <>
       <div className="home flex flex-col dark:bg-dark-darkBg">
