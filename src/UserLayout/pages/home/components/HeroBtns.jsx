@@ -12,7 +12,7 @@ const HeroBtns = () => {
                               Get Started
                          </div>
                          </Link>
-                         <Link to="/booking">
+                         <Link to="/doctors">
                          <div
                               role="button"
                               className="flex items-center px-7 py-3 text-primary hover:text-white hover:bg-primary transition-all duration-150 font-montserrat border border-primary text-center rounded-[10px]"
